@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Header.css";
-import { ShieldCheck, Star, Globe, ArrowRight } from "lucide-react";
+import { ShieldCheck, Star, ArrowRight } from "lucide-react";
 
 export default function Header({ onNavigateCheckout }) {
-  const [lang, setLang] = useState("EN");
-
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-orange-500/20 px-4 md:px-8 py-3.5 transition-all duration-300 shadow-sm">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
@@ -51,16 +49,8 @@ export default function Header({ onNavigateCheckout }) {
         {/* Right CTA */}
         <div className="flex items-center gap-3">
           <button 
-            onClick={() => setLang(lang === "EN" ? "HI" : "EN")}
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-orange-50/80 text-slate-700 border border-orange-200 hover:border-orange-500 transition-colors cursor-pointer"
-          >
-            <Globe size={13} className="text-[#f97316]" />
-            <span>{lang === "EN" ? "English" : "हिन्दी"}</span>
-          </button>
-
-          <button 
             onClick={onNavigateCheckout}
-            className="btn-orange-primary text-xs md:text-sm px-5 py-2.5 flex items-center gap-2 cursor-pointer"
+            className="btn-orange-primary text-xs md:text-sm px-5 py-2.5 flex items-center gap-2 cursor-pointer font-bold"
           >
             <span>Get Report @ ₹999</span>
             <ArrowRight size={15} />
