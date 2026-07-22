@@ -1,0 +1,40 @@
+/* ReportBenefits Component Styling - Divinelane Golden Pill Cards Match */
+.benefit-card {
+  background: #fffdf9;
+  border: 2px solid rgba(249, 115, 22, 0.25);
+  border-radius: 36px;
+  padding: 32px 24px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px -8px rgba(249, 115, 22, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.benefit-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(249, 115, 22, 0.6);
+  box-shadow: 0 20px 45px -10px rgba(249, 115, 22, 0.2);
+  background: #ffffff;
+}
+
+.benefit-img-wrapper {
+  width: 110px;
+  height: 110px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff5eb 0%, #fffbf7 100%);
+  border: 2px solid rgba(249, 115, 22, 0.2);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.12);
+  overflow: hidden;
+}
+
+.benefit-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

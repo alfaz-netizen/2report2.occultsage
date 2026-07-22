@@ -1,0 +1,26 @@
+/* App Background Glow Styles */
+
+.app-glow-node-1-82 {
+  position: absolute;
+  left: -477px;
+  width: 726px;
+  height: 726px;
+  top: 3473px;
+}
+
+.app-glow-node-1-85 {
+  position: absolute;
+  height: 640px;
+  left: calc(54.17% - 62px);
+  top: -577px;
+  width: 1144px;
+  transform: translateX(-50%);
+}
+
+.app-glow-node-1-139 {
+  position: absolute;
+  left: calc(83.33% + 33px);
+  width: 726px;
+  height: 726px;
+  top: 1695px;
+}
