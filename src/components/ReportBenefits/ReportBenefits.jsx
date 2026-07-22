@@ -118,11 +118,11 @@ export default function ReportBenefits({ onNavigateCheckout }) {
         <div className="pt-4 flex flex-col items-center space-y-3">
           <button 
             onClick={onNavigateCheckout}
-            className="w-full sm:w-auto bg-white hover:bg-orange-50 text-[#ea580c] font-black text-base sm:text-lg md:text-lg px-6 sm:px-9 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/25 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border-2 border-orange-400/80 leading-snug tracking-tight"
+            className="w-full sm:w-auto btn-orange-primary text-white font-black text-base sm:text-lg md:text-lg px-6 sm:px-9 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
           >
-            <Sparkles size={22} className="text-[#f97316] animate-pulse shrink-0" />
+            <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
             <span>Know your correct Vastu report now @ Rs.999/- Only</span>
-            <ArrowRight size={20} className="text-[#ea580c] shrink-0" />
+            <ArrowRight size={20} className="text-white shrink-0" />
           </button>
 
           <p className="text-xs text-slate-500 font-medium">

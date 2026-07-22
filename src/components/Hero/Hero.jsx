@@ -50,15 +50,15 @@ export default function Hero({ onNavigateCheckout }) {
               </h1>
             </div>
 
-            {/* Primary Capsule CTA Button (Compact lg:w-auto on Desktop) */}
+            {/* Primary Capsule CTA Button (Vibrant Orange Gradient with White Text) */}
             <div className="pt-1 w-full flex justify-center lg:justify-start">
               <button 
                 onClick={onNavigateCheckout}
-                className="w-full lg:w-auto bg-white hover:bg-orange-50 text-[#ea580c] font-extrabold text-sm lg:text-sm px-5 lg:px-7 py-3.5 lg:py-3.5 rounded-full shadow-lg shadow-orange-500/15 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border-2 border-orange-400/80 leading-snug tracking-tight"
+                className="w-full lg:w-auto btn-orange-primary text-white font-extrabold text-sm lg:text-sm px-6 lg:px-8 py-4 lg:py-4 rounded-full shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
               >
-                <Sparkles size={18} className="text-[#f97316] animate-pulse shrink-0" />
+                <Sparkles size={18} className="text-amber-200 animate-pulse shrink-0" />
                 <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
-                <ArrowRight size={16} className="text-[#ea580c] shrink-0" />
+                <ArrowRight size={18} className="text-white shrink-0" />
               </button>
             </div>
 
@@ -150,15 +150,15 @@ export default function Hero({ onNavigateCheckout }) {
 
         </div>
 
-        {/* Duplicate Centered CTA Button Directly Below Floating Trust Bar */}
+        {/* Duplicate Centered CTA Button Directly Below Floating Trust Bar (Vibrant Orange Gradient with White Text) */}
         <div className="pt-3 md:pt-5 flex justify-center w-full relative z-20">
           <button 
             onClick={onNavigateCheckout}
-            className="w-full sm:w-auto bg-white hover:bg-orange-50 text-[#ea580c] font-black text-base lg:text-lg px-7 lg:px-12 py-4 lg:py-4.5 rounded-full shadow-2xl shadow-orange-500/25 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border-2 border-orange-400/80 leading-snug tracking-tight"
+            className="w-full sm:w-auto btn-orange-primary text-white font-black text-base lg:text-lg px-7 lg:px-12 py-4 lg:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
           >
-            <Sparkles size={22} className="text-[#f97316] animate-pulse shrink-0" />
+            <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
             <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
-            <ArrowRight size={20} className="text-[#ea580c] shrink-0" />
+            <ArrowRight size={20} className="text-white shrink-0" />
           </button>
         </div>
 
