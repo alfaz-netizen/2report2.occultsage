@@ -1,35 +1,23 @@
 import React from "react";
 import "./Header.css";
 import { ShieldCheck, Star, ArrowRight } from "lucide-react";
+import vwLogo from "../../assets/VW-HR.png";
 
 export default function Header({ onNavigateCheckout }) {
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-orange-500/20 px-4 md:px-8 py-3.5 transition-all duration-300 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-xl border-b border-orange-500/20 px-4 md:px-8 py-3 transition-all duration-300 shadow-sm">
       <div className="max-w-[1400px] mx-auto flex items-center justify-between">
         
-        {/* Brand Logo */}
-        <div className="flex items-center gap-3">
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-[#f97316] to-[#fd9635] p-0.5 shadow-md shadow-orange-500/20">
-            <div className="w-full h-full bg-white rounded-full flex items-center justify-center p-1.5">
-              <svg viewBox="0 0 32 32" className="w-full h-full text-[#f97316]">
-                <path d="M16 2L4 28h5l7-16 7 16h5L16 2z" fill="currentColor" opacity="0.9" />
-                <path d="M16 8l-8 18h3.5l4.5-10 4.5 10H24L16 8z" fill="#ea580c" />
-              </svg>
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl md:text-2xl tracking-tight text-slate-900 font-sora">
-                Vastu<span className="orange-gradient-text">Wheels</span>
-              </span>
-              <span className="hidden sm:inline-block bg-orange-500/10 text-[#ea580c] border border-orange-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                Official
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
-              India's Premier AI & Vedic Vastu Platform
-            </p>
-          </div>
+        {/* Brand Logo - Official Full Logo Image */}
+        <div className="flex items-center gap-2">
+          <img 
+            src={vwLogo} 
+            alt="Vastu Wheels Logo" 
+            className="h-9 sm:h-11 md:h-12 w-auto object-contain"
+          />
+          <span className="hidden sm:inline-block bg-orange-500/10 text-[#ea580c] border border-orange-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+            Official
+          </span>
         </div>
 
         {/* Center Trust Credentials */}

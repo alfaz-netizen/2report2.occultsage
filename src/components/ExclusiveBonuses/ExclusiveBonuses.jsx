@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./ExclusiveBonuses.css";
 import { Award, Sparkles, ArrowRight, Clock, ShieldCheck, Flame, Compass } from "lucide-react";
 
+import palmistryNotesImg from "../../assets/Palmistry Secrets Notes dd.png";
+import astrologyNotesImg from "../../assets/Astrology Secrets Notes dd.png";
+
 export default function ExclusiveBonuses({ onNavigateCheckout }) {
   // Live Countdown Timer (14 minutes 59 seconds)
   const [timeLeft, setTimeLeft] = useState(899);
@@ -36,7 +39,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
           </h2>
         </div>
 
-        {/* 2 Big Bonus Cards with Real High-Definition Images */}
+        {/* 2 Big Bonus Cards with User Provided Notes Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-4">
           
           {/* BONUS CARD 1: Palmistry Secrets Notes */}
@@ -45,12 +48,12 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
               FREE BONUS #1
             </div>
 
-            {/* Real High-Definition Palmistry Image */}
+            {/* User Provided Palmistry Notes Image */}
             <div className="bonus-img-container shadow-md">
               <img 
-                src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80" 
-                alt="Palmistry Secrets Notes Hand Vastu Diagram" 
-                className="w-full h-full object-cover rounded-2xl"
+                src={palmistryNotesImg} 
+                alt="Palmistry Secrets Notes" 
+                className="bonus-img"
               />
             </div>
 
@@ -75,12 +78,12 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
               FREE BONUS #2
             </div>
 
-            {/* Real High-Definition Vedic Astrology Wheel Image */}
+            {/* User Provided Astrology Notes Image */}
             <div className="bonus-img-container shadow-md">
               <img 
-                src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&auto=format&fit=crop&q=80" 
-                alt="Astrology Secrets Notes Chart" 
-                className="w-full h-full object-cover rounded-2xl"
+                src={astrologyNotesImg} 
+                alt="Astrology Secrets Notes" 
+                className="bonus-img"
               />
             </div>
 

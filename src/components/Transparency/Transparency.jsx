@@ -2,6 +2,10 @@ import React from "react";
 import "./Transparency.css";
 import { Star, CheckCircle2 } from "lucide-react";
 
+import indianCoupleImg from "../../assets/indian_couple_review.png";
+import indianManImg from "../../assets/indian_man_review.png";
+import indianWomanImg from "../../assets/indian_woman_review.png";
+
 export default function Transparency() {
   const reviews = [
     {
@@ -10,7 +14,7 @@ export default function Transparency() {
       rating: 5,
       issue: "South-West Toilet causing severe debt & business losses",
       result: "Used Acharya Ji's brass strip & color therapy. Within 40 days, pending client payments got cleared!",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80"
+      image: indianCoupleImg
     },
     {
       name: "Vikram Malhotra",
@@ -18,7 +22,7 @@ export default function Transparency() {
       rating: 5,
       issue: "North-East Kitchen causing severe insomnia & health stress",
       result: "Implemented elemental green marble slab & crystal remedies without breaking walls. Health improved greatly!",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+      image: indianManImg
     },
     {
       name: "Dr. Ananya Reddy",
@@ -26,7 +30,7 @@ export default function Transparency() {
       rating: 5,
       issue: "South-East Water tank creating marriage disputes",
       result: "Applied red color shielding remedy on SE entrance. Relationship harmony restored completely.",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80"
+      image: indianWomanImg
     }
   ];
 
@@ -92,7 +96,7 @@ export default function Transparency() {
               </div>
 
               <div className="flex items-center gap-3.5 pt-4 border-t border-slate-100">
-                <img src={r.image} alt={r.name} className="w-11 h-11 rounded-full object-cover border-2 border-[#f97316]" />
+                <img src={r.image} alt={r.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#f97316] shadow-sm shrink-0" />
                 <div>
                   <div className="text-sm font-extrabold text-slate-900">{r.name}</div>
                   <div className="text-xs text-slate-500 font-medium">{r.location}</div>

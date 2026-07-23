@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import "./ReportForm.css";
-import { ArrowLeft, ShieldCheck, Lock, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Lock, CheckCircle2, Sparkles, AlertCircle } from "lucide-react";
+import vwLogo from "../../assets/VW-HR.png";
 
 export default function ReportForm({ onBack }) {
   const [formData, setFormData] = useState({
     fullName: "",
-    propertyType: "Apartment / Flat",
-    direction: "North-East",
-    concern: "Financial Growth & Cashflow",
+    propertyType: "",
+    direction: "",
+    concern: "",
+    dob: "",
+    gender: "",
     phone: "",
     email: "",
     city: "",
-    bonusCourse: "Astro-Vastu Gemstone Alignment Guide (FREE Today)"
+    successCourse: "",
+    reportLanguage: ""
   });
 
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -31,10 +36,31 @@ export default function ReportForm({ onBack }) {
     });
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.fullName.trim()) newErrors.fullName = true;
+    if (!formData.propertyType) newErrors.propertyType = true;
+    if (!formData.direction) newErrors.direction = true;
+    if (!formData.concern) newErrors.concern = true;
+    if (!formData.dob) newErrors.dob = true;
+    if (!formData.gender) newErrors.gender = true;
+    if (!formData.phone || formData.phone.length < 10) newErrors.phone = true;
+    if (!formData.email || !formData.email.includes("@")) newErrors.email = true;
+    if (!formData.city.trim()) newErrors.city = true;
+    if (!formData.successCourse) newErrors.successCourse = true;
+    if (!formData.reportLanguage) newErrors.reportLanguage = true;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.fullName || !formData.phone || !formData.email) {
-      alert("Please fill in all required fields.");
+    
+    if (!validateForm()) {
+      // Scroll to the top of the form so user sees missing fields
+      const formEl = document.getElementById("checkout-main-form");
+      if (formEl) formEl.scrollIntoView({ behavior: "smooth" });
       return;
     }
 
@@ -70,8 +96,11 @@ export default function ReportForm({ onBack }) {
         propertyType: formData.propertyType,
         direction: formData.direction,
         concern: formData.concern,
+        dob: formData.dob,
+        gender: formData.gender,
         city: formData.city,
-        bonusCourse: formData.bonusCourse
+        successCourse: formData.successCourse,
+        reportLanguage: formData.reportLanguage
       },
       theme: {
         color: "#ea580c"
@@ -88,7 +117,7 @@ export default function ReportForm({ onBack }) {
       rzp.open();
     } catch (err) {
       console.error("Razorpay Error:", err);
-      alert("Failed to initialize payment popup. Please try again.");
+      alert("Failed to initialize payment gateway. Please try again.");
       setIsSubmitting(false);
     }
   };
@@ -107,9 +136,11 @@ export default function ReportForm({ onBack }) {
         </button>
 
         <div className="flex items-center gap-2">
-          <span className="font-extrabold text-lg md:text-xl text-slate-900">
-            Vastu<span className="orange-gradient-text">Wheels</span>
-          </span>
+          <img 
+            src={vwLogo} 
+            alt="Vastu Wheels Logo" 
+            className="h-8 md:h-10 w-auto object-contain"
+          />
           <span className="bg-orange-100 text-[#ea580c] text-[10px] font-bold px-2 py-0.5 rounded border border-orange-300">
             Checkout
           </span>
@@ -121,7 +152,7 @@ export default function ReportForm({ onBack }) {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="max-w-2xl mx-auto space-y-8" id="checkout-main-form">
         
         {/* Main Title & Instructions */}
         <div className="text-center space-y-2">
@@ -129,15 +160,22 @@ export default function ReportForm({ onBack }) {
             Premium Vastu Analysis Report
           </h1>
           <p className="text-sm md:text-base text-[#ea580c] font-bold">
-            Submit Your Details
+            Submit Your Details (All Fields Mandatory *)
           </p>
           <p className="text-xs md:text-sm text-slate-600">
-            To tailor-make your personalized Vastu report, we need these details from you:
+            To tailor-make your personalized Vastu report, please select all required details below:
           </p>
         </div>
 
+        {Object.keys(errors).length > 0 && (
+          <div className="bg-rose-50 border-2 border-rose-400 p-4 rounded-2xl flex items-center gap-3 text-rose-700 text-xs md:text-sm font-bold shadow-md">
+            <AlertCircle size={20} className="shrink-0 text-rose-600" />
+            <span>Please select or fill in all mandatory fields highlighted in Red.</span>
+          </div>
+        )}
+
         {!isSuccess ? (
-          <form onSubmit={handleSubmit} className="white-orange-card p-6 md:p-8 space-y-6 shadow-xl border-2 border-orange-300 bg-white">
+          <form onSubmit={handleSubmit} noValidate className="white-orange-card p-6 md:p-8 space-y-6 shadow-xl border-2 border-orange-300 bg-white">
             
             {/* Form Fields */}
             <div className="space-y-4">
@@ -147,66 +185,145 @@ export default function ReportForm({ onBack }) {
                 <label className="block text-xs font-bold text-slate-800 mb-1">Full Name *</label>
                 <input 
                   type="text"
-                  required
                   placeholder="Enter your full name"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                  onChange={(e) => {
+                    setFormData({ ...formData, fullName: e.target.value });
+                    if (errors.fullName) setErrors({ ...errors, fullName: false });
+                  }}
+                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                    errors.fullName ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+                  }`}
                 />
+                {errors.fullName && <p className="text-[11px] text-rose-600 font-bold mt-1">Full Name is required</p>}
               </div>
 
-              {/* Property Type */}
+              {/* Property Type & Main Entrance Direction */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-800 mb-1">Property Type</label>
+                  <label className="block text-xs font-bold text-slate-800 mb-1">Property Type *</label>
                   <select 
                     value={formData.propertyType}
-                    onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                    onChange={(e) => {
+                      setFormData({ ...formData, propertyType: e.target.value });
+                      if (errors.propertyType) setErrors({ ...errors, propertyType: false });
+                    }}
+                    className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                      errors.propertyType ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+                    }`}
                   >
-                    <option>Apartment / Flat</option>
-                    <option>Independent House / Villa</option>
-                    <option>Office / Commercial Space</option>
-                    <option>Shop / Factory / Warehouse</option>
+                    <option value="">-- Select Property Type --</option>
+                    <option value="Apartment / Flat">Apartment / Flat</option>
+                    <option value="Independent House / Villa">Independent House / Villa</option>
+                    <option value="Office / Commercial Space">Office / Commercial Space</option>
+                    <option value="Shop / Factory / Warehouse">Shop / Factory / Warehouse</option>
                   </select>
+                  {errors.propertyType && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Property Type</p>}
                 </div>
 
-                {/* Entrance Direction */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-800 mb-1">Main Entrance Direction</label>
+                  <label className="block text-xs font-bold text-slate-800 mb-1">Main Entrance Direction *</label>
                   <select 
                     value={formData.direction}
-                    onChange={(e) => setFormData({ ...formData, direction: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                    onChange={(e) => {
+                      setFormData({ ...formData, direction: e.target.value });
+                      if (errors.direction) setErrors({ ...errors, direction: false });
+                    }}
+                    className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                      errors.direction ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+                    }`}
                   >
-                    <option>North (Kuber Zone)</option>
-                    <option>North-East (Ishan Zone)</option>
-                    <option>East (Indra Zone)</option>
-                    <option>South-East (Agni Zone)</option>
-                    <option>South (Yama Zone)</option>
-                    <option>South-West (Nairitya Zone)</option>
-                    <option>West (Varun Zone)</option>
-                    <option>North-West (Vayu Zone)</option>
+                    <option value="">-- Select Entrance Direction --</option>
+                    <option value="North (Kuber Zone)">North (Kuber Zone)</option>
+                    <option value="North-East (Ishan Zone)">North-East (Ishan Zone)</option>
+                    <option value="East (Indra Zone)">East (Indra Zone)</option>
+                    <option value="South-East (Agni Zone)">South-East (Agni Zone)</option>
+                    <option value="South (Yama Zone)">South (Yama Zone)</option>
+                    <option value="South-West (Nairitya Zone)">South-West (Nairitya Zone)</option>
+                    <option value="West (Varun Zone)">West (Varun Zone)</option>
+                    <option value="North-West (Vayu Zone)">North-West (Vayu Zone)</option>
                   </select>
+                  {errors.direction && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Entrance Direction</p>}
                 </div>
               </div>
 
-              {/* Primary Concern */}
+              {/* Primary Challenge Area */}
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Primary Challenge Area</label>
+                <label className="block text-xs font-bold text-slate-800 mb-1">Primary Challenge Area *</label>
                 <select 
                   value={formData.concern}
-                  onChange={(e) => setFormData({ ...formData, concern: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                  onChange={(e) => {
+                    setFormData({ ...formData, concern: e.target.value });
+                    if (errors.concern) setErrors({ ...errors, concern: false });
+                  }}
+                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                    errors.concern ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+                  }`}
                 >
-                  <option>Financial Growth & Cashflow</option>
-                  <option>Health Issues & Mental Stress</option>
-                  <option>Career Stagnation & Business Losses</option>
-                  <option>Marriage Delay & Family Disputes</option>
+                  <option value="">-- Select Primary Challenge Area --</option>
+                  <option value="Financial Growth & Cashflow">Financial Growth & Cashflow</option>
+                  <option value="Health Issues & Mental Stress">Health Issues & Mental Stress</option>
+                  <option value="Career Stagnation & Business Losses">Career Stagnation & Business Losses</option>
+                  <option value="Marriage Delay & Family Disputes">Marriage Delay & Family Disputes</option>
                 </select>
+                {errors.concern && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Primary Challenge Area</p>}
               </div>
 
-              {/* WhatsApp Number */}
+              {/* Date of Birth & Gender */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-800 mb-1">Date of Birth *</label>
+                  <input 
+                    type="date"
+                    value={formData.dob}
+                    onChange={(e) => {
+                      setFormData({ ...formData, dob: e.target.value });
+                      if (errors.dob) setErrors({ ...errors, dob: false });
+                    }}
+                    className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                      errors.dob ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+                    }`}
+                  />
+                  {errors.dob && <p className="text-[11px] text-rose-600 font-bold mt-1">Date of Birth is required</p>}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-800 mb-1">Gender *</label>
+                  <div className={`flex gap-3 p-1 rounded-xl transition-all ${errors.gender ? "border-2 border-rose-500 bg-rose-50/50" : ""}`}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData({ ...formData, gender: "Male" });
+                        if (errors.gender) setErrors({ ...errors, gender: false });
+                      }}
+                      className={`w-1/2 py-3 text-xs font-extrabold rounded-xl border transition-all cursor-pointer ${
+                        formData.gender === "Male"
+                          ? "bg-orange-50 border-[#f97316] text-[#ea580c] shadow-sm"
+                          : "bg-slate-50 border-slate-300 text-slate-700 hover:border-orange-300"
+                      }`}
+                    >
+                      Male
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFormData({ ...formData, gender: "Female" });
+                        if (errors.gender) setErrors({ ...errors, gender: false });
+                      }}
+                      className={`w-1/2 py-3 text-xs font-extrabold rounded-xl border transition-all cursor-pointer ${
+                        formData.gender === "Female"
+                          ? "bg-orange-50 border-[#f97316] text-[#ea580c] shadow-sm"
+                          : "bg-slate-50 border-slate-300 text-slate-700 hover:border-orange-300"
+                      }`}
+                    >
+                      Female
+                    </button>
+                  </div>
+                  {errors.gender && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Gender</p>}
+                </div>
+              </div>
+
+              {/* WhatsApp Phone Number */}
               <div>
                 <label className="block text-xs font-bold text-slate-800 mb-1">WhatsApp Phone Number *</label>
                 <div className="flex">
@@ -215,14 +332,19 @@ export default function ReportForm({ onBack }) {
                   </span>
                   <input 
                     type="tel"
-                    required
                     maxLength={10}
                     placeholder="9999999999"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, "") })}
-                    className="w-full bg-slate-50 border border-slate-300 rounded-r-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value.replace(/\D/g, "") });
+                      if (errors.phone) setErrors({ ...errors, phone: false });
+                    }}
+                    className={`w-full bg-slate-50 border rounded-r-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                      errors.phone ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+                    }`}
                   />
                 </div>
+                {errors.phone && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid 10-digit WhatsApp number required</p>}
               </div>
 
               {/* Email ID */}
@@ -230,60 +352,85 @@ export default function ReportForm({ onBack }) {
                 <label className="block text-xs font-bold text-slate-800 mb-1">Email ID *</label>
                 <input 
                   type="email"
-                  required
                   placeholder="Please enter your Email ID"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                    if (errors.email) setErrors({ ...errors, email: false });
+                  }}
+                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                    errors.email ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+                  }`}
                 />
+                {errors.email && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid Email ID is required</p>}
               </div>
 
               {/* Current Location */}
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Current Location / City</label>
+                <label className="block text-xs font-bold text-slate-800 mb-1">Current Location / City *</label>
                 <input 
                   type="text"
                   placeholder="City, State"
                   value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-[#f97316]"
+                  onChange={(e) => {
+                    setFormData({ ...formData, city: e.target.value });
+                    if (errors.city) setErrors({ ...errors, city: false });
+                  }}
+                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                    errors.city ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+                  }`}
                 />
+                {errors.city && <p className="text-[11px] text-rose-600 font-bold mt-1">Location / City is required</p>}
               </div>
 
-              {/* Bonus Course Selector */}
+              {/* Select Any One Success Workshop */}
               <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Included Bonus Guide (FREE)</label>
+                <label className="block text-xs font-bold text-slate-800 mb-1">
+                  Select Any One Success Workshop for just ₹199 (Included FREE) *
+                </label>
                 <select 
-                  value={formData.bonusCourse}
-                  onChange={(e) => setFormData({ ...formData, bonusCourse: e.target.value })}
-                  className="w-full bg-orange-50 border border-orange-300 text-[#ea580c] font-bold rounded-xl px-4 py-3 text-sm focus:outline-none"
+                  value={formData.successCourse}
+                  onChange={(e) => {
+                    setFormData({ ...formData, successCourse: e.target.value });
+                    if (errors.successCourse) setErrors({ ...errors, successCourse: false });
+                  }}
+                  className={`w-full border rounded-xl px-4 py-3 text-sm font-bold focus:outline-none transition-all ${
+                    errors.successCourse 
+                      ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" 
+                      : "bg-orange-50 border-orange-300 text-[#ea580c]"
+                  }`}
                 >
-                  <option>Astro-Vastu Gemstone Alignment Guide (FREE)</option>
-                  <option>Zero-Demolition Color Therapy Blueprint (FREE)</option>
-                  <option>Kuber Cashflow Multiplier Checklist (FREE)</option>
+                  <option value="">-- Select Success Workshop --</option>
+                  <option value="Money & Career Sector Workshop - Acharya Ji">Money & Career Sector Workshop - Acharya Ji</option>
+                  <option value="Health Sector Workshop - Acharya Ji">Health Sector Workshop - Acharya Ji</option>
+                  <option value="Relationship Sector Workshop - Acharya Ji">Relationship Sector Workshop - Acharya Ji</option>
+                  <option value="Study Sector Workshop - Acharya Ji">Study Sector Workshop - Acharya Ji</option>
+                  <option value="Foreign Settlement Sector Workshop - Acharya Ji">Foreign Settlement Sector Workshop - Acharya Ji</option>
                 </select>
+                {errors.successCourse && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select a Success Workshop</p>}
               </div>
 
-            </div>
+              {/* Select Report Language */}
+              <div>
+                <label className="block text-xs font-bold text-slate-800 mb-1">Select Report Language *</label>
+                <select 
+                  value={formData.reportLanguage}
+                  onChange={(e) => {
+                    setFormData({ ...formData, reportLanguage: e.target.value });
+                    if (errors.reportLanguage) setErrors({ ...errors, reportLanguage: false });
+                  }}
+                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                    errors.reportLanguage ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+                  }`}
+                >
+                  <option value="">-- Select Report Language --</option>
+                  <option value="English">English</option>
+                  <option value="Hindi">Hindi</option>
+                  <option value="Kannada">Kannada</option>
+                </select>
+                {errors.reportLanguage && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Report Language</p>}
+              </div>
 
-            {/* Order Summary Box */}
-            <div className="bg-orange-50/90 border border-orange-300 p-4 rounded-2xl space-y-2">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-800">
-                <span>Custom Vastu PDF Report</span>
-                <span className="text-[#ea580c] text-sm">
-                  ₹999 <del className="text-slate-400 font-normal">₹5,999</del>
-                </span>
-              </div>
-              <div className="text-[11px] text-slate-600 space-y-1">
-                <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                  <CheckCircle2 size={13} />
-                  <span>100% Zero-Demolition Blueprint Included</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                  <CheckCircle2 size={13} />
-                  <span>Instant Delivery on WhatsApp & Email</span>
-                </div>
-              </div>
             </div>
 
             {/* Submit Button */}

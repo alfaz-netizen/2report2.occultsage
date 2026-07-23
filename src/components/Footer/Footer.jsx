@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.css";
 import { ShieldCheck, Lock, Award, Mail } from "lucide-react";
+import vwLogo from "../../assets/VW-HR.png";
 
 export default function Footer() {
   return (
@@ -13,9 +14,11 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl tracking-tight text-white font-sora">
-                Vastu<span className="orange-gradient-text">Wheels</span>
-              </span>
+              <img 
+                src={vwLogo} 
+                alt="Vastu Wheels Logo" 
+                className="h-9 md:h-11 w-auto object-contain brightness-110"
+              />
             </div>
             <p className="text-slate-400 text-xs leading-relaxed">
               India's premier AI & Vedic Vastu platform providing zero-demolition energy analysis reports guided by Acharya Ji.

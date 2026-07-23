@@ -4,114 +4,190 @@ import {
   Users, Award, Calendar, Clock, Star, 
   ShieldCheck, ArrowRight, Sparkles, Lock 
 } from "lucide-react";
-import acharyaGroupImg from "../../assets/Group-219-1.png";
+import acharyaGroupImg from "../../assets/Elite Presentation (1).png";
 
 export default function Hero({ onNavigateCheckout }) {
   return (
     <section className="relative py-6 md:py-10 px-3 md:px-8 bg-gradient-to-b from-[#fffbf7] via-[#fff5eb] to-[#fffbf7] text-slate-900 overflow-hidden border-b border-orange-200/60">
       
+      {/* Top-Left Glowing Rotating Vastu Chakra Mandala Animation */}
+      <div className="absolute -top-20 -left-20 md:-top-28 md:-left-28 w-[380px] sm:w-[460px] md:w-[540px] h-[380px] sm:h-[460px] md:h-[540px] opacity-30 pointer-events-none z-0">
+        <svg 
+          viewBox="0 0 500 500" 
+          className="w-full h-full animate-vastu-spin drop-shadow-[0_0_25px_rgba(249,115,22,0.4)]"
+        >
+          <defs>
+            <linearGradient id="goldVastuGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#f97316" />
+              <stop offset="50%" stopColor="#fbbf24" />
+              <stop offset="100%" stopColor="#ea580c" />
+            </linearGradient>
+          </defs>
+          
+          {/* Outer Concentric Sacred Vastu Circles */}
+          <circle cx="250" cy="250" r="230" stroke="url(#goldVastuGlow)" strokeWidth="2.5" fill="none" strokeDasharray="6 4" />
+          <circle cx="250" cy="250" r="215" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
+          <circle cx="250" cy="250" r="195" stroke="url(#goldVastuGlow)" strokeWidth="1" fill="none" strokeDasharray="12 6" />
+
+          {/* 16 Vastu Zone Directional Rays */}
+          {[...Array(16)].map((_, i) => (
+            <line
+              key={i}
+              x1="250"
+              y1="250"
+              x2={250 + 215 * Math.cos((i * 22.5 * Math.PI) / 180)}
+              y2={250 + 215 * Math.sin((i * 22.5 * Math.PI) / 180)}
+              stroke="url(#goldVastuGlow)"
+              strokeWidth={i % 4 === 0 ? "2" : "1"}
+              strokeOpacity={i % 4 === 0 ? "0.9" : "0.5"}
+            />
+          ))}
+
+          {/* Degree Ticks & Dots */}
+          {[...Array(36)].map((_, i) => (
+            <circle
+              key={i}
+              cx={250 + 222 * Math.cos((i * 10 * Math.PI) / 180)}
+              cy={250 + 222 * Math.sin((i * 10 * Math.PI) / 180)}
+              r="2.5"
+              fill="#f97316"
+            />
+          ))}
+
+          {/* Inner Sacred Geometry Star & Inner Rings */}
+          <polygon
+            points="250,90 390,330 110,330"
+            stroke="url(#goldVastuGlow)"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.8"
+          />
+          <polygon
+            points="250,410 390,170 110,170"
+            stroke="url(#goldVastuGlow)"
+            strokeWidth="1.5"
+            fill="none"
+            opacity="0.8"
+          />
+
+          <circle cx="250" cy="250" r="120" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
+          <circle cx="250" cy="250" r="70" stroke="url(#goldVastuGlow)" strokeWidth="2" fill="none" strokeDasharray="4 4" />
+          <circle cx="250" cy="250" r="25" fill="url(#goldVastuGlow)" opacity="0.35" />
+          <circle cx="250" cy="250" r="6" fill="#ea580c" />
+        </svg>
+      </div>
+
       {/* Background Subtle Dotted Grid & Warm Radial Glows */}
       <div className="absolute inset-0 bg-[radial-gradient(#f97316_0.75px,transparent_0.75px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-orange-400/15 via-amber-400/15 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-[1400px] mx-auto space-y-6 md:space-y-8 relative z-10">
+      <div className="max-w-[1400px] mx-auto space-y-5 md:space-y-8 relative z-10">
 
         {/* Hero Main 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
 
-          {/* RIGHT COLUMN IMAGE (On Mobile: order-1 so it renders FIRST at the top) */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end lg:pr-10 relative mt-0 lg:-mt-26 z-10 order-1 lg:order-2">
-            <div className="max-w-md md:max-w-xl w-full flex justify-center relative">
-              
-              {/* Acharya Ji Group Image */}
-              <img 
-                src={acharyaGroupImg} 
-                alt="Acharya Ji - Vastu Scholar Energy Graphics" 
-                className="w-full max-h-[380px] sm:max-h-[480px] lg:max-h-[700px] object-contain drop-shadow-2xl scale-105 lg:scale-125 transition-transform origin-top pt-0.5"
-              />
-
-            </div>
-          </div>
-
-          {/* LEFT COLUMN CONTENT (On Mobile: order-2 so it renders SECOND below the image) */}
-          <div className="lg:col-span-7 space-y-4 md:space-y-5 text-center lg:text-left pt-1 order-2 lg:order-1">
+          {/* LEFT COLUMN CONTENT */}
+          <div className="lg:col-span-7 space-y-4 md:space-y-5 text-center lg:text-left pt-1 flex flex-col">
             
-            {/* Top Badge & Headline */}
-            <div className="space-y-2.5 md:space-y-3">
-              <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#ea580c]">
-                <Award size={14} className="text-[#f97316]" />
+            {/* 1. TOP SLIM BADGE (Phone & Desktop) */}
+            <div className="order-1">
+              <div className="inline-flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/30 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#ea580c] hero-top-badge">
+                <Award size={14} className="text-[#f97316] shrink-0" />
                 <span>Based on Ancient Vedic Vastu & Numerology — Trusted by 2,50,000+ People</span>
               </div>
+            </div>
 
-              {/* Master Headline */}
+            {/* 2. MASTER HEADLINE (Phone & Desktop) */}
+            <div className="order-2 pt-0.5">
               <h1 className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[36px] font-extrabold text-slate-900 font-sora leading-[1.28] tracking-tight">
                 Personalised <span className="orange-gradient-text">Vastu Report</span> — Unlock<br className="hidden sm:inline" />
                 <span className="orange-gradient-text">Wealth, Health, Marriage & Career</span>
               </h1>
             </div>
 
-            {/* Primary Capsule CTA Button (Vibrant Orange Gradient with White Text) */}
-            <div className="pt-1 w-full flex justify-center lg:justify-start">
-              <button 
-                onClick={onNavigateCheckout}
-                className="w-full lg:w-auto btn-orange-primary text-white font-extrabold text-sm lg:text-sm px-6 lg:px-8 py-4 lg:py-4 rounded-full shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
-              >
-                <Sparkles size={18} className="text-amber-200 animate-pulse shrink-0" />
-                <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
-                <ArrowRight size={18} className="text-white shrink-0" />
-              </button>
+            {/* 3. HERO IMAGE FOR MOBILE ONLY (z-index: 0 keeps image UNDER the button layer) */}
+            <div className="order-3 lg:hidden flex justify-center items-center hero-mobile-img-wrapper relative z-0">
+              <img 
+                src={acharyaGroupImg} 
+                alt="Acharya Ji - Vastu Scholar Energy Graphics" 
+                className="hero-acharya-img"
+              />
             </div>
 
-            {/* Target Audience Sub-Tagline */}
-            <p className="text-xs md:text-sm text-slate-600 font-semibold max-w-xl mx-auto lg:mx-0 pt-0.5 leading-relaxed">
-              Report specially designed for Homeowners, Couples, Business Leaders, Architects & Property Buyers
-            </p>
+            {/* 4. PRIMARY CAPSULE CTA BUTTON & SUB-TAGLINE (relative z-30 stacks button ABOVE image) */}
+            <div className="order-4 space-y-2.5 pt-0.5 relative z-20">
+              <div className="w-full flex justify-center lg:justify-start">
+                <button 
+                  onClick={onNavigateCheckout}
+                  className="w-full lg:w-auto btn-orange-primary text-white font-extrabold text-xs sm:text-sm px-5 sm:px-8 py-3.5 sm:py-4 rounded-full shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight relative z-30"
+                >
+                  <Sparkles size={18} className="text-amber-200 animate-pulse shrink-0" />
+                  <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
+                  <ArrowRight size={18} className="text-white shrink-0" />
+                </button>
+              </div>
 
-            {/* 4 Vibrant Orange Gradient Feature Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3.5 max-w-xl mx-auto lg:mx-0 pt-1">
+              <p className="text-xs md:text-sm text-slate-600 font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Report specially designed for Homeowners, Couples, Business Leaders, Architects & Property Buyers
+              </p>
+            </div>
+
+            {/* 5. 4 FEATURE CARDS (2 Columns Grid on Mobile = 2 Lines of 2 Boxes!) */}
+            <div className="order-5 grid grid-cols-2 gap-2 sm:gap-3.5 max-w-xl mx-auto lg:mx-0 pt-1">
               
               {/* Card 1: 10K+ Already Joined */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-3.5 px-4 rounded-2xl flex items-center gap-3 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-2 bg-white/20 rounded-xl shrink-0">
-                  <Users size={18} className="text-white" />
+              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
+                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
+                  <Users size={16} className="text-white" />
                 </div>
-                <div className="text-left font-sora font-extrabold text-xs sm:text-sm md:text-base tracking-wide">
-                  10K+ Already Joined
+                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
+                  10K+ Joined
                 </div>
               </div>
 
               {/* Card 2: 15+ Years Experience */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-3.5 px-4 rounded-2xl flex items-center gap-3 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-2 bg-white/20 rounded-xl shrink-0">
-                  <Award size={18} className="text-white" />
+              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
+                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
+                  <Award size={16} className="text-white" />
                 </div>
-                <div className="text-left font-sora font-extrabold text-xs sm:text-sm md:text-base tracking-wide">
-                  15+ Years Experience
+                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
+                  15+ Yrs Experience
                 </div>
               </div>
 
               {/* Card 3: 22nd, 23rd & 24th July */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-3.5 px-4 rounded-2xl flex items-center gap-3 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-2 bg-white/20 rounded-xl shrink-0">
-                  <Calendar size={18} className="text-white" />
+              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
+                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
+                  <Calendar size={16} className="text-white" />
                 </div>
-                <div className="text-left font-sora font-extrabold text-xs sm:text-sm md:text-base tracking-wide">
-                  22nd, 23rd & 24th July
+                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
+                  22, 23 & 24 July
                 </div>
               </div>
 
               {/* Card 4: 8 PM - 10:30 PM */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-3.5 px-4 rounded-2xl flex items-center gap-3 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-2 bg-white/20 rounded-xl shrink-0">
-                  <Clock size={18} className="text-white" />
+              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
+                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
+                  <Clock size={16} className="text-white" />
                 </div>
-                <div className="text-left font-sora font-extrabold text-xs sm:text-sm md:text-base tracking-wide">
-                  8 PM - 10:30 PM.
+                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
+                  8 PM - 10:30 PM
                 </div>
               </div>
 
             </div>
 
+          </div>
+
+          {/* RIGHT COLUMN IMAGE FOR DESKTOP ONLY (>= 1024px) */}
+          <div className="hidden lg:flex lg:col-span-5 justify-center items-center relative z-10">
+            <div className="max-w-md md:max-w-lg w-full flex justify-center items-center relative">
+              <img 
+                src={acharyaGroupImg} 
+                alt="Acharya Ji - Vastu Scholar Energy Graphics" 
+                className="hero-acharya-img"
+              />
+            </div>
           </div>
 
         </div>
@@ -154,7 +230,7 @@ export default function Hero({ onNavigateCheckout }) {
         <div className="pt-3 md:pt-5 flex justify-center w-full relative z-20">
           <button 
             onClick={onNavigateCheckout}
-            className="w-full sm:w-auto btn-orange-primary text-white font-black text-base lg:text-lg px-7 lg:px-12 py-4 lg:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
+            className="w-full sm:w-auto btn-orange-primary text-white font-black text-xs sm:text-base lg:text-lg px-6 sm:px-12 py-3.5 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
           >
             <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
             <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
