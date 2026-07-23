@@ -1,7 +1,7 @@
 import React from "react";
 import "./Hero.css";
 import { 
-  Users, Award, Calendar, Clock, Star, 
+  Award, Star, 
   ShieldCheck, ArrowRight, Sparkles, Lock 
 } from "lucide-react";
 import acharyaGroupImg from "../../assets/Elite Presentation (1).png";
@@ -132,49 +132,12 @@ export default function Hero({ onNavigateCheckout }) {
               </p>
             </div>
 
-            {/* 5. 4 FEATURE CARDS (2 Columns Grid on Mobile = 2 Lines of 2 Boxes!) */}
-            <div className="order-5 grid grid-cols-2 gap-2 sm:gap-3.5 max-w-xl mx-auto lg:mx-0 pt-1">
-              
-              {/* Card 1: 10K+ Already Joined */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
-                  <Users size={16} className="text-white" />
-                </div>
-                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
-                  10K+ Joined
-                </div>
-              </div>
-
-              {/* Card 2: 15+ Years Experience */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
-                  <Award size={16} className="text-white" />
-                </div>
-                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
-                  15+ Yrs Experience
-                </div>
-              </div>
-
-              {/* Card 3: 22nd, 23rd & 24th July */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
-                  <Calendar size={16} className="text-white" />
-                </div>
-                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
-                  22, 23 & 24 July
-                </div>
-              </div>
-
-              {/* Card 4: 8 PM - 10:30 PM */}
-              <div className="bg-gradient-to-r from-[#ff8c00] to-[#f97316] text-white p-2.5 sm:p-3.5 px-3 rounded-2xl flex items-center gap-2 shadow-md shadow-orange-500/20 border border-orange-400/40">
-                <div className="p-1.5 bg-white/20 rounded-xl shrink-0">
-                  <Clock size={16} className="text-white" />
-                </div>
-                <div className="text-left font-sora font-extrabold text-[11px] sm:text-xs md:text-sm tracking-tight leading-tight">
-                  8 PM - 10:30 PM
-                </div>
-              </div>
-
+            {/* 5. INVISIBLE RESERVED SPACE (Hides 4 Cards while keeping layout height 100% intact without any element shifting) */}
+            <div className="order-5 grid grid-cols-2 gap-2 sm:gap-3.5 max-w-xl mx-auto lg:mx-0 pt-1 invisible pointer-events-none select-none aria-hidden">
+              <div className="p-2.5 sm:p-3.5 px-3">10K+ Joined</div>
+              <div className="p-2.5 sm:p-3.5 px-3">15+ Yrs Experience</div>
+              <div className="p-2.5 sm:p-3.5 px-3">22, 23 & 24 July</div>
+              <div className="p-2.5 sm:p-3.5 px-3">8 PM - 10:30 PM</div>
             </div>
 
           </div>
