@@ -14,7 +14,7 @@ export default function ExpertTrust({ onNavigateCheckout }) {
             Revered Vedic Vastu Scholar
           </span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 font-sora">
-            Why Over <span className="orange-gradient-text">100,000+ Indian Families</span> Trust Acharya Ji
+            Why Over <span className="orange-gradient-text">60,000+ Indian Families</span> Trust Acharya Ji
           </h2>
           <p className="text-slate-600 text-base font-normal">
             15+ Years of Vedic Vastu Mastery combined with 100% Zero-Demolition scientific energy balancing.
@@ -79,7 +79,7 @@ export default function ExpertTrust({ onNavigateCheckout }) {
                 <div>
                   <h3 className="text-base font-bold text-slate-900">Instant WhatsApp & Email Report Delivery</h3>
                   <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                    Get your custom 24-page PDF report within 2 minutes of completing your details. No long waiting period.
+                    Get your custom PDF report within 2 minutes of completing your details. No long waiting period.
                   </p>
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function ExpertTrust({ onNavigateCheckout }) {
               onClick={onNavigateCheckout}
               className="btn-orange-primary text-sm md:text-base px-8 py-4 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
             >
-              <span>Get Report & Consult Acharya Ji @ ₹199/-</span>
+              <span>Get Report & Consult Acharya Ji @ ₹999/-</span>
               <ArrowRight size={18} />
             </button>
           </div>

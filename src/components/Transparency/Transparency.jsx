@@ -31,10 +31,10 @@ export default function Transparency() {
   ];
 
   const stats = [
-    { label: "Reports Generated", val: "120,000+" },
+    { label: "Reports Generated", val: "60,000+" },
     { label: "Demolition Required", val: "0%" },
     { label: "Customer Satisfaction", val: "99.4%" },
-    { label: "ISO Certified Rating", val: "4.9 / 5" }
+    { label: "ISO Certified Rating", val: "4.7 / 5" }
   ];
 
   return (
@@ -47,7 +47,7 @@ export default function Transparency() {
             Verified Success Stories
           </span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 font-sora">
-            Trusted By Over <span className="orange-gradient-text">100,000+ Indian Families</span>
+            Trusted By Over <span className="orange-gradient-text">60,000+ Indian Families</span>
           </h2>
           <p className="text-slate-600 text-base">
             See real experiences from homeowners who transformed their financial growth and family peace using Acharya Ji's zero-demolition remedies.

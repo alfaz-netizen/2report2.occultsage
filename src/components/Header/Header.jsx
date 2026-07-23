@@ -36,7 +36,7 @@ export default function Header({ onNavigateCheckout }) {
         <div className="hidden lg:flex items-center gap-6 text-xs text-slate-700 bg-orange-50/80 border border-orange-200/80 px-5 py-2 rounded-full shadow-sm">
           <div className="flex items-center gap-1.5 text-slate-800 font-semibold">
             <Star size={14} className="fill-amber-500 text-amber-500" />
-            <span>4.9/5 Rating</span>
+            <span>4.7/5 Rating</span>
             <span className="text-slate-500 font-normal">(12,840+ Reports)</span>
           </div>
           <span className="text-orange-300">|</span>

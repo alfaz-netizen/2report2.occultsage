@@ -120,14 +120,14 @@ export default function Hero({ onNavigateCheckout }) {
         <div className="bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
           
           <div className="flex flex-col items-center justify-center space-y-0.5 border-r border-orange-100 last:border-0 md:last:border-r pr-2 md:pr-0">
-            <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">100,000+</span>
+            <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>
             <span className="text-[10px] sm:text-xs text-slate-600 font-bold">Happy Consultations</span>
           </div>
 
           <div className="flex flex-col items-center justify-center space-y-0.5 border-r-0 md:border-r border-orange-100 pr-0 md:pr-0">
             <div className="flex items-center gap-1 text-lg sm:text-xl md:text-2xl font-extrabold text-amber-500 font-sora">
               <Star size={18} className="fill-amber-500" />
-              <span>4.9 / 5</span>
+              <span>4.7 / 5</span>
             </div>
             <span className="text-[10px] sm:text-xs text-slate-600 font-bold">12,840+ User Reviews</span>
           </div>
