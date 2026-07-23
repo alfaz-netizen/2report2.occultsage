@@ -1,6 +1,6 @@
 import React from "react";
 import "./ReportBenefits.css";
-import { Award, Sparkles, ArrowRight, Heart, ShieldCheck, TrendingUp, Compass, Sun, ShieldAlert, Coins } from "lucide-react";
+import { Award, Sparkles, ArrowRight, Heart, ShieldCheck, TrendingUp, Compass, Sun, ShieldAlert, Coins, Home } from "lucide-react";
 
 import wealthImg from "../../assets/vastu_benefit_wealth.png";
 import careerImg from "../../assets/vastu_benefit_career.png";
@@ -9,49 +9,49 @@ export default function ReportBenefits({ onNavigateCheckout }) {
   const benefitsList = [
     {
       id: 1,
-      title: "Dhan Ki Bharmaar",
-      subtitle: "Financial Prosperity & Kuber Energy",
-      desc: "Sahi Vastu Science Report Remedies se apne ghar me Kuber energy blockages ko kholein aur dhan aagaman ka raasta banayein.",
+      title: "Dhan Aagaman & Cashflow Alignment",
+      subtitle: "North & Kuber Zone Energy",
+      desc: "Ghar aur workplace ke North direction aur Kuber zone ki energy blockages ko dur karke continuous cashflow aur financial stability banayein.",
       img: wealthImg,
       icon: <Coins size={44} className="text-[#ea580c]" />
     },
     {
       id: 2,
-      title: "Business Aur Career Mein Tarakki",
-      subtitle: "Professional Success & Office Vastu",
-      desc: "Sahi Vastu Report analysis se apne business aur career ko nayi unchaiyon tak le jaayein aur Nayi Opportunities attract karein.",
+      title: "Business & Career Growth",
+      subtitle: "Professional Stability & Office Vastu",
+      desc: "Scientific Vastu analysis se office, shop ya workplace ki directional energy align karke naye business growth aur career opportunities attract karein.",
       img: careerImg,
       icon: <TrendingUp size={44} className="text-[#f97316]" />
     },
     {
       id: 3,
-      title: "Khushhaal Shaadi & Harmony",
-      subtitle: "South-West Relationship Zone",
-      desc: "Sahi Vastu remedies ke saath apne rishtey me sachha pyaar, aapas ka vishwas aur samajh ka sukoon paayein.",
+      title: "Parivarik Shanti & Domestic Harmony",
+      subtitle: "South-West Zone Relationship Balance",
+      desc: "South-West directional zone ko balance karke parivar me aapas ka vishwas, samanjasya aur griha shanti sthapit karein.",
       img: null,
       icon: <Heart size={44} className="text-rose-500 fill-rose-500/20" />
     },
     {
       id: 4,
-      title: "Paayein Apne Sapno Ka Pyaar",
-      subtitle: "Positive Love Vibrations",
-      desc: "Sahi Vastu Science Report se apne ghar me positive energy waves paakar true love aur rishtey ko attract karein.",
+      title: "Ghar Ki Energy & Brahmasthan Purify",
+      subtitle: "16 Vastu Zones Elemental Balance",
+      desc: "Ghar ke mukhya dwar aur Brahmasthan ki urja ko 16 Vastu directional zones ke prabhav se balance aur purify karein.",
       img: null,
-      icon: <Sparkles size={44} className="text-amber-500" />
+      icon: <Home size={44} className="text-amber-500" />
     },
     {
       id: 5,
-      title: "Apni Sehat Ko Behtar Banayein",
-      subtitle: "North-East Health Zone Balancing",
-      desc: "Sahi Vastu Report remedies se apne aur pariwar ki physical vitality & mental health ko hamesha behtar banayein.",
+      title: "Sehat & Mental Peace Alignment",
+      subtitle: "North-East (Ishan) Health Zone",
+      desc: "North-East (Ishan Kon) ki urja ko balance karke ghar ke sadasyon ki achhi sehat, mansik shanti aur vitality ko behtar banayein.",
       img: null,
       icon: <ShieldCheck size={44} className="text-emerald-600" />
     },
     {
       id: 6,
-      title: "Buri Nazar & Negative Energy Se Suraksha",
-      subtitle: "100% Zero-Demolition Protection",
-      desc: "Sahi Vastu Report se negative energies se permanent suraksha paakar apne jeevan me shanti aur suraksha laayein.",
+      title: "Negative Energy Se Suraksha",
+      subtitle: "100% Non-Demolition Elemental Remedies",
+      desc: "Bina kisi tod-phod (Zero Wall Breaking) ke practical elemental remedies se ghar ko dushprabhav aur vastu dosh se surakshit karein.",
       img: null,
       icon: <ShieldAlert size={44} className="text-blue-600" />
     }
