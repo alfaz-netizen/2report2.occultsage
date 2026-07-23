@@ -70,13 +70,13 @@
 
 /* =========================================================================
  * 💻 DESKTOP VIEW IMAGE ALIGNMENT (>= 1024px):
- * Preserved 100% untouched for Desktop screens!
+ * Margin-top: 70px shifts image lower down while keeping full scale(1.8) size!
  * ========================================================================= */
 @media (min-width: 1024px) {
   .hero-acharya-img {
     max-height: 560px;
     transform: scale(1.8);
-    margin-top: -5px;
+    margin-top: 70px;
     margin-left: -350px;
   }
 }

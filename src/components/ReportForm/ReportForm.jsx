@@ -77,7 +77,7 @@ export default function ReportForm({ onBack }) {
 
     const options = {
       key: keyId,
-      amount: 999 * 100, // ₹999 in paise = 99900
+      amount: 999 * 100, // ₹999 in paise = 99900 (To test with ₹1, change 999 to 1: 1 * 100 = 100 paise)
       currency: "INR",
       name: "VastuWheels",
       description: "Personalised Vastu Science Report",
@@ -93,14 +93,17 @@ export default function ReportForm({ onBack }) {
         contact: formData.phone
       },
       notes: {
-        propertyType: formData.propertyType,
-        direction: formData.direction,
-        concern: formData.concern,
-        dob: formData.dob,
+        full_name: formData.fullName,
+        property_type: formData.propertyType,
+        entrance_direction: formData.direction,
+        primary_challenge: formData.concern,
+        date_of_birth: formData.dob,
         gender: formData.gender,
-        city: formData.city,
-        successCourse: formData.successCourse,
-        reportLanguage: formData.reportLanguage
+        phone_number: formData.phone,
+        email_id: formData.email,
+        current_location: formData.city,
+        success_workshop: formData.successCourse,
+        report_language: formData.reportLanguage
       },
       theme: {
         color: "#ea580c"

@@ -87,25 +87,25 @@ export default function Hero({ onNavigateCheckout }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
 
           {/* LEFT COLUMN CONTENT */}
-          <div className="lg:col-span-7 space-y-4 md:space-y-5 text-center lg:text-left pt-1 flex flex-col">
+          <div className="lg:col-span-7 space-y-5 lg:space-y-7 text-center lg:text-left pt-1 flex flex-col">
             
-            {/* 1. TOP SLIM BADGE (Phone & Desktop) */}
-            <div className="order-1">
-              <div className="inline-flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/30 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#ea580c] hero-top-badge">
-                <Award size={14} className="text-[#f97316] shrink-0" />
-                <span>Based on Ancient Vedic Vastu & Numerology — Trusted by 2,50,000+ People</span>
+            {/* 1. TOP SLIM BADGE (Phone & Desktop - 100% Data Consistent with 60,000+) */}
+            <div className="order-1 lg:order-1">
+              <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-4 py-2.5 rounded-full text-xs md:text-sm font-extrabold text-[#ea580c] hero-top-badge shadow-sm">
+                <Award size={16} className="text-[#f97316] shrink-0" />
+                <span>Based on Ancient Vedic Vastu & Numerology — Trusted by 60,000+ People</span>
               </div>
             </div>
 
             {/* 2. MASTER HEADLINE (Phone & Desktop) */}
-            <div className="order-2 pt-0.5">
-              <h1 className="text-2xl sm:text-3xl lg:text-[34px] xl:text-[36px] font-extrabold text-slate-900 font-sora leading-[1.28] tracking-tight">
+            <div className="order-2 lg:order-2 pt-1 lg:pt-2">
+              <h1 className="text-2xl sm:text-3xl lg:text-[38px] xl:text-[42px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
                 Personalised <span className="orange-gradient-text">Vastu Report</span> — Unlock<br className="hidden sm:inline" />
                 <span className="orange-gradient-text">Wealth, Health, Marriage & Career</span>
               </h1>
             </div>
 
-            {/* 3. HERO IMAGE FOR MOBILE ONLY (z-index: 0 keeps image UNDER the button layer) */}
+            {/* 3. HERO IMAGE FOR MOBILE ONLY */}
             <div className="order-3 lg:hidden flex justify-center items-center hero-mobile-img-wrapper relative z-0">
               <img 
                 src={acharyaGroupImg} 
@@ -114,30 +114,25 @@ export default function Hero({ onNavigateCheckout }) {
               />
             </div>
 
-            {/* 4. PRIMARY CAPSULE CTA BUTTON & SUB-TAGLINE (relative z-30 stacks button ABOVE image) */}
-            <div className="order-4 space-y-2.5 pt-0.5 relative z-20">
-              <div className="w-full flex justify-center lg:justify-start">
-                <button 
-                  onClick={onNavigateCheckout}
-                  className="w-full lg:w-auto btn-orange-primary text-white font-extrabold text-xs sm:text-sm px-5 sm:px-8 py-3.5 sm:py-4 rounded-full shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight relative z-30"
-                >
-                  <Sparkles size={18} className="text-amber-200 animate-pulse shrink-0" />
-                  <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
-                  <ArrowRight size={18} className="text-white shrink-0" />
-                </button>
-              </div>
-
-              <p className="text-xs md:text-sm text-slate-600 font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            {/* 4. TARGET AUDIENCE SUB-TAGLINE */}
+            <div className="order-5 lg:order-4 pt-1 lg:pt-2">
+              <p className="text-sm md:text-base text-slate-700 font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Report specially designed for Homeowners, Couples, Business Leaders, Architects & Property Buyers
               </p>
             </div>
 
-            {/* 5. INVISIBLE RESERVED SPACE (Hides 4 Cards while keeping layout height 100% intact without any element shifting) */}
-            <div className="order-5 grid grid-cols-2 gap-2 sm:gap-3.5 max-w-xl mx-auto lg:mx-0 pt-1 invisible pointer-events-none select-none aria-hidden">
-              <div className="p-2.5 sm:p-3.5 px-3">10K+ Joined</div>
-              <div className="p-2.5 sm:p-3.5 px-3">15+ Yrs Experience</div>
-              <div className="p-2.5 sm:p-3.5 px-3">22, 23 & 24 July</div>
-              <div className="p-2.5 sm:p-3.5 px-3">8 PM - 10:30 PM</div>
+            {/* 5. PRIMARY CAPSULE CTA BUTTON */}
+            <div className="order-4 lg:order-5 pt-3 lg:pt-4 relative z-20">
+              <div className="w-full flex justify-center lg:justify-start">
+                <button 
+                  onClick={onNavigateCheckout}
+                  className="w-full lg:w-auto btn-orange-primary text-white font-black text-sm sm:text-base lg:text-base px-8 sm:px-11 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight relative z-30"
+                >
+                  <Sparkles size={20} className="text-amber-200 animate-pulse shrink-0" />
+                  <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
+                  <ArrowRight size={20} className="text-white shrink-0" />
+                </button>
+              </div>
             </div>
 
           </div>
@@ -156,7 +151,7 @@ export default function Hero({ onNavigateCheckout }) {
         </div>
 
         {/* SLEEK FLOATING TRUST BAR Layer */}
-        <div className="bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
+        <div className="mt-8 lg:mt-24 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
           
           <div className="flex flex-col items-center justify-center space-y-0.5 border-r border-orange-100 last:border-0 md:last:border-r pr-2 md:pr-0">
             <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>
