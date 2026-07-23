@@ -3,7 +3,7 @@ import "./App.css";
 
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
-import CelebrityTrust from "./components/CelebrityTrust/CelebrityTrust";
+// import CelebrityTrust from "./components/CelebrityTrust/CelebrityTrust";
 import ReportBenefits from "./components/ReportBenefits/ReportBenefits";
 import ExclusiveBonuses from "./components/ExclusiveBonuses/ExclusiveBonuses";
 import ReportValueStack from "./components/ReportValueStack/ReportValueStack";
@@ -42,16 +42,16 @@ export default function App() {
         {/* Hero Section */}
         <Hero onNavigateCheckout={handleNavigateCheckout} />
 
-        {/* Section 1 Below Hero: Top Industrialists & Celebrities Who Follow Vastu Science */}
-        <CelebrityTrust onNavigateCheckout={handleNavigateCheckout} />
+        {/* CelebrityTrust section hidden as requested */}
+        {/* <CelebrityTrust onNavigateCheckout={handleNavigateCheckout} /> */}
 
-        {/* Section 2 Below CelebrityTrust: Sahi Vastu Science Report Paane Ke Fayde */}
+        {/* Section 2 Below Hero: Sahi Vastu Science Report Paane Ke Fayde */}
         <ReportBenefits onNavigateCheckout={handleNavigateCheckout} />
 
         {/* Section 3 Below ReportBenefits: 2 Exclusive FREE Bonuses */}
         <ExclusiveBonuses onNavigateCheckout={handleNavigateCheckout} />
 
-        {/* Section 4: What You Get in 24-Page Vastu Report (Value Stack) */}
+        {/* Section 4: What You Get in Vastu Report (Value Stack) */}
         <ReportValueStack onNavigateCheckout={handleNavigateCheckout} />
 
         {/* Section 5: Verified Customer Success Stories & Reviews */}

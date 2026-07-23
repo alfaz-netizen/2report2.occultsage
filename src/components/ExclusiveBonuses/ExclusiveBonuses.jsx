@@ -28,7 +28,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <p className="text-xs md:text-sm font-extrabold text-[#ea580c] uppercase tracking-wider">
-            Order Your 24-Page Vastu Science Report To Get
+            Order Your Personalised Vastu Science Report To Get
           </p>
 
           <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 font-sora leading-tight tracking-tight">
@@ -39,7 +39,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
         {/* 2 Big Bonus Cards with Real High-Definition Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-4">
           
-          {/* BONUS CARD 1: Palmistry & Hand Vastu Energy Secrets */}
+          {/* BONUS CARD 1: Palmistry Secrets Notes */}
           <div className="bonus-card">
             <div className="bonus-badge">
               FREE BONUS #1
@@ -49,14 +49,14 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             <div className="bonus-img-container shadow-md">
               <img 
                 src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80" 
-                alt="Palmistry Secrets Hand Vastu Diagram" 
+                alt="Palmistry Secrets Notes Hand Vastu Diagram" 
                 className="w-full h-full object-cover rounded-2xl"
               />
             </div>
 
             <div className="space-y-2">
               <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 font-sora">
-                Palmistry Secrets
+                Palmistry Secrets Notes
               </h3>
               <div className="text-base font-extrabold text-[#ea580c]">
                 <span className="line-through text-slate-400 mr-2">₹999</span>
@@ -65,11 +65,11 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Apne haath ki lakeeron se jaaniye kaise yeh aapki strengths, jeevan ki chunautiyan, aur kismat dikhate hain, jo samriddhi, dhan, aur jeevan mein success ki sambhavnayein samajhne mein madad karte hain.
+              Apne haath ki lakeeron se jaaniye kaise yeh aapki strengths, jeevan ki chunautiyan, aur kismat dikhate hain — Yeh exclusive Palmistry Secrets Notes bonus me bilkul FREE milenge.
             </p>
           </div>
 
-          {/* BONUS CARD 2: Vedic Astrology 101 & 16-Direction Vastu Chart */}
+          {/* BONUS CARD 2: Astrology Secrets Notes */}
           <div className="bonus-card">
             <div className="bonus-badge">
               FREE BONUS #2
@@ -79,14 +79,14 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             <div className="bonus-img-container shadow-md">
               <img 
                 src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=600&auto=format&fit=crop&q=80" 
-                alt="Vedic Astrology 101 Zodiac Chart" 
+                alt="Astrology Secrets Notes Chart" 
                 className="w-full h-full object-cover rounded-2xl"
               />
             </div>
 
             <div className="space-y-2">
               <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 font-sora">
-                Vedic Astrology 101
+                Astrology Secrets Notes
               </h3>
               <div className="text-base font-extrabold text-[#ea580c]">
                 <span className="line-through text-slate-400 mr-2">₹999</span>
@@ -95,7 +95,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Jaaniye kaise grahon ki gati, aapki janam kundali, aur zodiac signs aapki zindagi ko prabhavit karte hain, aur pyaar, career, aur personal growth mein behtar decisions lene mein madad karte hain.
+              Jaaniye kaise grahon ki gati, aapki janam kundali, aur zodiac signs aapki zindagi ko prabhavit karte hain — Yeh exclusive Astrology Secrets Notes bonus me bilkul FREE milenge.
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
           </div>
 
           <h3 className="text-base md:text-lg font-extrabold text-[#ea580c] font-sora tracking-wide">
-            Hurry! Grab These Bonuses Before The Timer Hits ZERO
+            Hurry! Grab These Bonus Notes Before The Timer Hits ZERO
           </h3>
         </div>
 
@@ -144,7 +144,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
           <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-400 via-amber-500 to-orange-500" />
 
           <p className="text-base md:text-xl font-extrabold text-slate-900 font-sora max-w-2xl mx-auto leading-relaxed">
-            Rukawatein door karein aur 24-Page Vastu Science Report ke saath <span className="orange-gradient-text">health, wealth aur success</span> aaj hi laayein.
+            Rukawatein door karein aur Personalised Vastu Science Report ke saath <span className="orange-gradient-text">health, wealth aur success</span> aaj hi laayein.
           </p>
 
           <div className="pt-2">

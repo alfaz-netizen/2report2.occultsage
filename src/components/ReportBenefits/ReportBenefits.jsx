@@ -11,7 +11,7 @@ export default function ReportBenefits({ onNavigateCheckout }) {
       id: 1,
       title: "Dhan Ki Bharmaar",
       subtitle: "Financial Prosperity & Kuber Energy",
-      desc: "Sahi 24-Page Vastu Science Report Remedies se apne ghar me Kuber energy blockages ko kholein aur dhan aagaman ka raasta banayein.",
+      desc: "Sahi Vastu Science Report Remedies se apne ghar me Kuber energy blockages ko kholein aur dhan aagaman ka raasta banayein.",
       img: wealthImg,
       icon: <Coins size={44} className="text-[#ea580c]" />
     },
@@ -77,7 +77,7 @@ export default function ReportBenefits({ onNavigateCheckout }) {
           </h2>
 
           <p className="text-xs md:text-sm text-slate-600 font-semibold leading-relaxed">
-            Ghar aur workplace ke hisaab se tay ki gayi 24-page Vastu Report aapki zindagi me deti hai:
+            Ghar aur workplace ke hisaab se tay ki gayi Personalised Vastu Report aapki zindagi me deti hai:
           </p>
         </div>
 
@@ -126,7 +126,7 @@ export default function ReportBenefits({ onNavigateCheckout }) {
           </button>
 
           <p className="text-xs text-slate-500 font-medium">
-            100% Non-Demolition Remedies • 24-Page Personalised PDF Analysis
+            100% Non-Demolition Remedies • Personalised Vastu PDF Analysis
           </p>
         </div>
 

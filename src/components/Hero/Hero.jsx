@@ -40,7 +40,7 @@ export default function Hero({ onNavigateCheckout }) {
             <div className="space-y-2.5 md:space-y-3">
               <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#ea580c]">
                 <Award size={14} className="text-[#f97316]" />
-                <span>Official Vastu Science Analysis @ ₹999/- Only</span>
+                <span>Based on Ancient Vedic Vastu & Numerology — Trusted by 2,50,000+ People</span>
               </div>
 
               {/* Master Headline */}

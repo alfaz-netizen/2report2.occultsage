@@ -54,7 +54,7 @@ export default function ReportForm({ onBack }) {
       amount: 999 * 100, // ₹999 in paise = 99900
       currency: "INR",
       name: "VastuWheels",
-      description: "24-Page Personalised Vastu Science Report",
+      description: "Personalised Vastu Science Report",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
       handler: function (response) {
         console.log("Razorpay Payment Success Response:", response);
@@ -132,7 +132,7 @@ export default function ReportForm({ onBack }) {
             Submit Your Details
           </p>
           <p className="text-xs md:text-sm text-slate-600">
-            To tailor-make your personalized 24-page Vastu report, we need these details from you:
+            To tailor-make your personalized Vastu report, we need these details from you:
           </p>
         </div>
 
@@ -269,7 +269,7 @@ export default function ReportForm({ onBack }) {
             {/* Order Summary Box */}
             <div className="bg-orange-50/90 border border-orange-300 p-4 rounded-2xl space-y-2">
               <div className="flex items-center justify-between text-xs font-bold text-slate-800">
-                <span>24-Page Custom Vastu PDF Report</span>
+                <span>Custom Vastu PDF Report</span>
                 <span className="text-[#ea580c] text-sm">
                   ₹999 <del className="text-slate-400 font-normal">₹5,999</del>
                 </span>
@@ -317,7 +317,7 @@ export default function ReportForm({ onBack }) {
             </div>
             <h2 className="text-2xl font-extrabold text-slate-900 font-sora">Order Confirmed for {formData.fullName}!</h2>
             <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-              Your 24-page custom Vastu report for <strong className="text-[#ea580c]">{formData.direction}</strong> entrance and <strong className="text-[#ea580c]">{formData.concern}</strong> remedies is being generated. Check your WhatsApp number (+91 {formData.phone}) and email ({formData.email}) in 2 minutes.
+              Your custom Vastu report for <strong className="text-[#ea580c]">{formData.direction}</strong> entrance and <strong className="text-[#ea580c]">{formData.concern}</strong> remedies is being generated. Check your WhatsApp number (+91 {formData.phone}) and email ({formData.email}) in 2 minutes.
             </p>
             <button
               onClick={onBack}

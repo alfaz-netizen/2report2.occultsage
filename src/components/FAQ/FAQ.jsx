@@ -11,8 +11,8 @@ export default function FAQ() {
       a: "No! 100% Zero Demolition. Acharya Ji's remedies rely on elemental color balancing, micro metallic strips (copper/brass), crystal pyramid placements, and room usage adjustments. You don't need to break a single brick."
     },
     {
-      q: "How fast will I get my 24-Page Vastu PDF Report?",
-      a: "Instantly! Once you submit your details and complete the ₹999 processing fee, your customized 24-page report is generated within 2 minutes and sent directly to your WhatsApp and Email ID."
+      q: "How fast will I get my Vastu PDF Report?",
+      a: "Instantly! Once you submit your details and complete the ₹999 processing fee, your customized Vastu report is generated within 2 minutes and sent directly to your WhatsApp and Email ID."
     },
     {
       q: "Can I apply these Vastu remedies in a rented apartment?",

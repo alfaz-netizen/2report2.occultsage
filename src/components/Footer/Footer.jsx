@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="space-y-2.5">
             <h4 className="font-bold text-white uppercase text-xs tracking-wider">Vastu Reports</h4>
             <ul className="space-y-2 text-slate-400">
-              <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Home Vastu Report (₹199)</a></li>
+              <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Personalised Vastu Report (₹999)</a></li>
               <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Office & Factory Vastu Report</a></li>
               <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Astro-Vastu Gemstone Guide</a></li>
               <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">1-on-1 Acharya Consultation</a></li>
@@ -60,7 +60,7 @@ export default function Footer() {
           <div className="space-y-2.5">
             <h4 className="font-bold text-white uppercase text-xs tracking-wider">Accepted Payments</h4>
             <p className="text-slate-400 text-xs leading-relaxed">
-              Instant PDF report generation via secure UPI, Paytm, PhonePe, Google Pay, Net Banking & Credit Cards.
+              Instant PDF report generation via secure Razorpay, UPI, Paytm, PhonePe, Google Pay, Net Banking & Credit Cards.
             </p>
             <div className="flex flex-wrap gap-2 pt-1">
               <span className="bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-md text-[11px] font-bold text-white">UPI / GPay</span>

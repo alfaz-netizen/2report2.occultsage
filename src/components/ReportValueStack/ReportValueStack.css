@@ -1,1 +1,101 @@
-/* ReportValueStack CSS styling */
+/* ReportValueStack CSS Styling - Realistic Printed Paper Report Carousel */
+
+.report-doc-stack {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 2px solid rgba(249, 115, 22, 0.3);
+  box-shadow: 0 20px 50px -10px rgba(249, 115, 22, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.report-doc-stack::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 14px;
+  right: 14px;
+  height: 10px;
+  background: rgba(253, 186, 116, 0.4);
+  border-radius: 12px 12px 0 0;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+  z-index: -1;
+}
+
+.report-doc-stack::after {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 28px;
+  right: 28px;
+  height: 10px;
+  background: rgba(254, 215, 170, 0.3);
+  border-radius: 12px 12px 0 0;
+  border: 1px solid rgba(249, 115, 22, 0.15);
+  z-index: -2;
+}
+
+.report-paper-img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(249, 115, 22, 0.15);
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  background: #ffffff;
+}
+
+.report-paper-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.feature-pill-card {
+  background: #ffffff;
+  border: 2px solid rgba(249, 115, 22, 0.2);
+  border-radius: 20px;
+  padding: 16px 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px -5px rgba(249, 115, 22, 0.06);
+  cursor: pointer;
+}
+
+.feature-pill-card.active {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffffff 100%);
+  border-color: #f97316;
+  box-shadow: 0 12px 30px -8px rgba(249, 115, 22, 0.22);
+  transform: scale(1.03);
+}
+
+.feature-pill-card:hover {
+  border-color: rgba(249, 115, 22, 0.5);
+  transform: translateY(-2px);
+}
+
+.nav-arrow-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #f97316;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.2);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.nav-arrow-btn:hover {
+  background: #ea580c;
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 12px 28px rgba(234, 88, 12, 0.35);
+}
