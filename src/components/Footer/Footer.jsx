@@ -33,7 +33,7 @@ export default function Footer() {
           <div className="space-y-2.5">
             <h4 className="font-bold text-white uppercase text-xs tracking-wider">Vastu Reports</h4>
             <ul className="space-y-2 text-slate-400">
-              <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Personalised Vastu Report (₹999)</a></li>
+              <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Personalised Vastu Report (₹996)</a></li>
               <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Office & Factory Vastu Report</a></li>
               <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">Astro-Vastu Gemstone Guide</a></li>
               <li><a href="#vastu-diagnostic-form" className="hover:text-orange-400 transition-colors">1-on-1 Acharya Consultation</a></li>

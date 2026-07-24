@@ -22,7 +22,7 @@ export default function UrgencyBar() {
         <span className="bg-white text-[#c2410c] px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
           <Flame size={13} className="text-[#ea580c] animate-bounce" /> Special Ad Offer
         </span>
-        <span className="hidden sm:inline text-white font-medium">Get Personal Vastu Report @ ₹999 (Regular ₹5,999)</span>
+        <span className="hidden sm:inline text-white font-medium">Get Personal Vastu Report @ ₹996 (Regular ₹5,999)</span>
       </div>
 
       <div className="flex items-center gap-4 mx-auto md:mx-0 mt-1 md:mt-0">

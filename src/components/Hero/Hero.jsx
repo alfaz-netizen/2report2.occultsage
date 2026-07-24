@@ -10,86 +10,87 @@ export default function Hero({ onNavigateCheckout }) {
   return (
     <section className="relative py-6 md:py-10 px-3 md:px-8 bg-gradient-to-b from-[#fffbf7] via-[#fff5eb] to-[#fffbf7] text-slate-900 overflow-hidden border-b border-orange-200/60">
       
-      {/* Top-Left Glowing Rotating Vastu Chakra Mandala Animation */}
-      <div className="absolute -top-20 -left-20 md:-top-28 md:-left-28 w-[380px] sm:w-[460px] md:w-[540px] h-[380px] sm:h-[460px] md:h-[540px] opacity-30 pointer-events-none z-0">
-        <svg 
-          viewBox="0 0 500 500" 
-          className="w-full h-full animate-vastu-spin drop-shadow-[0_0_25px_rgba(249,115,22,0.4)]"
-        >
-          <defs>
-            <linearGradient id="goldVastuGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f97316" />
-              <stop offset="50%" stopColor="#fbbf24" />
-              <stop offset="100%" stopColor="#ea580c" />
-            </linearGradient>
-          </defs>
-          
-          {/* Outer Concentric Sacred Vastu Circles */}
-          <circle cx="250" cy="250" r="230" stroke="url(#goldVastuGlow)" strokeWidth="2.5" fill="none" strokeDasharray="6 4" />
-          <circle cx="250" cy="250" r="215" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
-          <circle cx="250" cy="250" r="195" stroke="url(#goldVastuGlow)" strokeWidth="1" fill="none" strokeDasharray="12 6" />
-
-          {/* 16 Vastu Zone Directional Rays */}
-          {[...Array(16)].map((_, i) => (
-            <line
-              key={i}
-              x1="250"
-              y1="250"
-              x2={250 + 215 * Math.cos((i * 22.5 * Math.PI) / 180)}
-              y2={250 + 215 * Math.sin((i * 22.5 * Math.PI) / 180)}
-              stroke="url(#goldVastuGlow)"
-              strokeWidth={i % 4 === 0 ? "2" : "1"}
-              strokeOpacity={i % 4 === 0 ? "0.9" : "0.5"}
-            />
-          ))}
-
-          {/* Degree Ticks & Dots */}
-          {[...Array(36)].map((_, i) => (
-            <circle
-              key={i}
-              cx={250 + 222 * Math.cos((i * 10 * Math.PI) / 180)}
-              cy={250 + 222 * Math.sin((i * 10 * Math.PI) / 180)}
-              r="2.5"
-              fill="#f97316"
-            />
-          ))}
-
-          {/* Inner Sacred Geometry Star & Inner Rings */}
-          <polygon
-            points="250,90 390,330 110,330"
-            stroke="url(#goldVastuGlow)"
-            strokeWidth="1.5"
-            fill="none"
-            opacity="0.8"
-          />
-          <polygon
-            points="250,410 390,170 110,170"
-            stroke="url(#goldVastuGlow)"
-            strokeWidth="1.5"
-            fill="none"
-            opacity="0.8"
-          />
-
-          <circle cx="250" cy="250" r="120" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
-          <circle cx="250" cy="250" r="70" stroke="url(#goldVastuGlow)" strokeWidth="2" fill="none" strokeDasharray="4 4" />
-          <circle cx="250" cy="250" r="25" fill="url(#goldVastuGlow)" opacity="0.35" />
-          <circle cx="250" cy="250" r="6" fill="#ea580c" />
-        </svg>
-      </div>
-
       {/* Background Subtle Dotted Grid & Warm Radial Glows */}
       <div className="absolute inset-0 bg-[radial-gradient(#f97316_0.75px,transparent_0.75px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-orange-400/15 via-amber-400/15 to-transparent rounded-full blur-3xl pointer-events-none" />
 
+      {/* Centered Main Container - Anchors Vastu Chakra directly behind left content on ALL screen widths */}
       <div className="max-w-[1400px] mx-auto space-y-5 md:space-y-8 relative z-10">
 
+        {/* Top-Left Glowing Rotating Vastu Chakra Mandala Animation (Anchored relative to max-w-[1400px]) */}
+        <div className="absolute -top-16 -left-12 sm:-top-20 sm:-left-20 md:-top-24 md:-left-24 w-[360px] sm:w-[460px] md:w-[540px] h-[360px] sm:h-[460px] md:h-[540px] opacity-30 pointer-events-none z-0">
+          <svg 
+            viewBox="0 0 500 500" 
+            className="w-full h-full animate-vastu-spin drop-shadow-[0_0_25px_rgba(249,115,22,0.4)]"
+          >
+            <defs>
+              <linearGradient id="goldVastuGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#f97316" />
+                <stop offset="50%" stopColor="#fbbf24" />
+                <stop offset="100%" stopColor="#ea580c" />
+              </linearGradient>
+            </defs>
+            
+            {/* Outer Concentric Sacred Vastu Circles */}
+            <circle cx="250" cy="250" r="230" stroke="url(#goldVastuGlow)" strokeWidth="2.5" fill="none" strokeDasharray="6 4" />
+            <circle cx="250" cy="250" r="215" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
+            <circle cx="250" cy="250" r="195" stroke="url(#goldVastuGlow)" strokeWidth="1" fill="none" strokeDasharray="12 6" />
+
+            {/* 16 Vastu Zone Directional Rays */}
+            {[...Array(16)].map((_, i) => (
+              <line
+                key={i}
+                x1="250"
+                y1="250"
+                x2={250 + 215 * Math.cos((i * 22.5 * Math.PI) / 180)}
+                y2={250 + 215 * Math.sin((i * 22.5 * Math.PI) / 180)}
+                stroke="url(#goldVastuGlow)"
+                strokeWidth={i % 4 === 0 ? "2" : "1"}
+                strokeOpacity={i % 4 === 0 ? "0.9" : "0.5"}
+              />
+            ))}
+
+            {/* Degree Ticks & Dots */}
+            {[...Array(36)].map((_, i) => (
+              <circle
+                key={i}
+                cx={250 + 222 * Math.cos((i * 10 * Math.PI) / 180)}
+                cy={250 + 222 * Math.sin((i * 10 * Math.PI) / 180)}
+                r="2.5"
+                fill="#f97316"
+              />
+            ))}
+
+            {/* Inner Sacred Geometry Star & Inner Rings */}
+            <polygon
+              points="250,90 390,330 110,330"
+              stroke="url(#goldVastuGlow)"
+              strokeWidth="1.5"
+              fill="none"
+              opacity="0.8"
+            />
+            <polygon
+              points="250,410 390,170 110,170"
+              stroke="url(#goldVastuGlow)"
+              strokeWidth="1.5"
+              fill="none"
+              opacity="0.8"
+            />
+
+            <circle cx="250" cy="250" r="120" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
+            <circle cx="250" cy="250" r="70" stroke="url(#goldVastuGlow)" strokeWidth="2" fill="none" strokeDasharray="4 4" />
+            <circle cx="250" cy="250" r="25" fill="url(#goldVastuGlow)" opacity="0.35" />
+            <circle cx="250" cy="250" r="6" fill="#ea580c" />
+          </svg>
+        </div>
+
         {/* Hero Main 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
 
           {/* LEFT COLUMN CONTENT */}
           <div className="lg:col-span-7 space-y-5 lg:space-y-7 text-center lg:text-left pt-1 flex flex-col">
             
-            {/* 1. TOP SLIM BADGE (Phone & Desktop - 100% Data Consistent with 60,000+) */}
+            {/* 1. TOP SLIM BADGE (Phone & Desktop) */}
             <div className="order-1 lg:order-1">
               <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/30 px-4 py-2.5 rounded-full text-xs md:text-sm font-extrabold text-[#ea580c] hero-top-badge shadow-sm">
                 <Award size={16} className="text-[#f97316] shrink-0" />
@@ -114,25 +115,25 @@ export default function Hero({ onNavigateCheckout }) {
               />
             </div>
 
-            {/* 4. TARGET AUDIENCE SUB-TAGLINE */}
+            {/* 4. PRIMARY CAPSULE CTA BUTTON */}
+            <div className="order-4 lg:order-5 pt-0 lg:pt-4 relative z-20">
+              <div className="w-full flex justify-center lg:justify-start">
+                <button 
+                  onClick={onNavigateCheckout}
+                  className="w-full lg:w-auto btn-orange-primary text-white font-black text-sm sm:text-base lg:text-lg px-8 sm:px-11 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight relative z-30"
+                >
+                  <Sparkles size={20} className="text-amber-200 animate-pulse shrink-0" />
+                  <span className="text-center tracking-wide">BUY NOW at ₹996 only</span>
+                  <ArrowRight size={20} className="text-white shrink-0" />
+                </button>
+              </div>
+            </div>
+
+            {/* 5. TARGET AUDIENCE SUB-TAGLINE */}
             <div className="order-5 lg:order-4 pt-1 lg:pt-2">
               <p className="text-sm md:text-base text-slate-700 font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Report specially designed for Homeowners, Couples, Business Leaders, Architects & Property Buyers
               </p>
-            </div>
-
-            {/* 5. PRIMARY CAPSULE CTA BUTTON */}
-            <div className="order-4 lg:order-5 pt-3 lg:pt-4 relative z-20">
-              <div className="w-full flex justify-center lg:justify-start">
-                <button 
-                  onClick={onNavigateCheckout}
-                  className="w-full lg:w-auto btn-orange-primary text-white font-black text-sm sm:text-base lg:text-base px-8 sm:px-11 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight relative z-30"
-                >
-                  <Sparkles size={20} className="text-amber-200 animate-pulse shrink-0" />
-                  <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
-                  <ArrowRight size={20} className="text-white shrink-0" />
-                </button>
-              </div>
             </div>
 
           </div>
@@ -191,7 +192,7 @@ export default function Hero({ onNavigateCheckout }) {
             className="w-full sm:w-auto btn-orange-primary text-white font-black text-xs sm:text-base lg:text-lg px-6 sm:px-12 py-3.5 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
           >
             <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
-            <span className="text-center">Know your correct Vastu report now @ Rs.999/- Only</span>
+            <span className="text-center tracking-wide">BUY NOW at ₹996 only</span>
             <ArrowRight size={20} className="text-white shrink-0" />
           </button>
         </div>

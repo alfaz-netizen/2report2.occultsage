@@ -115,7 +115,7 @@ export default function WhyVastu() {
               Don't Wait For Small Losses To Become Big Disasters
             </h3>
             <p className="text-xs md:text-sm text-orange-100 font-medium">
-              Get your home diagnosed by Acharya Ji's Vastu Engine in under 2 minutes for just ₹999.
+              Get your home diagnosed by Acharya Ji's Vastu Engine in under 2 minutes for just ₹996.
             </p>
           </div>
 

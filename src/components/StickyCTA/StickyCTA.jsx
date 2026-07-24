@@ -23,7 +23,7 @@ export default function StickyCTA({ onNavigateCheckout }) {
         <div className="space-y-0.5">
           <div className="flex items-center gap-1.5 text-xs font-bold text-orange-100">
             <Flame size={14} className="text-amber-300 animate-bounce" />
-            <span>Ad Special: ₹999</span>
+            <span>Ad Special: ₹996</span>
             <del className="text-orange-200 text-[10px] font-normal">₹5,999</del>
           </div>
           <p className="text-[11px] text-white font-medium">Expires in: {formattedTime}</p>
@@ -33,7 +33,7 @@ export default function StickyCTA({ onNavigateCheckout }) {
           onClick={onNavigateCheckout}
           className="bg-white hover:bg-orange-50 text-[#ea580c] font-extrabold text-xs md:text-sm px-5 py-2.5 rounded-full shadow-lg flex items-center gap-1.5 cursor-pointer transition-transform transform hover:scale-105"
         >
-          <span>GET MY REPORT NOW</span>
+          <span>GET YOUR REPORT NOW</span>
           <ArrowRight size={15} />
         </button>
 

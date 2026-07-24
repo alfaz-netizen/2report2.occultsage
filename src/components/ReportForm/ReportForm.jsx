@@ -77,7 +77,7 @@ export default function ReportForm({ onBack }) {
 
     const options = {
       key: keyId,
-      amount: 999 * 100, // ₹999 in paise = 99900 (To test with ₹1, change 999 to 1: 1 * 100 = 100 paise)
+      amount: 996 * 100, // ₹996 in paise = 99600 (To test with ₹1, change 996 to 1: 1 * 100 = 100 paise)
       currency: "INR",
       name: "VastuWheels",
       description: "Personalised Vastu Science Report",
@@ -446,7 +446,7 @@ export default function ReportForm({ onBack }) {
                 <span>Opening Payment Gateway...</span>
               ) : (
                 <>
-                  <span>Proceed to Pay ₹999 & Get Report</span>
+                  <span>Proceed to Pay ₹996 & Get Report</span>
                   <Sparkles size={18} />
                 </>
               )}

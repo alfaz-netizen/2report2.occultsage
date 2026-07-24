@@ -25,20 +25,20 @@
 }
 
 /* =========================================================================
- * 📱 MOBILE PHONE VIEW IMAGE & BADGE CONTROLS (< 1024px):
- * Scale set to 1.7 as requested with z-index:0 so image stays UNDER button layer!
+ * 📱 SMALL MOBILE PHONE VIEW (< 640px):
+ * Preserved 100% intact with scale(2.2) and z-index:0!
  * ========================================================================= */
-@media (max-width: 1023px) {
+@media (max-width: 639px) {
   /* Mobile Image Wrapper (z-index: 0 keeps image UNDER the button layer) */
   .hero-mobile-img-wrapper {
     padding-top: 85px !important;
-    padding-bottom: 75px !important;
+    padding-bottom: 48px !important;
     position: relative !important;
     z-index: 0 !important;
   }
 
   .hero-acharya-img {
-    /* 1. BADA / CHOTA (Phone Scale set to 1.7): */
+    /* 1. BADA / CHOTA (Phone Scale set to 2.2): */
     transform: scale(2.2) !important;
 
     /* 2. UPER / NICHE (Phone Vertical Shift): */
@@ -69,8 +69,44 @@
 }
 
 /* =========================================================================
+ * 📱💻 TABLET / MEDIUM SCREENS (640px to 1023px, e.g., 861px iPad & DevTools View):
+ * Natural 1:1 scale(1.0) with clean 350px max-height for perfect display!
+ * ========================================================================= */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero-mobile-img-wrapper {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+  .hero-acharya-img {
+    transform: scale(1.0) !important;
+    max-height: 350px !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0px !important;
+    position: relative !important;
+    z-index: 0 !important;
+  }
+
+  .hero-top-badge {
+    padding: 7px 18px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+}
+
+/* =========================================================================
  * 💻 DESKTOP VIEW IMAGE ALIGNMENT (>= 1024px):
- * Margin-top: 70px shifts image lower down while keeping full scale(1.8) size!
+ * Preserved 100% untouched for Desktop screens!
  * ========================================================================= */
 @media (min-width: 1024px) {
   .hero-acharya-img {
