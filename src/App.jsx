@@ -19,7 +19,13 @@ import { trackPixelEvent } from "./utils/pixel";
 export default function App() {
   const [currentPage, setCurrentPage] = useState("landing"); // "landing" | "checkout" | "legal" | "thankyou"
   const [activeLegalDoc, setActiveLegalDoc] = useState("privacy");
-  const [orderInfo, setOrderInfo] = useState({ language: "English", fullName: "", phone: "" });
+  const [orderInfo, setOrderInfo] = useState({ 
+    language: "English", 
+    fullName: "", 
+    phone: "",
+    email: "",
+    paymentId: ""
+  });
 
   // Sync initial URL path on mount & listen to browser back/forward buttons
   useEffect(() => {
@@ -80,7 +86,9 @@ export default function App() {
     setOrderInfo({
       language: selectedLang,
       fullName: data.fullName || "",
-      phone: data.phone || ""
+      phone: data.phone || "",
+      email: data.email || "",
+      paymentId: data.paymentId || ""
     });
 
     const targetUrl = selectedLang === "Hindi" ? "/thankyou-hindi" : "/thankyou-english";
@@ -104,6 +112,8 @@ export default function App() {
         selectedLanguage={orderInfo.language} 
         fullName={orderInfo.fullName} 
         phone={orderInfo.phone} 
+        email={orderInfo.email}
+        paymentId={orderInfo.paymentId}
         onBackToHome={handleBackToLanding} 
       />
     );

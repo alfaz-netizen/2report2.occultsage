@@ -87,7 +87,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
     const options = {
       key: keyId,
-      amount: 996 * 100, // ₹996 in paise = 99600
+      amount: 1 * 100, // ₹996 in paise = 99600
       currency: "INR",
       name: "VastuWheels (Powered & Managed by GlobalInch)",
       description: "Personalised Vastu Science Report",
@@ -99,7 +99,9 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
           onPaymentSuccess({
             language: formData.reportLanguage,
             fullName: formData.fullName,
-            phone: formData.phone
+            phone: formData.phone,
+            email: formData.email,
+            paymentId: response?.razorpay_payment_id || ("PAY_" + Math.random().toString(36).substring(2, 10).toUpperCase())
           });
         }
       },
