@@ -16,7 +16,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, onBack
     } else {
       // Custom Event 'Purchase English' & Standard Event 'Purchase'
       trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English GA" });
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English FB" });
     }
   }, [selectedLanguage]);
 

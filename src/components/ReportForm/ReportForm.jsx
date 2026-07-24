@@ -80,10 +80,10 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
     // Format exact language payload for Razorpay Notes requested by user:
     // Hindi -> "Vastu Wheels Hindi fb"
-    // English -> "Vastu Wheels English GA"
+    // English -> "Vastu Wheels English FB"
     const languagePayload = formData.reportLanguage === "Hindi"
       ? "Vastu Wheels Hindi fb"
-      : "Vastu Wheels English GA";
+      : "Vastu Wheels English FB";
 
     const options = {
       key: keyId,
