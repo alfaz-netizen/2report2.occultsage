@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ReportValueStack.css";
 import { 
   CheckCircle2, ShieldCheck, ArrowRight, 
-  ChevronLeft, ChevronRight, Sparkles, Layers, FileText
+  ChevronLeft, ChevronRight, Sparkles, Layers
 } from "lucide-react";
 
 import page1Img from "../../assets/vastu_report_page1.png";
@@ -290,7 +290,7 @@ export default function ReportValueStack({ onNavigateCheckout }) {
 
           {/* Pricing Highlight */}
           <div className="space-y-1">
-            <div className="text-xs text-slate-500 uppercase tracking-widest font-bold">Total Package Value: ₹5,996</div>
+            <div className="text-xs text-slate-500 uppercase tracking-widest font-bold">Total Package Value: ₹5,999</div>
             <div className="text-3xl md:text-5xl font-extrabold text-slate-900 font-sora flex items-center justify-center gap-3">
               <span className="orange-gradient-text">Today Only: ₹996</span>
               <span className="text-slate-400 text-lg md:text-2xl line-through font-normal">₹5,999</span>

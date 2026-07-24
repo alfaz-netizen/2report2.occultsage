@@ -68,7 +68,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Apne haath ki lakeeron se jaaniye kaise yeh aapki strengths, jeevan ki chunautiyan, aur kismat dikhate hain — Yeh exclusive Palmistry Secrets Notes bonus me bilkul FREE milenge.
+              Haath ki lakeeron ke chhupe hue secrets ko decode kijiye aur apni strengths, life challenges aur destiny ko samajhiye- Enroll karte hi paaiye Exclusive Palmistry Secrets Notes bilkul FREE! 
             </p>
           </div>
 
@@ -98,7 +98,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Jaaniye kaise grahon ki gati, aapki janam kundali, aur zodiac signs aapki zindagi ko prabhavit karte hain — Yeh exclusive Astrology Secrets Notes bonus me bilkul FREE milenge.
+              Jaaniye kaise grahon ki gati, aapki janam kundali, aur zodiac signs aapki zindagi ko prabhavit karte hain -Yeh exclusive Astrology Secrets Notes bonus me bilkul FREE milenge.
             </p>
           </div>
 

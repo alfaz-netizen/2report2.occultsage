@@ -5,35 +5,46 @@ import {
   ShieldCheck, ArrowRight, Sparkles, Lock 
 } from "lucide-react";
 import acharyaGroupImg from "../../assets/Elite Presentation (1).png";
+import vwLogo from "../../assets/VW-HR.png";
 
-export default function Hero({ onNavigateCheckout }) {
+export default function Hero({ onNavigateCheckout, onBackToHome }) {
   return (
-    <section className="relative py-6 md:py-10 px-3 md:px-8 bg-gradient-to-b from-[#fffbf7] via-[#fff5eb] to-[#fffbf7] text-slate-900 overflow-hidden border-b border-orange-200/60">
+    <section className="relative pt-4 sm:pt-6 md:pt-8 pb-6 md:pb-10 px-3 md:px-8 bg-gradient-to-b from-[#fffbf7] via-[#fff5eb] to-[#fffbf7] text-slate-900 overflow-hidden border-b border-orange-200/60">
       
       {/* Background Subtle Dotted Grid & Warm Radial Glows */}
       <div className="absolute inset-0 bg-[radial-gradient(#f97316_0.75px,transparent_0.75px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-r from-orange-400/15 via-amber-400/15 to-transparent rounded-full blur-3xl pointer-events-none" />
 
       {/* Centered Main Container - Anchors Vastu Chakra directly behind left content on ALL screen widths */}
-      <div className="max-w-[1400px] mx-auto space-y-5 md:space-y-8 relative z-10">
+      <div className="max-w-[1400px] mx-auto space-y-4 md:space-y-6 relative z-10">
 
-        {/* Top-Left Glowing Rotating Vastu Chakra Mandala Animation (Anchored relative to max-w-[1400px]) */}
-        <div className="absolute -top-16 -left-12 sm:-top-20 sm:-left-20 md:-top-24 md:-left-24 w-[360px] sm:w-[460px] md:w-[540px] h-[360px] sm:h-[460px] md:h-[540px] opacity-30 pointer-events-none z-0">
+        {/* 1. BRAND LOGO - Positioned at Top-Left Corner seamlessly */}
+        <div className="flex justify-center lg:justify-start items-center pb-2 sm:pb-4 relative z-20">
+          <img 
+            src={vwLogo} 
+            alt="Vastu Wheels Logo" 
+            onClick={onBackToHome}
+            className="h-10 sm:h-12 md:h-14 w-auto object-contain cursor-pointer transition-transform hover:scale-105"
+          />
+        </div>
+
+        {/* 2. Elegant Soft Golden Vastu Chakra Watermark (Subtle Opacity 0.24 matching reference site clicknumero.com) */}
+        <div className="absolute -top-32 -left-28 sm:-top-40 sm:-left-40 md:-top-48 md:-left-52 w-[500px] sm:w-[620px] md:w-[720px] h-[500px] sm:h-[620px] md:h-[720px] opacity-[0.24] pointer-events-none z-0">
           <svg 
             viewBox="0 0 500 500" 
-            className="w-full h-full animate-vastu-spin drop-shadow-[0_0_25px_rgba(249,115,22,0.4)]"
+            className="w-full h-full animate-vastu-spin drop-shadow-[0_0_15px_rgba(251,191,36,0.25)]"
           >
             <defs>
               <linearGradient id="goldVastuGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#f97316" />
+                <stop offset="0%" stopColor="#f59e0b" />
                 <stop offset="50%" stopColor="#fbbf24" />
-                <stop offset="100%" stopColor="#ea580c" />
+                <stop offset="100%" stopColor="#d97706" />
               </linearGradient>
             </defs>
             
             {/* Outer Concentric Sacred Vastu Circles */}
-            <circle cx="250" cy="250" r="230" stroke="url(#goldVastuGlow)" strokeWidth="2.5" fill="none" strokeDasharray="6 4" />
-            <circle cx="250" cy="250" r="215" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
+            <circle cx="250" cy="250" r="230" stroke="url(#goldVastuGlow)" strokeWidth="2" fill="none" strokeDasharray="6 4" />
+            <circle cx="250" cy="250" r="215" stroke="url(#goldVastuGlow)" strokeWidth="1.2" fill="none" />
             <circle cx="250" cy="250" r="195" stroke="url(#goldVastuGlow)" strokeWidth="1" fill="none" strokeDasharray="12 6" />
 
             {/* 16 Vastu Zone Directional Rays */}
@@ -45,8 +56,8 @@ export default function Hero({ onNavigateCheckout }) {
                 x2={250 + 215 * Math.cos((i * 22.5 * Math.PI) / 180)}
                 y2={250 + 215 * Math.sin((i * 22.5 * Math.PI) / 180)}
                 stroke="url(#goldVastuGlow)"
-                strokeWidth={i % 4 === 0 ? "2" : "1"}
-                strokeOpacity={i % 4 === 0 ? "0.9" : "0.5"}
+                strokeWidth={i % 4 === 0 ? "1.5" : "0.8"}
+                strokeOpacity={i % 4 === 0 ? "0.6" : "0.35"}
               />
             ))}
 
@@ -56,8 +67,9 @@ export default function Hero({ onNavigateCheckout }) {
                 key={i}
                 cx={250 + 222 * Math.cos((i * 10 * Math.PI) / 180)}
                 cy={250 + 222 * Math.sin((i * 10 * Math.PI) / 180)}
-                r="2.5"
-                fill="#f97316"
+                r="2"
+                fill="#f59e0b"
+                opacity="0.5"
               />
             ))}
 
@@ -65,22 +77,22 @@ export default function Hero({ onNavigateCheckout }) {
             <polygon
               points="250,90 390,330 110,330"
               stroke="url(#goldVastuGlow)"
-              strokeWidth="1.5"
+              strokeWidth="1.2"
               fill="none"
-              opacity="0.8"
+              opacity="0.4"
             />
             <polygon
               points="250,410 390,170 110,170"
               stroke="url(#goldVastuGlow)"
-              strokeWidth="1.5"
+              strokeWidth="1.2"
               fill="none"
-              opacity="0.8"
+              opacity="0.4"
             />
 
-            <circle cx="250" cy="250" r="120" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" />
-            <circle cx="250" cy="250" r="70" stroke="url(#goldVastuGlow)" strokeWidth="2" fill="none" strokeDasharray="4 4" />
-            <circle cx="250" cy="250" r="25" fill="url(#goldVastuGlow)" opacity="0.35" />
-            <circle cx="250" cy="250" r="6" fill="#ea580c" />
+            <circle cx="250" cy="250" r="120" stroke="url(#goldVastuGlow)" strokeWidth="1.2" fill="none" opacity="0.4" />
+            <circle cx="250" cy="250" r="70" stroke="url(#goldVastuGlow)" strokeWidth="1.5" fill="none" strokeDasharray="4 4" opacity="0.4" />
+            <circle cx="250" cy="250" r="25" fill="url(#goldVastuGlow)" opacity="0.2" />
+            <circle cx="250" cy="250" r="5" fill="#f59e0b" opacity="0.6" />
           </svg>
         </div>
 
@@ -101,8 +113,8 @@ export default function Hero({ onNavigateCheckout }) {
             {/* 2. MASTER HEADLINE (Phone & Desktop) */}
             <div className="order-2 lg:order-2 pt-1 lg:pt-2">
               <h1 className="text-2xl sm:text-3xl lg:text-[38px] xl:text-[42px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
-                Personalised <span className="orange-gradient-text">Vastu Report</span> — Unlock<br className="hidden sm:inline" />
-                <span className="orange-gradient-text">Wealth, Health, Marriage & Career</span>
+                Discover the <span className="orange-gradient-text">Hidden Energy </span> Your <br className="hidden sm:inline" />
+                <span className="orange-gradient-text">Health, Wealth, Relationships & Career</span>
               </h1>
             </div>
 

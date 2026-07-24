@@ -9,41 +9,41 @@ export default function ReportBenefits({ onNavigateCheckout }) {
   const benefitsList = [
     {
       id: 1,
-      title: "Dhan Aagaman & Cashflow Alignment",
+      title: "Dhan-samriddhi hogi bharpoor",
       subtitle: "North & Kuber Zone Energy",
-      desc: "Ghar aur workplace ke North direction aur Kuber zone ki energy blockages ko dur karke continuous cashflow aur financial stability banayein.",
+      desc: "North Direction aur Kuber Zone ki energy ka detailed Vastu analysis karwa kar financial blockages ko identify karein aur wealth growth, better cash flow aur financial stability ke liye expert guidance paaiye.",
       img: wealthImg,
       icon: <Coins size={44} className="text-[#ea580c]" />
     },
     {
       id: 2,
-      title: "Business & Career Growth",
+      title: "Business & Career Growth ka Achook upay",
       subtitle: "Professional Stability & Office Vastu",
-      desc: "Scientific Vastu analysis se office, shop ya workplace ki directional energy align karke naye business growth aur career opportunities attract karein.",
+      desc: "Scientific Vastu Analysis se office, shop aur workplace ki energy ko optimize karke business growth aur career opportunities ko support karein. ",
       img: careerImg,
       icon: <TrendingUp size={44} className="text-[#f97316]" />
     },
     {
       id: 3,
-      title: "Parivarik Shanti & Domestic Harmony",
-      subtitle: "South-West Zone Relationship Balance",
-      desc: "South-West directional zone ko balance karke parivar me aapas ka vishwas, samanjasya aur griha shanti sthapit karein.",
+      title: "Family Problem ka Proper Solution",
+      subtitle: "South-West Zone Relationship Balance ",
+      desc: "South-West Zone ki Vastu energy ka detailed analysis karwa kar family relationships ko prabhavit karne wale imbalances ko identify karein. Personalized recommendations ke saath vishwas, samanjasya aur griha shanti ko support dene wala balanced home environment banaiye.",
       img: null,
       icon: <Heart size={44} className="text-rose-500 fill-rose-500/20" />
     },
     {
       id: 4,
-      title: "Ghar Ki Energy & Brahmasthan Purify",
-      subtitle: "16 Vastu Zones Elemental Balance",
-      desc: "Ghar ke mukhya dwar aur Brahmasthan ki urja ko 16 Vastu directional zones ke prabhav se balance aur purify karein.",
+      title: "Brahmasthan ka Vastu Assessment",
+      subtitle: "Balance the Heart of Your Home ",
+      desc: "Brahmasthan ki Vastu energy ka detailed analysis karwa kar ghar ke energy flow ko optimize karein aur sukh, shanti aur positivity se bharpoor environment banaiye.",
       img: null,
       icon: <Home size={44} className="text-amber-500" />
     },
     {
       id: 5,
-      title: "Sehat & Mental Peace Alignment",
+      title: "Health & Mansik Shanti",
       subtitle: "North-East (Ishan) Health Zone",
-      desc: "North-East (Ishan Kon) ki urja ko balance karke ghar ke sadasyon ki achhi sehat, mansik shanti aur vitality ko behtar banayein.",
+      desc: "North-East (Ishan Kon) ki urja ko balance karke ghar mein behtar sehat, mansik sukoon aur positive vitality ka sanchar karein.",
       img: null,
       icon: <ShieldCheck size={44} className="text-emerald-600" />
     },
@@ -51,7 +51,7 @@ export default function ReportBenefits({ onNavigateCheckout }) {
       id: 6,
       title: "Negative Energy Se Suraksha",
       subtitle: "100% Non-Demolition Elemental Remedies",
-      desc: "Bina kisi tod-phod (Zero Wall Breaking) ke practical elemental remedies se ghar ko dushprabhav aur vastu dosh se surakshit karein.",
+      desc: "Bina kisi tod-phod (Zero Wall Breaking) ke practical elemental remedies ke madhyam se ghar ko Vastu Dosh aur negative energies se surakshit banayein. ",
       img: null,
       icon: <ShieldAlert size={44} className="text-blue-600" />
     }
@@ -73,11 +73,12 @@ export default function ReportBenefits({ onNavigateCheckout }) {
           </div>
 
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 font-sora leading-tight tracking-tight">
-            Sahi <span className="orange-gradient-text">Vastu Science Report</span> Paane Ke Fayde
+            Expert <span className="orange-gradient-text">Vastu Report Se Milne</span> Wale Fayde 
           </h2>
 
           <p className="text-xs md:text-sm text-slate-600 font-semibold leading-relaxed">
-            Ghar aur workplace ke hisaab se tay ki gayi Personalised Vastu Report aapki zindagi me deti hai:
+            Jaane Kaise Sahi Vastu Analysis Badal Sakta Hai Aapki Zindagi 
+
           </p>
         </div>
 
