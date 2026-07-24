@@ -87,9 +87,9 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
     const options = {
       key: keyId,
-      amount: 1 * 100, // ₹996 in paise = 99600
+      amount: 996 * 100, // ₹996 in paise = 99600
       currency: "INR",
-      name: "VastuWheels",
+      name: "VastuWheels (Powered & Managed by GlobalInch)",
       description: "Personalised Vastu Science Report",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
       handler: function (response) {
@@ -473,7 +473,11 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
             )}
           </button>
 
-          <div className="flex items-center justify-center text-xs md:text-sm text-slate-600 font-semibold pt-1 text-center">
+          <div className="flex flex-col items-center justify-center text-xs md:text-sm text-slate-600 font-semibold pt-1 text-center space-y-1">
+            <span className="text-[#ea580c] font-extrabold flex items-center justify-center gap-1.5 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+              <ShieldCheck size={16} />
+              <span>Powered & Managed by GlobalInch | Secured by Razorpay</span>
+            </span>
             <span>Note: Your personalized report will be ready and delivered within 48 hours</span>
           </div>
 
