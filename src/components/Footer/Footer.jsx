@@ -143,7 +143,7 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
           
           {/* Corporate Details */}
           <div className="text-slate-300 font-semibold space-y-1">
-            <p>VastuWheels Private Limited | GSTIN: 07AAAAA0000A1Z5 | globalinchpvt@gmail.com</p>
+            <p>VastuWheels Private Limited | globalinchpvt@gmail.com</p>
             <p className="text-slate-400 font-normal">Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075 | Phone: +91 9217664304</p>
           </div>
 

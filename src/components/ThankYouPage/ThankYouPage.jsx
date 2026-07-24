@@ -161,7 +161,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, onBack
       {/* Footer Disclaimer */}
       <footer className="relative z-20 border-t border-slate-800/80 px-4 py-4 text-center text-xs text-slate-500 bg-slate-950/80">
         <div className="max-w-4xl mx-auto">
-          Copyright 2026 - VastuWheels Private Limited | Instant VIP Support Helpline: +91 99999 99999
+          Copyright 2026 - VastuWheels Private Limited | Instant VIP Support Helpline: +91 9217664304
         </div>
       </footer>
 

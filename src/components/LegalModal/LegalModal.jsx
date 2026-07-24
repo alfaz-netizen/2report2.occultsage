@@ -11,23 +11,23 @@ export default function LegalModal({ activeModal, onClose }) {
       content: (
         <div className="space-y-4 text-slate-700 text-sm leading-relaxed">
           <p>
-            Welcome to <strong>VastuWheels Private Limited</strong>. By accessing or purchasing from our platform, you agree to be bound by the following terms and conditions.
+            Welcome to <strong>VastuWheels Private Limited</strong> (Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075). By accessing or purchasing from our platform, you agree to be bound by the following terms and conditions.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">1. Digital Product Delivery</h4>
           <p>
             All Vastu Science Reports, Astro-Vastu analysis documents, and bonus ebooks provided on this website are digital PDF products. Upon successful payment verification via Razorpay, your report will be generated and delivered to your registered WhatsApp number and Email ID within 48 hours.
           </p>
-          <h4 className="font-extrabold text-slate-900 text-base pt-2">2. User Provided Information</h4>
+          <h4 className="font-extrabold text-slate-900 text-base pt-2">2. Non-Refundable Agreement</h4>
           <p>
-            You are responsible for ensuring that all details submitted in the diagnostic form (such as property entrance direction, date of birth, property type, and contact details) are accurate. Reports are generated based strictly on user-submitted inputs.
+            By completing your transaction, you acknowledge and agree that all payments are 100% Non-Refundable as customized digital analysis work begins immediately.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">3. Intellectual Property Rights</h4>
           <p>
-            All content, proprietary Vastu algorithms, logos, graphics, and report formats are the exclusive intellectual property of VastuWheels Private Limited. Unauthorized duplication, redistribution, or resale is strictly prohibited under copyright law.
+            All content, proprietary Vastu algorithms, logos, graphics, and report formats are the exclusive intellectual property of VastuWheels Private Limited.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">4. Jurisdiction & Governing Law</h4>
           <p>
-            These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising out of or in connection with this platform shall be subject to the exclusive jurisdiction of the courts in India.
+            These terms shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in New Delhi, Delhi.
           </p>
         </div>
       )
@@ -39,11 +39,11 @@ export default function LegalModal({ activeModal, onClose }) {
       content: (
         <div className="space-y-4 text-slate-700 text-sm leading-relaxed">
           <p>
-            At <strong>VastuWheels Private Limited</strong>, we respect your privacy and are committed to protecting your personal data.
+            At <strong>VastuWheels Private Limited</strong> (Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075), we respect your privacy and are committed to protecting your personal data.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">1. Information We Collect</h4>
           <p>
-            We collect personal information that you voluntarily provide when ordering a Vastu Report, including your Full Name, Email ID, Phone Number, Date of Birth, Gender, Property Details, and Primary Vastu Concern.
+            We collect personal information that you voluntarily provide when ordering a Vastu Report, including your Full Name, Email ID (globalinchpvt@gmail.com), Phone Number (+91 9217664304), Date of Birth, Gender, Property Details, and Primary Vastu Concern.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">2. How We Use Your Information</h4>
           <p>
@@ -52,10 +52,6 @@ export default function LegalModal({ activeModal, onClose }) {
           <h4 className="font-extrabold text-slate-900 text-base pt-2">3. Payment Security</h4>
           <p>
             We do NOT store your bank details, credit card numbers, or UPI PINs. All financial transactions are processed securely through PCI-DSS compliant payment gateways (Razorpay) using 256-bit SSL encryption.
-          </p>
-          <h4 className="font-extrabold text-slate-900 text-base pt-2">4. Data Sharing & Third Parties</h4>
-          <p>
-            We never sell, rent, or trade your personal information to third-party marketing companies. Data is shared only with trusted operational infrastructure partners (such as Razorpay and automated messaging APIs) strictly for order fulfillment.
           </p>
         </div>
       )
@@ -70,7 +66,7 @@ export default function LegalModal({ activeModal, onClose }) {
             <strong>VastuWheels Private Limited</strong> is India's premier research organization dedicated to Vedic Vastu Science, Astro-Vastu Analysis, and Numerology.
           </p>
           <p>
-            Guided by expert Vastu Scholars, our mission is to empower homeowners, business leaders, couples, and property buyers with scientific, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
+            Guided by expert Vastu Scholars at our corporate headquarters (Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075), our mission is to empower homeowners, business leaders, couples, and property buyers with scientific, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">Why Choose Us?</h4>
           <ul className="list-disc pl-5 space-y-1.5 text-slate-600">
@@ -84,23 +80,19 @@ export default function LegalModal({ activeModal, onClose }) {
 
     refund: {
       title: "Refund & Cancellation Policy",
-      icon: <RefreshCw className="text-blue-500" size={24} />,
+      icon: <RefreshCw className="text-rose-500" size={24} />,
       content: (
         <div className="space-y-4 text-slate-700 text-sm leading-relaxed">
+          <div className="bg-rose-50 border border-rose-300 p-4 rounded-xl text-rose-900 font-bold text-xs">
+            STRICT NO-REFUND POLICY: All digital Vastu reports and services are customized deliverables and are 100% NON-REFUNDABLE once payment is completed.
+          </div>
+          <h4 className="font-extrabold text-slate-900 text-base pt-2">1. Digital Deliverables</h4>
           <p>
-            Thank you for choosing <strong>VastuWheels Private Limited</strong>.
+            Since our personalized Vastu reports are digital products generated immediately after order submission, orders cannot be cancelled or refunded.
           </p>
-          <h4 className="font-extrabold text-slate-900 text-base pt-2">1. Digital Product Cancellation</h4>
+          <h4 className="font-extrabold text-slate-900 text-base pt-2">2. Delivery Queries</h4>
           <p>
-            Since our personalized Vastu reports are digital products that are instantly queued for processing upon payment, orders cannot be cancelled once payment is completed.
-          </p>
-          <h4 className="font-extrabold text-slate-900 text-base pt-2">2. Refund Eligibility</h4>
-          <p>
-            If you encounter any technical issue where payment was deducted but the report was not received on WhatsApp or Email within 48 hours, please reach out to our support helpline. If we are unable to deliver your report due to technical error, a full 100% refund will be credited back to your original payment method within 5-7 business days.
-          </p>
-          <h4 className="font-extrabold text-slate-900 text-base pt-2">3. Contact Support</h4>
-          <p>
-            For any billing questions or refund requests, please email us at <strong>support@vastuwheels.com</strong> or call our helpline at <strong>+91 99999 99999</strong> with your payment ID.
+            If you encounter any technical issue receiving your report on WhatsApp or Email within 48 hours, please reach out to our support helpline (+91 9217664304 / globalinchpvt@gmail.com) for immediate re-delivery.
           </p>
         </div>
       )
@@ -116,10 +108,7 @@ export default function LegalModal({ activeModal, onClose }) {
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">Vastu Consultation Disclaimer</h4>
           <p>
-            The recommendations and remedies provided in the Vastu Analysis Report are based on ancient Vedic Vastu Shastra principles and algorithmic directional analysis. These recommendations are meant for spatial and energetic harmony. Results may vary depending on property layout, correct directional input, and individual application.
-          </p>
-          <p>
-            Our services do not advocate or require structural wall breaking or demolition. Vastu remedies should not replace professional medical, legal, or financial advice.
+            The recommendations and remedies provided in the Vastu Analysis Report are based on ancient Vedic Vastu Shastra principles and algorithmic directional analysis. Results may vary depending on property layout and individual application. All services are digital products and strictly non-refundable.
           </p>
         </div>
       )
@@ -130,7 +119,7 @@ export default function LegalModal({ activeModal, onClose }) {
   if (!current) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fade-in">
+    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fade-in font-sora">
       <div 
         className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-orange-200 overflow-hidden relative my-auto max-h-[85vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
