@@ -6,7 +6,7 @@
  * and stores them in sessionStorage so they persist across checkout navigation.
  */
 
-const UTM_KEYS = [
+const ALL_UTM_KEYS = [
   "utm_source",
   "utm_medium",
   "utm_campaign",
@@ -27,7 +27,7 @@ export function captureUtmParams() {
     const captured = {};
     let foundAny = false;
 
-    UTM_KEYS.forEach((key) => {
+    ALL_UTM_KEYS.forEach((key) => {
       const val = searchParams.get(key);
       if (val) {
         captured[key] = val;
@@ -50,14 +50,14 @@ export function captureUtmParams() {
   }
 }
 
-// Get clean UTM params object for Razorpay Notes
+// Get clean UTM params object for Razorpay Notes (strictly capped to 4 keys so total notes = 14 <= 15 limit)
 export function getUtmParamsForNotes() {
   const params = captureUtmParams();
-  const utmNotes = {};
-
-  UTM_KEYS.forEach((key) => {
-    utmNotes[key] = params[key] || "organic / none";
-  });
-
-  return utmNotes;
+  
+  return {
+    utm_source: params.utm_source || "organic / none",
+    utm_medium: params.utm_medium || "organic / none",
+    utm_campaign: params.utm_campaign || "organic / none",
+    utm_content: params.utm_content || "organic / none"
+  };
 }
