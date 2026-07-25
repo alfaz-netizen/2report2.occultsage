@@ -164,14 +164,14 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
         </div>
 
         {/* SLEEK FLOATING TRUST BAR Layer */}
-        <div className="mt-8 lg:mt-24 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
+        <div className="mt-8 lg:mt-24 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
           
-          <div className="flex flex-col items-center justify-center space-y-0.5 border-r border-orange-100 last:border-0 md:last:border-r pr-2 md:pr-0">
+          <div className="flex flex-col items-center justify-center space-y-0.5 border-b sm:border-b-0 sm:border-r border-orange-100 pb-2 sm:pb-0">
             <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>
             <span className="text-[10px] sm:text-xs text-slate-600 font-bold">Happy Consultations</span>
           </div>
 
-          <div className="flex flex-col items-center justify-center space-y-0.5 border-r-0 md:border-r border-orange-100 pr-0 md:pr-0">
+          <div className="flex flex-col items-center justify-center space-y-0.5 border-b sm:border-b-0 sm:border-r border-orange-100 pb-2 sm:pb-0">
             <div className="flex items-center gap-1 text-lg sm:text-xl md:text-2xl font-extrabold text-amber-500 font-sora">
               <Star size={18} className="fill-amber-500" />
               <span>4.7 / 5</span>
@@ -179,20 +179,12 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
             <span className="text-[10px] sm:text-xs text-slate-600 font-bold">12,840+ User Reviews</span>
           </div>
 
-          <div className="flex flex-col items-center justify-center space-y-0.5 border-r border-orange-100 last:border-0 md:last:border-r pr-2 md:pr-0">
+          <div className="flex flex-col items-center justify-center space-y-0.5">
             <div className="flex items-center gap-1 text-[11px] sm:text-xs md:text-sm font-extrabold text-emerald-700">
               <ShieldCheck size={16} className="text-emerald-600" />
               <span>100% Non-Demolition</span>
             </div>
             <span className="text-[10px] sm:text-xs text-slate-600 font-bold">Zero Wall Breaking</span>
-          </div>
-
-          <div className="flex flex-col items-center justify-center space-y-0.5">
-            <div className="flex items-center gap-1 text-[11px] sm:text-xs md:text-sm font-extrabold text-slate-800">
-              <Lock size={15} className="text-[#f97316]" />
-              <span>ISO 9001:2015</span>
-            </div>
-            <span className="text-[10px] sm:text-xs text-slate-600 font-bold">Certified Vedic Platform</span>
           </div>
 
         </div>

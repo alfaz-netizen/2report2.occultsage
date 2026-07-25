@@ -172,11 +172,6 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
             Checkout
           </span>
         </div>
-
-        <div className="flex items-center gap-1.5 text-xs text-emerald-700 font-semibold hidden sm:flex">
-          <ShieldCheck size={16} />
-          <span>256-Bit SSL Secured</span>
-        </div>
       </div>
 
       <div className="max-w-2xl mx-auto space-y-8" id="checkout-main-form">
