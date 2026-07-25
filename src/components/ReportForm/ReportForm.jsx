@@ -182,13 +182,10 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       <div className="max-w-2xl mx-auto space-y-8" id="checkout-main-form">
         
         {/* Main Title & Instructions */}
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 font-sora">
-            Premium Vastu Analysis Report
-          </h1>
-          <p className="text-sm md:text-base text-[#ea580c] font-bold">
+        <div className="text-center space-y-1">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[#ea580c] font-sora">
             Submit Your Details
-          </p>
+          </h1>
           <p className="text-xs md:text-sm text-slate-600">
             To Tailor make your report, we need these details from you
           </p>
