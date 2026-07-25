@@ -164,7 +164,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
         </div>
 
         {/* SLEEK FLOATING TRUST BAR Layer */}
-        <div className="mt-8 lg:mt-24 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
+        <div className="mt-8 lg:mt-12 xl:mt-24 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
           
           <div className="flex flex-col items-center justify-center space-y-0.5 border-b sm:border-b-0 sm:border-r border-orange-100 pb-2 sm:pb-0">
             <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>

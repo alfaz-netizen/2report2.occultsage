@@ -22,14 +22,16 @@
   object-fit: contain;
   filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.12));
   transition: transform 0.3s ease, margin 0.3s ease;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 /* =========================================================================
  * 📱 SMALL MOBILE PHONE VIEW (< 640px):
- * Preserved 100% intact with scale(2.2) and z-index:0!
+ * 100% Crisp & Sharp with scale(2.2) preserved across ALL phone models!
  * ========================================================================= */
 @media (max-width: 639px) {
-  /* Mobile Image Wrapper (z-index: 0 keeps image UNDER the button layer) */
+  /* Mobile Image Wrapper */
   .hero-mobile-img-wrapper {
     padding-top: 85px !important;
     padding-bottom: 48px !important;
@@ -38,15 +40,11 @@
   }
 
   .hero-acharya-img {
-    /* 1. BADA / CHOTA (Phone Scale set to 2.2): */
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
     transform: scale(2.2) !important;
-
-    /* 2. UPER / NICHE (Phone Vertical Shift): */
     margin-top: 0px !important;
-
-    /* 3. LEFT / RIGHT (Phone Horizontal Shift): */
     margin-left: -25px !important;
-
     max-height: 280px !important;
     max-width: 280px !important;
     margin-right: auto !important;
@@ -68,9 +66,30 @@
   }
 }
 
+/* Fine-tuned horizontal position for mid-sized phones (390px - 415px) */
+@media (max-width: 415px) {
+  .hero-acharya-img {
+    margin-left: -38px !important;
+  }
+}
+
+/* Fine-tuned horizontal position for iPhone SE & Samsung Galaxy (360px - 376px) */
+@media (max-width: 376px) {
+  .hero-acharya-img {
+    margin-left: -48px !important;
+  }
+}
+
+/* Fine-tuned horizontal position for compact phones (<= 350px) */
+@media (max-width: 350px) {
+  .hero-acharya-img {
+    margin-left: -56px !important;
+  }
+}
+
 /* =========================================================================
- * 📱💻 TABLET / MEDIUM SCREENS (640px to 1023px, e.g., 861px iPad & DevTools View):
- * Natural 1:1 scale(1.0) with clean 350px max-height for perfect display!
+ * 📱💻 INTERMEDIATE / TABLET / MEDIUM DESKTOP SCREENS (640px to 1279px):
+ * Smooth Mask Fade active ONLY for intermediate resized viewports!
  * ========================================================================= */
 @media (min-width: 640px) and (max-width: 1023px) {
   .hero-mobile-img-wrapper {
@@ -81,6 +100,8 @@
   }
 
   .hero-acharya-img {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 98%) !important;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 98%) !important;
     transform: scale(1.0) !important;
     max-height: 350px !important;
     max-width: 100% !important;
@@ -104,12 +125,25 @@
   }
 }
 
-/* =========================================================================
- * 💻 DESKTOP VIEW IMAGE ALIGNMENT (>= 1024px):
- * Preserved 100% untouched for Desktop screens!
- * ========================================================================= */
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (max-width: 1279px) {
   .hero-acharya-img {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 98%) !important;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 98%) !important;
+    max-height: 480px;
+    transform: scale(1.4);
+    margin-top: 30px;
+    margin-left: -180px;
+  }
+}
+
+/* =========================================================================
+ * 🖥️ FULL DESKTOP VIEW (>= 1280px):
+ * 100% Crisp, Clear & Sharp (NO Fade/Blur Mask)
+ * ========================================================================= */
+@media (min-width: 1280px) {
+  .hero-acharya-img {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
     max-height: 560px;
     transform: scale(1.8);
     margin-top: 70px;
