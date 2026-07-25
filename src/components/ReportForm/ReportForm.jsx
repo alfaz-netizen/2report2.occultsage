@@ -3,6 +3,7 @@ import "./ReportForm.css";
 import { ArrowLeft, ShieldCheck, CheckCircle2, Sparkles, AlertCircle } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
+import { getUtmParamsForNotes } from "../../utils/utm";
 
 export default function ReportForm({ onBack, onPaymentSuccess }) {
   const [formData, setFormData] = useState({
@@ -15,7 +16,6 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     phone: "",
     email: "",
     city: "",
-    successCourse: "",
     reportLanguage: ""
   });
 
@@ -47,7 +47,6 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     if (!formData.phone || formData.phone.length < 10) newErrors.phone = true;
     if (!formData.email || !formData.email.includes("@")) newErrors.email = true;
     if (!formData.city.trim()) newErrors.city = true;
-    if (!formData.successCourse) newErrors.successCourse = true;
     if (!formData.reportLanguage) newErrors.reportLanguage = true;
 
     setErrors(newErrors);
@@ -120,8 +119,8 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         phone_number: formData.phone,
         email_id: formData.email,
         current_location: formData.city,
-        success_workshop: formData.successCourse,
-        report_language: languagePayload
+        report_language: languagePayload,
+        ...getUtmParamsForNotes()
       },
       theme: {
         color: "#ea580c"
@@ -408,33 +407,6 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
                 }`}
               />
               {errors.city && <p className="text-[11px] text-rose-600 font-bold mt-1">Location / City is required</p>}
-            </div>
-
-            {/* Select Any One Success Workshop */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">
-                Select Any One Success Workshop for just ₹199 (Included FREE) *
-              </label>
-              <select 
-                value={formData.successCourse}
-                onChange={(e) => {
-                  setFormData({ ...formData, successCourse: e.target.value });
-                  if (errors.successCourse) setErrors({ ...errors, successCourse: false });
-                }}
-                className={`w-full border rounded-xl px-4 py-3 text-sm font-bold focus:outline-none transition-all ${
-                  errors.successCourse 
-                    ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" 
-                    : "bg-orange-50 border-orange-300 text-[#ea580c]"
-                }`}
-              >
-                <option value="">-- Select Success Workshop --</option>
-                <option value="Money & Career Sector Workshop - Acharya Ji">Money & Career Sector Workshop - Acharya Ji</option>
-                <option value="Health Sector Workshop - Acharya Ji">Health Sector Workshop - Acharya Ji</option>
-                <option value="Relationship Sector Workshop - Acharya Ji">Relationship Sector Workshop - Acharya Ji</option>
-                <option value="Study Sector Workshop - Acharya Ji">Study Sector Workshop - Acharya Ji</option>
-                <option value="Foreign Settlement Sector Workshop - Acharya Ji">Foreign Settlement Sector Workshop - Acharya Ji</option>
-              </select>
-              {errors.successCourse && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select a Success Workshop</p>}
             </div>
 
             {/* Select Report Language - RESTRICTED TO ONLY HINDI AND ENGLISH */}

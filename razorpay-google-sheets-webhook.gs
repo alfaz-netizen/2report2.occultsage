@@ -9,7 +9,7 @@
  * 3. Run `setupSheetHeaders()` ONCE to automatically create all column headers in Google Sheet.
  * 4. Click 'Deploy' -> 'New deployment'
  * 5. Select type: 'Web app'
- *    - Description: "Razorpay VastuWheels Webhook"
+ *    - Description: "Razorpay VastuWheels Webhook with UTM Tracking"
  *    - Execute as: "Me"
  *    - Who has access: "Anyone" (CRITICAL for Razorpay webhook to work)
  * 6. Click 'Deploy' & copy the Web App URL!
@@ -17,10 +17,10 @@
  *    - Webhook URL: (Paste your Google Web App URL)
  *    - Secret: (Leave blank or set optional secret)
  *    - Active Events: Select `payment.captured` and/or `order.paid`
- * 8. Done! All orders will automatically populate into your Google Sheet!
+ * 8. Done! All orders with UTM campaign analytics will automatically populate into your Google Sheet!
  */
 
-// 1. ONE-CLICK SHEET HEADERS SETUP FUNCTION
+// 1. ONE-CLICK SHEET HEADERS SETUP FUNCTION WITH UTM CAMPAIGN COLUMNS
 function setupSheetHeaders() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var headers = [
@@ -37,8 +37,16 @@ function setupSheetHeaders() {
     "Date of Birth",
     "Gender",
     "Current Location",
-    "Selected Workshop",
-    "Report Sent Status" // Dedicated tracking column
+    "UTM Source",
+    "UTM Medium",
+    "UTM Campaign",
+    "UTM Term",
+    "UTM Content",
+    "UTM ID",
+    "UTM Platform",
+    "UTM Creative Format",
+    "UTM Marketing Tactic",
+    "Report Sent Status" // Dedicated tracking column for report delivery
   ];
   
   sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
@@ -55,7 +63,7 @@ function setupSheetHeaders() {
   }
 }
 
-// 2. RAZORPAY WEBHOOK RECEIVER FUNCTION
+// 2. RAZORPAY WEBHOOK RECEIVER FUNCTION WITH UTM PARAMETER EXTRACTION
 function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -82,7 +90,18 @@ function doPost(e) {
     var dob = notes.date_of_birth || "N/A";
     var gender = notes.gender || "N/A";
     var location = notes.current_location || "N/A";
-    var workshop = notes.success_workshop || "N/A";
+    
+    // UTM Ad Campaign Parameters from Notes
+    var utmSource = notes.utm_source || "organic / none";
+    var utmMedium = notes.utm_medium || "organic / none";
+    var utmCampaign = notes.utm_campaign || "organic / none";
+    var utmTerm = notes.utm_term || "organic / none";
+    var utmContent = notes.utm_content || "organic / none";
+    var utmId = notes.utm_id || "organic / none";
+    var utmPlatform = notes.utm_source_platform || "organic / none";
+    var utmCreativeFormat = notes.utm_creative_format || "organic / none";
+    var utmMarketingTactic = notes.utm_marketing_tactic || "organic / none";
+
     var reportSentStatus = "PENDING"; // Default status for report delivery tracking
 
     // Append new row to Google Sheet
@@ -100,7 +119,15 @@ function doPost(e) {
       dob,
       gender,
       location,
-      workshop,
+      utmSource,
+      utmMedium,
+      utmCampaign,
+      utmTerm,
+      utmContent,
+      utmId,
+      utmPlatform,
+      utmCreativeFormat,
+      utmMarketingTactic,
       reportSentStatus
     ]);
 
@@ -115,5 +142,5 @@ function doPost(e) {
 
 // 3. GET HANDLER FOR TESTING WEB APP URL IN BROWSER
 function doGet() {
-  return ContentService.createTextOutput("VastuWheels Webhook is Live and Active!");
+  return ContentService.createTextOutput("VastuWheels Webhook with UTM Campaign Tracking is Live and Active!");
 }

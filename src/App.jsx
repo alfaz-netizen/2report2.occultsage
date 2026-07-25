@@ -15,6 +15,7 @@ import ReportForm from "./components/ReportForm/ReportForm";
 import LegalPage from "./components/LegalPage/LegalPage";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
 import { trackPixelEvent } from "./utils/pixel";
+import { captureUtmParams } from "./utils/utm";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("landing"); // "landing" | "checkout" | "legal" | "thankyou"
@@ -27,8 +28,10 @@ export default function App() {
     paymentId: ""
   });
 
-  // Sync initial URL path on mount & listen to browser back/forward buttons
+  // Sync initial URL path on mount, capture UTM parameters, & listen to browser back/forward buttons
   useEffect(() => {
+    captureUtmParams(); // Capture UTM ad parameters immediately on site visit
+
     const handleUrlChange = () => {
       // Decode URL (handles spaces or encoded characters like %20 in 'thankyou english')
       const rawPath = decodeURIComponent(window.location.pathname).toLowerCase();
