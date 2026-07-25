@@ -1,9 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./ReportForm.css";
-import { ArrowLeft, ShieldCheck, CheckCircle2, Sparkles, AlertCircle } from "lucide-react";
+import { ArrowLeft, ShieldCheck, CheckCircle2, Sparkles, AlertCircle, MapPin, ChevronDown, Search } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
 import { getUtmParamsForNotes } from "../../utils/utm";
+
+const INDIAN_CITIES = [
+  "Delhi NCR (Delhi, Gurgaon, Noida)",
+  "Mumbai, Maharashtra",
+  "Bengaluru, Karnataka",
+  "Hyderabad, Telangana",
+  "Chennai, Tamil Nadu",
+  "Kolkata, West Bengal",
+  "Ahmedabad, Gujarat",
+  "Pune, Maharashtra",
+  "Jaipur, Rajasthan",
+  "Surat, Gujarat",
+  "Lucknow, Uttar Pradesh",
+  "Kanpur, Uttar Pradesh",
+  "Nagpur, Maharashtra",
+  "Indore, Madhya Pradesh",
+  "Bhopal, Madhya Pradesh",
+  "Thane, Maharashtra",
+  "Visakhapatnam, Andhra Pradesh",
+  "Vadodara, Gujarat",
+  "Chandigarh",
+  "Patna, Bihar",
+  "Ranchi, Jharkhand",
+  "Bhubaneswar, Odisha",
+  "Guwahati, Assam",
+  "Coimbatore, Tamil Nadu",
+  "Kochi, Kerala",
+  "Agra, Uttar Pradesh",
+  "Varanasi, Uttar Pradesh",
+  "Ludhiana, Punjab",
+  "Amritsar, Punjab",
+  "Dehradun, Uttarakhand",
+  "Raipur, Chhattisgarh",
+  "Rajkot, Gujarat",
+  "Nashik, Maharashtra",
+  "Mysuru, Karnataka",
+  "Jodhpur, Rajasthan",
+  "Madurai, Tamil Nadu",
+  "Vijayawada, Andhra Pradesh",
+  "Jammu, Jammu & Kashmir",
+  "Shimla, Himachal Pradesh",
+  "Panaji, Goa",
+  "Other / Outside India"
+];
 
 export default function ReportForm({ onBack, onPaymentSuccess }) {
   const [formData, setFormData] = useState({
@@ -21,6 +65,25 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const [citySearch, setCitySearch] = useState("");
+  const [isCityDropdownOpen, setIsCityDropdownOpen] = useState(false);
+  const cityDropdownRef = useRef(null);
+
+  // Close city dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cityDropdownRef.current && !cityDropdownRef.current.contains(event.target)) {
+        setIsCityDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredCities = INDIAN_CITIES.filter((c) =>
+    c.toLowerCase().includes(citySearch.toLowerCase())
+  );
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -345,7 +408,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1">WhatsApp Phone Number *</label>
               <div className="flex">
-                <span className="bg-slate-100 border border-r-0 border-slate-300 rounded-l-xl px-4 py-3 text-xs text-slate-600 font-bold flex items-center">
+                <span className="bg-slate-100 border border-r-0 border-slate-300 rounded-l-xl px-3 sm:px-4 py-3 text-xs text-slate-700 font-bold flex items-center justify-center whitespace-nowrap shrink-0">
                   IN +91
                 </span>
                 <input 
@@ -383,21 +446,76 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
               {errors.email && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid Email ID is required</p>}
             </div>
 
-            {/* Current Location */}
-            <div>
+            {/* Current Location / City with Searchable Dropdown */}
+            <div className="relative" ref={cityDropdownRef}>
               <label className="block text-xs font-bold text-slate-800 mb-1">Current Location / City *</label>
-              <input 
-                type="text"
-                placeholder="City, State"
-                value={formData.city}
-                onChange={(e) => {
-                  setFormData({ ...formData, city: e.target.value });
-                  if (errors.city) setErrors({ ...errors, city: false });
-                }}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                  errors.city ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
-                }`}
-              />
+              
+              <div className="relative">
+                <input 
+                  type="text"
+                  placeholder="Select or Search City (e.g. Mumbai, Delhi, Thane)"
+                  value={formData.city}
+                  onFocus={() => setIsCityDropdownOpen(true)}
+                  onChange={(e) => {
+                    const query = e.target.value;
+                    setFormData({ ...formData, city: query });
+                    setCitySearch(query);
+                    setIsCityDropdownOpen(true);
+                    if (errors.city) setErrors({ ...errors, city: false });
+                  }}
+                  className={`w-full bg-slate-50 border rounded-xl pl-10 pr-10 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                    errors.city ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+                  }`}
+                />
+                <MapPin size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" />
+                <ChevronDown size={18} className={`absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition-transform duration-200 pointer-events-none ${isCityDropdownOpen ? "rotate-180 text-[#ea580c]" : ""}`} />
+              </div>
+
+              {/* Searchable Dropdown Overlay */}
+              {isCityDropdownOpen && (
+                <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white border-2 border-orange-300 rounded-2xl shadow-2xl max-h-60 overflow-y-auto divide-y divide-slate-100 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="p-2.5 bg-orange-50/80 sticky top-0 flex items-center gap-2 border-b border-orange-200 backdrop-blur-sm">
+                    <Search size={16} className="text-[#ea580c] shrink-0 ml-1" />
+                    <input 
+                      type="text"
+                      placeholder="Type city or state to search..."
+                      value={citySearch}
+                      onChange={(e) => setCitySearch(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-[#f97316]"
+                      autoFocus
+                    />
+                  </div>
+
+                  {filteredCities.length > 0 ? (
+                    filteredCities.map((cityName, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, city: cityName });
+                          setCitySearch("");
+                          setIsCityDropdownOpen(false);
+                          if (errors.city) setErrors({ ...errors, city: false });
+                        }}
+                        className={`w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-orange-50 hover:text-[#ea580c] transition-colors flex items-center justify-between cursor-pointer ${
+                          formData.city === cityName ? "bg-orange-100/70 text-[#ea580c] font-bold" : "text-slate-700"
+                        }`}
+                      >
+                        <span>{cityName}</span>
+                        {formData.city === cityName && <CheckCircle2 size={15} className="text-[#ea580c]" />}
+                      </button>
+                    ))
+                  ) : (
+                    <div 
+                      onClick={() => setIsCityDropdownOpen(false)}
+                      className="p-3 text-center text-xs text-slate-500 italic cursor-pointer hover:bg-slate-50"
+                    >
+                      Use custom entered location: "{formData.city}"
+                    </div>
+                  )}
+                </div>
+              )}
+
               {errors.city && <p className="text-[11px] text-rose-600 font-bold mt-1">Location / City is required</p>}
             </div>
 
