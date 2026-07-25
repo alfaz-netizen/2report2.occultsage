@@ -145,12 +145,10 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
             </div>
           </div>
 
-          {email && (
-            <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
-              <Mail size={14} className="text-slate-400 shrink-0" />
-              <span className="truncate">Email: {email}</span>
-            </div>
-          )}
+          <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
+            <Mail size={14} className="text-slate-400 shrink-0" />
+            <span className="truncate">Email: {email || "globalinchpvt@gmail.com"}</span>
+          </div>
         </div>
 
         {/* 48 Hours Team Contact Assurance Notice */}
