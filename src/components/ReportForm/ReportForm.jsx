@@ -149,70 +149,15 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     // Generate Unique Customer ID for tracking customer across payments (e.g. VW-84920193)
     const uniqueCustomerId = "VW-" + Math.floor(10000000 + Math.random() * 90000000);
 
-    const notesPayload = {
-      payment_type: "form_checkout",
-      unique_customer_id: uniqueCustomerId,
-      full_name: formData.fullName,
-      property_type: formData.propertyType,
-      entrance_direction: formData.direction,
-      primary_challenge: formData.concern,
-      date_of_birth: formData.dob,
-      gender: "N/A",
-      phone_number: formData.phone,
-      email_id: formData.email,
-      current_location: formData.city,
-      report_language: languagePayload,
-      ...getUtmParamsForNotes()
-    };
-
-    // Try fetching Order ID created by backend with payment_capture: 1 (Auto-Capture ON)
-    let createdOrderId = null;
-    try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-      const orderRes = await fetch(`${backendUrl}/api/create-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: 996,
-          currency: "INR",
-          notes: notesPayload
-        })
-      });
-      const orderData = await orderRes.json();
-      if (orderData.success && orderData.order_id) {
-        createdOrderId = orderData.order_id;
-      }
-    } catch (apiErr) {
-      console.warn("Backend order API offline, proceeding with direct client checkout:", apiErr);
-    }
-
     const options = {
       key: keyId,
       amount: 1 * 100, // ₹996 in paise = 99600
       currency: "INR",
       name: "VastuWheels (Powered & Managed by GlobalInch)",
       description: "Personalised Vastu Science Report",
-      ...(createdOrderId ? { order_id: createdOrderId } : {}),
-      handler: async function (response) {
+      payment_capture: 1, // Automatically capture payment (Authorized -> Captured)
+      handler: function (response) {
         console.log("Razorpay Payment Success Response:", response);
-
-        // Verify HMAC signature & trigger automatic capture API fallback on backend
-        try {
-          const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-          await fetch(`${backendUrl}/api/verify-payment`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              amount: 996
-            })
-          });
-        } catch (verifyErr) {
-          console.warn("Backend payment verification offline:", verifyErr);
-        }
-
         setIsSubmitting(false);
         if (onPaymentSuccess) {
           onPaymentSuccess({
@@ -230,7 +175,21 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         email: formData.email,
         contact: formData.phone
       },
-      notes: notesPayload,
+      notes: {
+        payment_type: "form_checkout",
+        unique_customer_id: uniqueCustomerId,
+        full_name: formData.fullName,
+        property_type: formData.propertyType,
+        entrance_direction: formData.direction,
+        primary_challenge: formData.concern,
+        date_of_birth: formData.dob,
+        gender: "N/A",
+        phone_number: formData.phone,
+        email_id: formData.email,
+        current_location: formData.city,
+        report_language: languagePayload,
+        ...getUtmParamsForNotes()
+      },
       theme: {
         color: "#ea580c"
       },

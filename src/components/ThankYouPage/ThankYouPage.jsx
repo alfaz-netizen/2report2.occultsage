@@ -98,63 +98,15 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
     const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_live_SSFQ4gpLaM0VXb";
 
-    const upgradeNotesPayload = {
-      payment_type: "popup_upgrade",
-      unique_customer_id: activeCustomerId,
-      original_payment_id: displayPaymentId,
-      full_name: fullName || "Valued Customer",
-      phone_number: phone || "9217664304",
-      email_id: email || "globalinchpvt@gmail.com",
-      upgrade_type: "1-on-1 Consultation"
-    };
-
-    let createdOrderId = null;
-    try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-      const orderRes = await fetch(`${backendUrl}/api/create-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: displayPrice,
-          currency: "INR",
-          notes: upgradeNotesPayload
-        })
-      });
-      const orderData = await orderRes.json();
-      if (orderData.success && orderData.order_id) {
-        createdOrderId = orderData.order_id;
-      }
-    } catch (apiErr) {
-      console.warn("Backend order API offline, proceeding with direct client checkout:", apiErr);
-    }
-
     const upgradeOptions = {
       key: keyId,
       amount: displayPrice * 100, // ₹1,999 or ₹1,799 in paise
       currency: "INR",
       name: "VastuWheels Report Upgrade",
       description: "1-on-1 Consultation & Express Vastu Report",
-      ...(createdOrderId ? { order_id: createdOrderId } : {}),
-      handler: async function (response) {
+      payment_capture: 1, // Automatically capture payment (Authorized -> Captured)
+      handler: function (response) {
         console.log("Upgrade Payment Success:", response);
-
-        // Verify HMAC signature & trigger automatic capture API fallback on backend
-        try {
-          const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-          await fetch(`${backendUrl}/api/verify-payment`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              amount: displayPrice
-            })
-          });
-        } catch (verifyErr) {
-          console.warn("Backend payment verification offline:", verifyErr);
-        }
-
         setIsUpgrading(false);
         setShowPopup(false);
         setIsVipUpgraded(true);
@@ -169,7 +121,15 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
         email: email || "globalinchpvt@gmail.com",
         contact: phone || "9217664304"
       },
-      notes: upgradeNotesPayload,
+      notes: {
+        payment_type: "popup_upgrade",
+        unique_customer_id: activeCustomerId,
+        original_payment_id: displayPaymentId,
+        full_name: fullName || "Valued Customer",
+        phone_number: phone || "9217664304",
+        email_id: email || "globalinchpvt@gmail.com",
+        upgrade_type: "1-on-1 Consultation"
+      },
       theme: {
         color: "#ea580c"
       },
