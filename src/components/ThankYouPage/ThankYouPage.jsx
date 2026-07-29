@@ -55,7 +55,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     }));
     setParticles(newParticles);
 
-    // Fast Rolling Number Counter Effect (1999 -> 1799)
+    // Fast Rolling Number Counter Effect
     let current = 1;
     const target = 1;
     const step = 20;
@@ -71,7 +71,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     }, 40);
   };
 
-  // Direct Razorpay Payment Gateway Trigger for ₹1,799 VIP Upgrade
+  // Direct Razorpay Payment Gateway Trigger for Special Upgrade
   const handleOpenRazorpayUpgrade = async () => {
     setIsUpgrading(true);
 
@@ -102,18 +102,18 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       key: keyId,
       amount: displayPrice * 100, // ₹1,999 or ₹1,799 in paise
       currency: "INR",
-      name: "VastuWheels VIP Upgrade",
+      name: "VastuWheels Report Upgrade",
       description: "1-on-1 Consultation & Express Vastu Report",
       handler: function (response) {
-        console.log("VIP Upgrade Payment Success:", response);
+        console.log("Upgrade Payment Success:", response);
         setIsUpgrading(false);
         setShowPopup(false);
         setIsVipUpgraded(true);
-        setVipPaymentId(response?.razorpay_payment_id || ("PAY_VIP_" + Math.random().toString(36).substring(2, 10).toUpperCase()));
+        setVipPaymentId(response?.razorpay_payment_id || ("PAY_UPGRADE_" + Math.random().toString(36).substring(2, 10).toUpperCase()));
         
         // Trigger Facebook Pixel Upgrade Purchase Events:
-        trackPixelEvent("Purchase VIP Upgrade", { value: displayPrice, currency: "INR" });
-        trackPixelEvent("Purchase", { value: displayPrice, currency: "INR", content_name: "Vastu Wheels VIP Upgrade" });
+        trackPixelEvent("Purchase Report Upgrade", { value: displayPrice, currency: "INR" });
+        trackPixelEvent("Purchase", { value: displayPrice, currency: "INR", content_name: "Vastu Wheels Report Upgrade" });
       },
       prefill: {
         name: fullName || "Valued Customer",
@@ -124,10 +124,10 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
         payment_type: "popup_upgrade",
         unique_customer_id: activeCustomerId,
         original_payment_id: displayPaymentId,
-        full_name: fullName,
-        phone_number: phone,
-        email_id: email,
-        upgrade_type: "VIP 1-on-1 Consultation"
+        full_name: fullName || "Valued Customer",
+        phone_number: phone || "9217664304",
+        email_id: email || "globalinchpvt@gmail.com",
+        upgrade_type: "1-on-1 Consultation"
       },
       theme: {
         color: "#ea580c"
@@ -151,8 +151,8 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
   // Clean professional content tailoring for Hindi vs English
   const content = isHindi ? {
-    badge: isVipUpgraded ? "🎉 VIP अपग्रेड भुगतान पूरा हुआ!" : "भुगतान सफलतापूर्वक पूरा हुआ (Payment Successful)",
-    mainTitle: isVipUpgraded ? "✨ बधाई हो! आपका VIP 1-on-1 अपग्रेड कंफ़र्म हो गया है ✨" : "धन्यवाद! आपका ऑर्डर सफलतापूर्वक प्राप्त हो गया है",
+    badge: isVipUpgraded ? "🎉 अपग्रेड भुगतान पूरा हुआ!" : "भुगतान सफलतापूर्वक पूरा हुआ (Payment Successful)",
+    mainTitle: isVipUpgraded ? "✨ बधाई हो! आपका 1-on-1 अपग्रेड कंफ़र्म हो गया है ✨" : "धन्यवाद! आपका ऑर्डर सफलतापूर्वक प्राप्त हो गया है",
     subMessage: isVipUpgraded 
       ? "हमारी एक्सपर्ट वास्तु टीम जल्द ही आपसे 1-on-1 कंसल्टेशन सेशन एवं इमीडिएट रिपोर्ट डिलीवरी के लिए संपर्क करेगी।"
       : "आपकी 16-ज़ोन वैदिक वास्तु विश्लेषण रिपोर्ट तैयार की जा रही है और 48 घंटे के भीतर डिलीवर कर दी जाएगी।",
@@ -164,18 +164,18 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     supportContact: "हेल्पलाइन: +91 9217664304 | globalinchpvt@gmail.com",
     // Popup Hindi Content
     popupHeader: "🎁 बधाई हो! आप हमारे लकी कस्टमर हैं!",
-    popupSubHeader: "केवल आज के लिए विशेष VIP अपग्रेड ऑफर",
+    popupSubHeader: "केवल आज के लिए विशेष अपग्रेड ऑफर",
     originalPriceLabel: "सामान्य कीमत:",
-    vipPriceLabel: "VIP अपग्रेड कीमत:",
+    vipPriceLabel: "अपग्रेड कीमत:",
     benefit1: "📞 1-on-1 फ्री पर्सनल सेशन एक्सपर्ट आचार्य जी के साथ",
     benefit2: "⚡ इमीडिएट इंस्टेंट रिपोर्ट (बिना किसी वेटिंग के)",
     benefit3: "🤝 पर्सनल वास्तु एजेंट & गाइडेंस सपोर्ट",
     claimBtn: "🎉 10% अतिरिक्त डिस्काउंट क्लेम करें",
-    claimedBtn: "🚀 ₹1,799 में VIP अपग्रेड करें (Direct Payment)",
+    claimedBtn: "🚀 ₹1,799 में अपग्रेड करें (Direct Payment)",
     dismissText: "नहीं धन्यवाद, स्टैंडर्ड रिपोर्ट ही रखें"
   } : {
-    badge: isVipUpgraded ? "🎉 VIP Upgrade Payment Completed!" : "Payment Completed Successfully",
-    mainTitle: isVipUpgraded ? "✨ Congratulations! Your VIP 1-on-1 Upgrade Is Confirmed ✨" : "Thank You! Your Order Has Been Confirmed",
+    badge: isVipUpgraded ? "🎉 Upgrade Payment Completed!" : "Payment Completed Successfully",
+    mainTitle: isVipUpgraded ? "✨ Congratulations! Your 1-on-1 Upgrade Is Confirmed ✨" : "Thank You! Your Order Has Been Confirmed",
     subMessage: isVipUpgraded
       ? "Our expert Vastu team will contact you shortly for your 1-on-1 consultation session and immediate express report delivery."
       : "Your 16-Zone Personalized Vastu Report is being prepared and will be delivered within 48 hours.",
@@ -187,21 +187,21 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     supportContact: "Helpline: +91 9217664304 | globalinchpvt@gmail.com",
     // Popup English Content
     popupHeader: "🎁 CONGRATULATIONS! YOU ARE A LUCKY CUSTOMER!",
-    popupSubHeader: "Special VIP Upgrade Offer Only For Today",
+    popupSubHeader: "Special Upgrade Offer Only For Today",
     originalPriceLabel: "Regular Price:",
-    vipPriceLabel: "VIP Upgrade Price:",
+    vipPriceLabel: "Upgrade Price:",
     benefit1: "📞 1-on-1 Free Personal Consultation Session with Vastu Expert",
     benefit2: "⚡ Immediate Express Vastu Report Delivery (Zero waiting)",
     benefit3: "🤝 Dedicated Personal Vastu Agent & Guidance Support",
     claimBtn: "🎉 Claim Extra 10% INSTANT Discount",
-    claimedBtn: "🚀 Upgrade VIP Order Now at ₹1,799",
+    claimedBtn: "🚀 Upgrade Order Now at ₹1,799",
     dismissText: "No thanks, I will keep standard report"
   };
 
   return (
     <div className="min-h-screen bg-[#fffbf7] text-slate-900 font-sora relative overflow-hidden flex flex-col justify-between selection:bg-orange-500 selection:text-white">
       
-      {/* 🎁 LUCKY CUSTOMER VIP UPGRADE POPUP MODAL */}
+      {/* 🎁 LUCKY CUSTOMER UPGRADE POPUP MODAL */}
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fadeIn">
           
@@ -273,7 +273,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
               )}
             </div>
 
-            {/* Included VIP Benefits */}
+            {/* Included Upgrade Benefits */}
             <div className="bg-orange-100/60 border border-orange-200 p-4 rounded-2xl text-left space-y-2.5 text-xs text-slate-800 font-semibold">
               <div className="flex items-center gap-2 text-slate-900">
                 <Headphones size={16} className="text-[#ea580c] shrink-0" />
@@ -375,7 +375,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
           <div className="flex justify-center">
             <a 
-              href="https://chat.whatsapp.com/" 
+              href="https://chat.whatsapp.com/EO8jo2u84lFLkpeIInf4He" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1ebd59] text-white font-black text-sm md:text-base px-10 py-4 rounded-full shadow-md shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all duration-200 transform hover:scale-[1.02] cursor-pointer border border-emerald-400"
@@ -395,7 +395,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
             </h3>
             <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-extrabold px-3 py-0.5 rounded-full flex items-center gap-1">
               <ShieldCheck size={13} className="text-emerald-700" />
-              <span>{isVipUpgraded ? "PAID ₹1,799 (VIP UPGRADE)" : "PAID ₹996"}</span>
+              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹996"}</span>
             </span>
           </div>
 
@@ -436,7 +436,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
                 <span>Report Language</span>
               </span>
               <p className="font-bold text-emerald-700 text-xs">
-                {selectedLanguage || "Hindi"} Report {isVipUpgraded ? "(VIP 1-on-1)" : ""}
+                {selectedLanguage || "Hindi"} Report {isVipUpgraded ? "(1-on-1)" : ""}
               </p>
             </div>
           </div>
