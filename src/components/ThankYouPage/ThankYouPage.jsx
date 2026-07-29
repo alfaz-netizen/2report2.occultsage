@@ -98,12 +98,31 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
     const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_live_SSFQ4gpLaM0VXb";
 
+    // Create Razorpay Order via Orders API for instant automatic payment capture
+    let orderId = "";
+    try {
+      const orderRes = await fetch("/api/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: displayPrice * 100 })
+      });
+      if (orderRes.ok) {
+        const orderData = await orderRes.json();
+        if (orderData?.order_id) {
+          orderId = orderData.order_id;
+        }
+      }
+    } catch (err) {
+      console.warn("Orders API upgrade warning, proceeding with fallback checkout options:", err);
+    }
+
     const upgradeOptions = {
       key: keyId,
       amount: displayPrice * 100, // ₹1,999 or ₹1,799 in paise
       currency: "INR",
       name: "VastuWheels Report Upgrade",
       description: "1-on-1 Consultation & Express Vastu Report",
+      order_id: orderId || undefined, // Linked Order ID for 100% instant automatic capture!
       payment_capture: 1, // Automatically capture payment (Authorized -> Captured)
       handler: function (response) {
         console.log("Upgrade Payment Success:", response);
