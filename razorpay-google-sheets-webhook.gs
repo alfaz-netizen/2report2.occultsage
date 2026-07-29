@@ -3,20 +3,15 @@
  * VASTUWHEELS - RAZORPAY WEBHOOK + UNIQUE CUSTOMER ID + 2-TAB GOOGLE SHEETS SCRIPT (Code.gs)
  * ====================================================================
  * 
- * DEPLOYMENT INSTRUCTIONS:
+ * IMPORTANT DEPLOYMENT STEPS:
  * 1. Open Google Sheets -> Extensions -> Apps Script
  * 2. Delete any extra files (like `code1.gs.gs`) on the left sidebar so only ONE `Code.gs` file exists!
- * 3. Paste this entire clean code into `Code.gs` (replace old code completely)
- * 4. Run `setupSheetHeaders()` ONCE from the toolbar to create both Tabs:
- *    - Tab 1: "996 Payments" (23 Columns with Unique Customer ID & UTMs)
- *    - Tab 2: "Popup Sheet" (7 Columns with Unique Customer ID & Original Payment ID)
- * 5. Click 'Deploy' -> 'New deployment'
- *    - Select type: 'Web app'
- *    - Description: "VastuWheels Webhook with Unique Customer ID & Popup Sheet"
- *    - Execute as: "Me"
- *    - Who has access: "Anyone" (CRITICAL for Razorpay Webhook)
- * 6. Click 'Deploy' and copy the Web App URL!
- * 7. Paste Web App URL in Razorpay Dashboard -> Settings -> Webhooks -> Add New Webhook (`payment.captured`).
+ * 3. Replace all code in `Code.gs` with this code and click Save (Ctrl+S).
+ * 4. Select `setupSheetHeaders` from the toolbar and click 'Run' ONCE to create both Tabs:
+ *    - Tab 1: "996 Payments" (23 Columns)
+ *    - Tab 2: "Popup Sheet" (7 Columns)
+ * 5. CRITICAL: Click 'Deploy' -> 'Manage deployments' -> Edit (Pencil icon) -> Version: 'New version' -> 'Deploy'!
+ *    (If you don't deploy a NEW VERSION, Razorpay will keep calling the old code!)
  */
 
 // 1. ONE-CLICK SHEET HEADERS SETUP FUNCTION FOR 2 TABS
@@ -118,14 +113,24 @@ function doPost(e) {
       }
     }
 
-    var fullName = notes.full_name || notes.customer_name || payment.contact || "N/A";
+    var fullName = notes.full_name || notes.customer_name || "Valued Customer";
+    // Sanitize: If fullName accidentally contains a phone number, default to "Valued Customer"
+    if (fullName === payment.contact || /^\+?\d{10,12}$/.test(fullName.trim())) {
+      fullName = "Valued Customer";
+    }
+
     var phone = notes.phone_number || payment.contact || "N/A";
     var email = notes.email_id || payment.email || "N/A";
 
     // -------------------------------------------------------------
-    // ROUTE BASED ON PAYMENT TYPE OR AMOUNT
+    // MULTI-INDICATOR POPUP UPGRADE DETECTION
     // -------------------------------------------------------------
-    var isPopupUpgrade = notes.payment_type === "popup_upgrade" || rawAmount >= 1500;
+    var isPopupUpgrade = (
+      notes.payment_type === "popup_upgrade" ||
+      notes.upgrade_type === "VIP 1-on-1 Consultation" ||
+      (notes.original_payment_id && notes.original_payment_id !== "N/A") ||
+      rawAmount >= 1500
+    );
 
     if (isPopupUpgrade) {
       // 🚀 TAB 2: POPUP SHEET (₹1,799 / ₹1,999 Payments)

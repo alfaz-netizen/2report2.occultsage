@@ -86,14 +86,18 @@ export default function App() {
 
   const handlePaymentSuccess = (data) => {
     const selectedLang = data.language || "English";
-    setOrderInfo({
+    const newOrder = {
       language: selectedLang,
       fullName: data.fullName || "",
       phone: data.phone || "",
       email: data.email || "",
       paymentId: data.paymentId || "",
       uniqueCustomerId: data.uniqueCustomerId || ("VW-" + Math.floor(10000000 + Math.random() * 90000000))
-    });
+    };
+    setOrderInfo(newOrder);
+    try {
+      localStorage.setItem("vastu_order_info", JSON.stringify(newOrder));
+    } catch (e) {}
 
     const targetUrl = selectedLang === "Hindi" ? "/thankyou-hindi" : "/thankyou-english";
     window.history.pushState({}, "", targetUrl);
