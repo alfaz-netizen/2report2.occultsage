@@ -7,7 +7,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
   // Interactive Popup States
   const [showPopup, setShowPopup] = useState(true);
   const [discountClaimed, setDiscountClaimed] = useState(false);
-  const [displayPrice, setDisplayPrice] = useState(1999);
+  const [displayPrice, setDisplayPrice] = useState(1);
   const [isRolling, setIsRolling] = useState(false);
   const [particles, setParticles] = useState([]);
   const [isUpgrading, setIsUpgrading] = useState(false);
