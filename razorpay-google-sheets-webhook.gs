@@ -5,14 +5,14 @@
  * 
  * DEPLOYMENT INSTRUCTIONS:
  * 1. Open Google Sheets -> Extensions -> Apps Script
- * 2. IMPORTANT: Delete any extra files (like `code1.gs.gs`) on the left sidebar so only ONE `Code.gs` file exists!
+ * 2. Delete any extra files (like `code1.gs.gs`) on the left sidebar so only ONE `Code.gs` file exists!
  * 3. Paste this entire clean code into `Code.gs` (replace old code completely)
  * 4. Run `setupSheetHeaders()` ONCE from the toolbar to create both Tabs:
  *    - Tab 1: "996 Payments" (23 Columns with Unique Customer ID & UTMs)
- *    - Tab 2: "1799 VIP Upgrades" (7 Columns with Unique Customer ID & Original Payment ID)
+ *    - Tab 2: "Popup Sheet" (7 Columns with Unique Customer ID & Original Payment ID)
  * 5. Click 'Deploy' -> 'New deployment'
  *    - Select type: 'Web app'
- *    - Description: "VastuWheels Webhook with Unique Customer ID & 2 Tabs"
+ *    - Description: "VastuWheels Webhook with Unique Customer ID & Popup Sheet"
  *    - Execute as: "Me"
  *    - Who has access: "Anyone" (CRITICAL for Razorpay Webhook)
  * 6. Click 'Deploy' and copy the Web App URL!
@@ -66,30 +66,30 @@ function setupSheetHeaders() {
   sheet996.setFrozenRows(1);
 
   // -------------------------------------------------------------
-  // TAB 2: 1799 VIP Upgrades (7 Columns)
+  // TAB 2: Popup Sheet (7 Columns for ₹1,799 / ₹1,999 Payments)
   // -------------------------------------------------------------
-  var sheet1799 = ss.getSheetByName("1799 VIP Upgrades");
-  if (!sheet1799) {
-    sheet1799 = ss.insertSheet("1799 VIP Upgrades");
+  var sheetPopup = ss.getSheetByName("Popup Sheet");
+  if (!sheetPopup) {
+    sheetPopup = ss.insertSheet("Popup Sheet");
   }
 
-  var headers1799 = [
+  var headersPopup = [
     "Date & Time",            // Col 1 (A)
     "Unique Customer ID",     // Col 2 (B) - Same Unique ID from ₹996 payment!
     "Payment ID",             // Col 3 (C) - Upgrade Payment ID
-    "Amount (INR)",           // Col 4 (D) - ₹1,799
+    "Amount (INR)",           // Col 4 (D) - ₹1,799 or ₹1,999
     "Full Name",              // Col 5 (E)
     "WhatsApp Phone Number",  // Col 6 (F)
     "Original Payment ID"     // Col 7 (G) - ₹996 Original Payment ID
   ];
 
-  sheet1799.getRange(1, 1, 1, headers1799.length).setValues([headers1799]);
-  var headerRange1799 = sheet1799.getRange(1, 1, 1, headers1799.length);
-  headerRange1799.setFontWeight("bold");
-  headerRange1799.setBackground("#25d366");
-  headerRange1799.setFontColor("#ffffff");
-  headerRange1799.setHorizontalAlignment("center");
-  sheet1799.setFrozenRows(1);
+  sheetPopup.getRange(1, 1, 1, headersPopup.length).setValues([headersPopup]);
+  var headerRangePopup = sheetPopup.getRange(1, 1, 1, headersPopup.length);
+  headerRangePopup.setFontWeight("bold");
+  headerRangePopup.setBackground("#25d366");
+  headerRangePopup.setFontColor("#ffffff");
+  headerRangePopup.setHorizontalAlignment("center");
+  sheetPopup.setFrozenRows(1);
 }
 
 // 2. RAZORPAY WEBHOOK RECEIVER FUNCTION
@@ -105,7 +105,7 @@ function doPost(e) {
     var formattedDate = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd-MM-yyyy HH:mm:ss");
     var paymentId = payment.id || "N/A";
     
-    // Unique Customer ID passed from frontend notes (e.g. VW-84920193)
+    // Unique Customer ID passed from frontend notes (e.g. VW-91064188)
     var uniqueCustomerId = notes.unique_customer_id || ("VW-" + Math.floor(10000000 + Math.random() * 90000000));
     
     // Parse UTM details if present
@@ -123,18 +123,20 @@ function doPost(e) {
     var email = notes.email_id || payment.email || "N/A";
 
     // -------------------------------------------------------------
-    // ROUTE TO TAB BASED ON PAYMENT AMOUNT
+    // ROUTE BASED ON PAYMENT TYPE OR AMOUNT
     // -------------------------------------------------------------
-    if (rawAmount >= 1500) {
-      // 🚀 TAB 2: 1799 VIP UPGRADES (₹1,799 Payment)
-      var sheet1799 = ss.getSheetByName("1799 VIP Upgrades");
-      if (!sheet1799) {
-        sheet1799 = ss.insertSheet("1799 VIP Upgrades");
+    var isPopupUpgrade = notes.payment_type === "popup_upgrade" || rawAmount >= 1500;
+
+    if (isPopupUpgrade) {
+      // 🚀 TAB 2: POPUP SHEET (₹1,799 / ₹1,999 Payments)
+      var sheetPopup = ss.getSheetByName("Popup Sheet");
+      if (!sheetPopup) {
+        sheetPopup = ss.insertSheet("Popup Sheet");
       }
 
       var originalPaymentId = notes.original_payment_id || "N/A";
 
-      sheet1799.appendRow([
+      sheetPopup.appendRow([
         formattedDate,
         uniqueCustomerId,
         paymentId,
@@ -144,11 +146,11 @@ function doPost(e) {
         originalPaymentId
       ]);
 
-      return ContentService.createTextOutput(JSON.stringify({ status: "success", tab: "1799 VIP Upgrades", unique_customer_id: uniqueCustomerId }))
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", tab: "Popup Sheet", unique_customer_id: uniqueCustomerId }))
         .setMimeType(ContentService.MimeType.JSON);
 
     } else {
-      // 📄 TAB 1: 996 PAYMENTS (₹996 Payment)
+      // 📄 TAB 1: 996 PAYMENTS (₹996 Checkout Payments)
       var sheet996 = ss.getSheetByName("996 Payments");
       if (!sheet996) {
         sheet996 = ss.getSheetByName("Sheet1") || ss.getActiveSheet();

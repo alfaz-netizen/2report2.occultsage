@@ -175,6 +175,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         contact: formData.phone
       },
       notes: {
+        payment_type: "form_checkout",
         unique_customer_id: uniqueCustomerId,
         full_name: formData.fullName,
         property_type: formData.propertyType,

@@ -100,7 +100,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
     const upgradeOptions = {
       key: keyId,
-      amount: 1 * 100, // ₹1,799 in paise = 179900
+      amount: displayPrice * 100, // ₹1,999 or ₹1,799 in paise
       currency: "INR",
       name: "VastuWheels VIP Upgrade",
       description: "1-on-1 Consultation & Express Vastu Report",
@@ -112,8 +112,8 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
         setVipPaymentId(response?.razorpay_payment_id || ("PAY_VIP_" + Math.random().toString(36).substring(2, 10).toUpperCase()));
         
         // Trigger Facebook Pixel Upgrade Purchase Events:
-        trackPixelEvent("Purchase VIP Upgrade", { value: 1799, currency: "INR" });
-        trackPixelEvent("Purchase", { value: 1799, currency: "INR", content_name: "Vastu Wheels VIP Upgrade" });
+        trackPixelEvent("Purchase VIP Upgrade", { value: displayPrice, currency: "INR" });
+        trackPixelEvent("Purchase", { value: displayPrice, currency: "INR", content_name: "Vastu Wheels VIP Upgrade" });
       },
       prefill: {
         name: fullName || "Valued Customer",
@@ -121,6 +121,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
         contact: phone || "9217664304"
       },
       notes: {
+        payment_type: "popup_upgrade",
         unique_customer_id: activeCustomerId,
         original_payment_id: displayPaymentId,
         full_name: fullName,
@@ -290,24 +291,28 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
             {/* Action Buttons */}
             <div className="space-y-3 pt-1">
-              {!discountClaimed ? (
+              {!discountClaimed && (
                 <button
                   onClick={handleClaimDiscount}
-                  className="w-full bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:to-amber-600 text-white font-black text-sm sm:text-base py-4 rounded-2xl shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300"
+                  className="w-full bg-[#ea580c]/10 hover:bg-[#ea580c]/20 text-[#ea580c] font-extrabold text-xs sm:text-sm py-2.5 rounded-xl border border-orange-300 flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
-                  <Sparkles size={20} className="text-amber-200 animate-spin" />
+                  <Sparkles size={16} className="text-[#ea580c]" />
                   <span>{content.claimBtn}</span>
                 </button>
-              ) : (
-                <button
-                  onClick={handleOpenRazorpayUpgrade}
-                  disabled={isUpgrading}
-                  className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-black text-sm sm:text-base py-4 rounded-2xl shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-emerald-300"
-                >
-                  <CreditCard size={20} className="text-white shrink-0" />
-                  <span>{isUpgrading ? "Opening Payment Gateway..." : content.claimedBtn}</span>
-                </button>
               )}
+
+              <button
+                onClick={handleOpenRazorpayUpgrade}
+                disabled={isUpgrading}
+                className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-black text-sm sm:text-base py-4 rounded-2xl shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-emerald-300"
+              >
+                <CreditCard size={20} className="text-white shrink-0" />
+                <span>
+                  {isUpgrading 
+                    ? "Opening Payment Gateway..." 
+                    : (isHindi ? `Pay ₹${displayPrice} Now (पेमेंट करें)` : `Pay ₹${displayPrice} Now`)}
+                </span>
+              </button>
 
               <button
                 onClick={handleClosePopup}
