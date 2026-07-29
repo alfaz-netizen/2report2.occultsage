@@ -95,13 +95,28 @@ function doPost(e) {
     
     var payment = postData.payload.payment ? postData.payload.payment.entity : {};
     var notes = payment.notes || {};
-    
+
+    // -------------------------------------------------------------
+    // CRITICAL FILTER: ONLY PROCESS VASTUWHEELS LANDING PAGE PAYMENTS!
+    // -------------------------------------------------------------
+    var isVastuWheelsPayment = (
+      notes.payment_type === "form_checkout" ||
+      notes.payment_type === "popup_upgrade" ||
+      (notes.unique_customer_id && notes.unique_customer_id.indexOf("VW-") === 0)
+    );
+
+    if (!isVastuWheelsPayment) {
+      // IGNORE UNRELATED/EXTERNAL PAYMENTS (e.g. ₹799 payments from other products)
+      return ContentService.createTextOutput(JSON.stringify({ 
+        status: "ignored", 
+        message: "Not a VastuWheels landing page payment. Ignored." 
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
     var rawAmount = payment.amount ? payment.amount / 100 : 996;
     var formattedDate = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd-MM-yyyy HH:mm:ss");
     var paymentId = payment.id || "N/A";
-    
-    // Unique Customer ID passed from frontend notes (e.g. VW-91064188)
-    var uniqueCustomerId = notes.unique_customer_id || ("VW-" + Math.floor(10000000 + Math.random() * 90000000));
+    var uniqueCustomerId = notes.unique_customer_id;
     
     // Parse UTM details if present
     var utmDetails = {};
@@ -114,7 +129,6 @@ function doPost(e) {
     }
 
     var fullName = notes.full_name || notes.customer_name || "Valued Customer";
-    // Sanitize: If fullName accidentally contains a phone number, default to "Valued Customer"
     if (fullName === payment.contact || /^\+?\d{10,12}$/.test(fullName.trim())) {
       fullName = "Valued Customer";
     }
@@ -123,11 +137,12 @@ function doPost(e) {
     var email = notes.email_id || payment.email || "N/A";
 
     // -------------------------------------------------------------
-    // MULTI-INDICATOR POPUP UPGRADE DETECTION
+    // ROUTE TO "Popup Sheet" vs "996 Payments"
     // -------------------------------------------------------------
     var isPopupUpgrade = (
       notes.payment_type === "popup_upgrade" ||
       notes.upgrade_type === "VIP 1-on-1 Consultation" ||
+      notes.upgrade_type === "1-on-1 Consultation" ||
       (notes.original_payment_id && notes.original_payment_id !== "N/A") ||
       rawAmount >= 1500
     );
