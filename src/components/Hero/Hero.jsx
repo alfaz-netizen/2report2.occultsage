@@ -112,9 +112,9 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
 
             {/* 2. MASTER HEADLINE (Phone & Desktop) */}
             <div className="order-2 lg:order-2 pt-1 lg:pt-2">
-              <h1 className="text-2xl sm:text-3xl lg:text-[38px] xl:text-[42px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
-                Discover the <span className="orange-gradient-text">Hidden Energy </span> Your <br className="hidden sm:inline" />
-                <span className="orange-gradient-text">Health, Wealth, Relationships & Career</span>
+              <h1 className="text-2xl sm:text-3xl lg:text-[36px] xl:text-[40px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
+                Get Your <span className="orange-gradient-text">Personalized Vastu Report</span> <br className="hidden sm:inline" />
+                <span className="orange-gradient-text">Improve Your Health, Wealth, Relationships, Career</span>
               </h1>
             </div>
 
@@ -144,7 +144,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
             {/* 5. TARGET AUDIENCE SUB-TAGLINE */}
             <div className="order-5 lg:order-4 pt-1 lg:pt-2">
               <p className="text-sm md:text-base text-slate-700 font-semibold max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Report specially designed for Homeowners, Couples, Business Leaders, Architects & Property Buyers
+                Receive a customized Vastu analysis with actionable recommendations from Acharya Pankaj Ji
               </p>
             </div>
 
@@ -164,7 +164,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
         </div>
 
         {/* SLEEK FLOATING TRUST BAR Layer */}
-        <div className="mt-8 lg:mt-12 xl:mt-24 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
+        <div className="mt-4 lg:mt-2 xl:mt-3 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
           
           <div className="flex flex-col items-center justify-center space-y-0.5 border-b sm:border-b-0 sm:border-r border-orange-100 pb-2 sm:pb-0">
             <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>

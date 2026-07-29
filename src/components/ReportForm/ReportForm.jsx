@@ -106,7 +106,6 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     if (!formData.direction) newErrors.direction = true;
     if (!formData.concern) newErrors.concern = true;
     if (!formData.dob) newErrors.dob = true;
-    if (!formData.gender) newErrors.gender = true;
     if (!formData.phone || formData.phone.length < 10) newErrors.phone = true;
     if (!formData.email || !formData.email.includes("@")) newErrors.email = true;
     if (!formData.city.trim()) newErrors.city = true;
@@ -147,13 +146,15 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       ? "Vastu Wheels Hindi fb"
       : "Vastu Wheels English FB";
 
+    // Generate Unique Customer ID for tracking customer across payments (e.g. VW-84920193)
+    const uniqueCustomerId = "VW-" + Math.floor(10000000 + Math.random() * 90000000);
+
     const options = {
       key: keyId,
       amount: 1 * 100, // ₹996 in paise = 99600
       currency: "INR",
       name: "VastuWheels (Powered & Managed by GlobalInch)",
       description: "Personalised Vastu Science Report",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
       handler: function (response) {
         console.log("Razorpay Payment Success Response:", response);
         setIsSubmitting(false);
@@ -163,6 +164,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
             fullName: formData.fullName,
             phone: formData.phone,
             email: formData.email,
+            uniqueCustomerId: uniqueCustomerId,
             paymentId: response?.razorpay_payment_id || ("PAY_" + Math.random().toString(36).substring(2, 10).toUpperCase())
           });
         }
@@ -173,12 +175,13 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         contact: formData.phone
       },
       notes: {
+        unique_customer_id: uniqueCustomerId,
         full_name: formData.fullName,
         property_type: formData.propertyType,
         entrance_direction: formData.direction,
         primary_challenge: formData.concern,
         date_of_birth: formData.dob,
-        gender: formData.gender,
+        gender: "N/A",
         phone_number: formData.phone,
         email_id: formData.email,
         current_location: formData.city,
@@ -350,58 +353,21 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
               {errors.concern && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Primary Challenge Area</p>}
             </div>
 
-            {/* Date of Birth & Gender */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Date of Birth *</label>
-                <input 
-                  type="date"
-                  value={formData.dob}
-                  onChange={(e) => {
-                    setFormData({ ...formData, dob: e.target.value });
-                    if (errors.dob) setErrors({ ...errors, dob: false });
-                  }}
-                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                    errors.dob ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
-                  }`}
-                />
-                {errors.dob && <p className="text-[11px] text-rose-600 font-bold mt-1">Date of Birth is required</p>}
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Gender *</label>
-                <div className={`flex gap-3 p-1 rounded-xl transition-all ${errors.gender ? "border-2 border-rose-500 bg-rose-50/50" : ""}`}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormData({ ...formData, gender: "Male" });
-                      if (errors.gender) setErrors({ ...errors, gender: false });
-                    }}
-                    className={`w-1/2 py-3 text-xs font-extrabold rounded-xl border transition-all cursor-pointer ${
-                      formData.gender === "Male"
-                        ? "bg-orange-50 border-[#f97316] text-[#ea580c] shadow-sm"
-                        : "bg-slate-50 border-slate-300 text-slate-700 hover:border-orange-300"
-                    }`}
-                  >
-                    Male
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFormData({ ...formData, gender: "Female" });
-                      if (errors.gender) setErrors({ ...errors, gender: false });
-                    }}
-                    className={`w-1/2 py-3 text-xs font-extrabold rounded-xl border transition-all cursor-pointer ${
-                      formData.gender === "Female"
-                        ? "bg-orange-50 border-[#f97316] text-[#ea580c] shadow-sm"
-                        : "bg-slate-50 border-slate-300 text-slate-700 hover:border-orange-300"
-                    }`}
-                  >
-                    Female
-                  </button>
-                </div>
-                {errors.gender && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Gender</p>}
-              </div>
+            {/* Date of Birth */}
+            <div>
+              <label className="block text-xs font-bold text-slate-800 mb-1">Date of Birth *</label>
+              <input 
+                type="date"
+                value={formData.dob}
+                onChange={(e) => {
+                  setFormData({ ...formData, dob: e.target.value });
+                  if (errors.dob) setErrors({ ...errors, dob: false });
+                }}
+                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                  errors.dob ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+                }`}
+              />
+              {errors.dob && <p className="text-[11px] text-rose-600 font-bold mt-1">Date of Birth is required</p>}
             </div>
 
             {/* WhatsApp Phone Number */}

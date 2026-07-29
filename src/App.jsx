@@ -91,7 +91,8 @@ export default function App() {
       fullName: data.fullName || "",
       phone: data.phone || "",
       email: data.email || "",
-      paymentId: data.paymentId || ""
+      paymentId: data.paymentId || "",
+      uniqueCustomerId: data.uniqueCustomerId || ("VW-" + Math.floor(10000000 + Math.random() * 90000000))
     });
 
     const targetUrl = selectedLang === "Hindi" ? "/thankyou-hindi" : "/thankyou-english";
@@ -117,6 +118,7 @@ export default function App() {
         phone={orderInfo.phone} 
         email={orderInfo.email}
         paymentId={orderInfo.paymentId}
+        uniqueCustomerId={orderInfo.uniqueCustomerId}
         onBackToHome={handleBackToLanding} 
       />
     );

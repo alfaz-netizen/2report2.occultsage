@@ -1,67 +1,341 @@
-import React, { useEffect } from "react";
-import { Sparkles, ArrowLeft, ShieldCheck, CheckCircle2, Clock, Mail, Phone, CreditCard, FileCheck, User } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ArrowLeft, ShieldCheck, CheckCircle2, Clock, Mail, Phone, CreditCard, FileCheck, User, MessageCircle, X, Sparkles, Zap, Headphones, Gift, ShieldAlert } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
 
-export default function ThankYouPage({ selectedLanguage, fullName, phone, email, paymentId, onBackToHome }) {
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Fire Meta Facebook Pixel Purchase Triggers requested by user:
-    const isHindi = selectedLanguage === "Hindi";
-    if (isHindi) {
-      // Custom Event 'Purchase Hindi' & Standard Event 'Purchase'
-      trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels Hindi FB" });
-    } else {
-      // Custom Event 'Purchase English' & Standard Event 'Purchase'
-      trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English FB" });
-    }
-  }, [selectedLanguage]);
+export default function ThankYouPage({ selectedLanguage, fullName, phone, email, paymentId, uniqueCustomerId, onBackToHome }) {
+  // Interactive Popup States
+  const [showPopup, setShowPopup] = useState(true);
+  const [discountClaimed, setDiscountClaimed] = useState(false);
+  const [displayPrice, setDisplayPrice] = useState(1999);
+  const [isRolling, setIsRolling] = useState(false);
+  const [particles, setParticles] = useState([]);
+  const [isUpgrading, setIsUpgrading] = useState(false);
+  const [isVipUpgraded, setIsVipUpgraded] = useState(false);
+  const [vipPaymentId, setVipPaymentId] = useState("");
 
   const isHindi = selectedLanguage === "Hindi";
   const displayPaymentId = paymentId || ("pay_vw" + Math.random().toString(36).substring(2, 10).toUpperCase());
+  const activeCustomerId = uniqueCustomerId || ("VW-" + Math.floor(10000000 + Math.random() * 90000000));
 
-  // Content tailoring for Hindi vs English
+  // Dynamic URL Subroute Management: Shows /topop when popup is open, reverts when closed
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const baseRoute = isHindi ? "/thankyou-hindi" : "/thankyou-english";
+    if (showPopup) {
+      window.history.pushState({}, "", `${baseRoute}/topop`);
+    } else {
+      window.history.pushState({}, "", baseRoute);
+    }
+
+    // Fire Meta Facebook Pixel Purchase Triggers:
+    if (isHindi) {
+      trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true);
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels Hindi FB" });
+    } else {
+      trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English FB" });
+    }
+  }, [selectedLanguage, showPopup]);
+
+  // 🎉 Party Popper Confetti Burst & Fast Rolling Price Animation
+  const handleClaimDiscount = () => {
+    if (discountClaimed || isRolling) return;
+    setIsRolling(true);
+
+    // Generate 60 Explosive Confetti Particles
+    const colors = ["#f97316", "#25d366", "#eab308", "#3b82f6", "#ec4899", "#8b5cf6", "#14b8a6"];
+    const newParticles = Array.from({ length: 60 }).map((_, i) => ({
+      id: i,
+      x: 50 + (Math.random() - 0.5) * 60,
+      y: 50 + (Math.random() - 0.5) * 40,
+      size: Math.random() * 12 + 6,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    }));
+    setParticles(newParticles);
+
+    // Fast Rolling Number Counter Effect (1999 -> 1799)
+    let current = 1999;
+    const target = 1799;
+    const step = 20;
+    const interval = setInterval(() => {
+      current -= step;
+      if (current <= target) {
+        current = target;
+        clearInterval(interval);
+        setIsRolling(false);
+        setDiscountClaimed(true);
+      }
+      setDisplayPrice(current);
+    }, 40);
+  };
+
+  // Direct Razorpay Payment Gateway Trigger for ₹1,799 VIP Upgrade
+  const handleOpenRazorpayUpgrade = async () => {
+    setIsUpgrading(true);
+
+    const loadScript = () => {
+      return new Promise((resolve) => {
+        if (window.Razorpay) {
+          resolve(true);
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+    };
+
+    const isLoaded = await loadScript();
+    if (!isLoaded) {
+      alert("Razorpay payment gateway failed to load. Please check your internet connection.");
+      setIsUpgrading(false);
+      return;
+    }
+
+    const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_live_SSFQ4gpLaM0VXb";
+
+    const upgradeOptions = {
+      key: keyId,
+      amount: 1 * 100, // ₹1,799 in paise = 179900
+      currency: "INR",
+      name: "VastuWheels VIP Upgrade",
+      description: "1-on-1 Consultation & Express Vastu Report",
+      handler: function (response) {
+        console.log("VIP Upgrade Payment Success:", response);
+        setIsUpgrading(false);
+        setShowPopup(false);
+        setIsVipUpgraded(true);
+        setVipPaymentId(response?.razorpay_payment_id || ("PAY_VIP_" + Math.random().toString(36).substring(2, 10).toUpperCase()));
+        
+        // Trigger Facebook Pixel Upgrade Purchase Events:
+        trackPixelEvent("Purchase VIP Upgrade", { value: 1799, currency: "INR" });
+        trackPixelEvent("Purchase", { value: 1799, currency: "INR", content_name: "Vastu Wheels VIP Upgrade" });
+      },
+      prefill: {
+        name: fullName || "Valued Customer",
+        email: email || "globalinchpvt@gmail.com",
+        contact: phone || "9217664304"
+      },
+      notes: {
+        unique_customer_id: activeCustomerId,
+        original_payment_id: displayPaymentId,
+        full_name: fullName,
+        phone_number: phone,
+        email_id: email,
+        upgrade_type: "VIP 1-on-1 Consultation"
+      },
+      theme: {
+        color: "#ea580c"
+      },
+      modal: {
+        ondismiss: function () {
+          setIsUpgrading(false);
+        }
+      }
+    };
+
+    const rzp = new window.Razorpay(upgradeOptions);
+    rzp.open();
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    const baseRoute = isHindi ? "/thankyou-hindi" : "/thankyou-english";
+    window.history.pushState({}, "", baseRoute);
+  };
+
+  // Clean professional content tailoring for Hindi vs English
   const content = isHindi ? {
-    badge: "भुगतान सफलतापूर्वक पूरा हुआ!",
-    mainTitle: "✨ धन्यवाद! आपका ऑर्डर सफलतापूर्वक प्राप्त हो गया है ✨",
-    subMessage: "आपने 100% सटीक वैदिक वास्तु समाधानों के साथ अपने जीवन, समृद्धि और स्वास्थ्य को बदलने की दिशा में पहला कदम उठाया है!",
+    badge: isVipUpgraded ? "🎉 VIP अपग्रेड भुगतान पूरा हुआ!" : "भुगतान सफलतापूर्वक पूरा हुआ (Payment Successful)",
+    mainTitle: isVipUpgraded ? "✨ बधाई हो! आपका VIP 1-on-1 अपग्रेड कंफ़र्म हो गया है ✨" : "धन्यवाद! आपका ऑर्डर सफलतापूर्वक प्राप्त हो गया है",
+    subMessage: isVipUpgraded 
+      ? "हमारी एक्सपर्ट वास्तु टीम जल्द ही आपसे 1-on-1 कंसल्टेशन सेशन एवं इमीडिएट रिपोर्ट डिलीवरी के लिए संपर्क करेगी।"
+      : "आपकी 16-ज़ोन वैदिक वास्तु विश्लेषण रिपोर्ट तैयार की जा रही है और 48 घंटे के भीतर डिलीवर कर दी जाएगी।",
+    whatsappGroupTitle: "आधिकारिक WhatsApp ग्रुप जॉइन करें",
+    whatsappBtnText: "WhatsApp ग्रुप जॉइन करें",
     summaryTitle: "ऑर्डर एवं भुगतान विवरण (Payment Receipt)",
-    teamNoticeTitle: "📞 हमारी टीम आपसे संपर्क करेगी (48 Hours Assurance)",
-    teamNoticeText: `हमारी एक्सपर्ट एस्ट्रो-वास्तु टीम अगले 48 घंटे के भीतर आपसे (+91 ${phone || 'XXXXXXXXXX'}) पर संपर्क करेगी और आपकी 16-ज़ोन वैदिक वास्तु विश्लेषण रिपोर्ट आपके WhatsApp और Email (${email || 'आपकी ईमेल आईडी'}) पर डिलीवर कर देगी।`,
-    supportContact: "किसी भी जानकारी के लिए हेल्पलाइन: +91 9217664304 | globalinchpvt@gmail.com"
+    teamNoticeTitle: "हमारी टीम आपसे संपर्क करेगी (48 Hours Assurance)",
+    teamNoticeText: `हमारी एक्सपर्ट वास्तु टीम अगले 48 घंटे के भीतर आपसे (+91 ${phone || 'XXXXXXXXXX'}) पर संपर्क करेगी और आपकी रिपोर्ट आपके WhatsApp एवं Email (${email || 'globalinchpvt@gmail.com'}) पर डिलीवर कर देगी।`,
+    supportContact: "हेल्पलाइन: +91 9217664304 | globalinchpvt@gmail.com",
+    // Popup Hindi Content
+    popupHeader: "🎁 बधाई हो! आप हमारे लकी कस्टमर हैं!",
+    popupSubHeader: "केवल आज के लिए विशेष VIP अपग्रेड ऑफर",
+    originalPriceLabel: "सामान्य कीमत:",
+    vipPriceLabel: "VIP अपग्रेड कीमत:",
+    benefit1: "📞 1-on-1 फ्री पर्सनल सेशन एक्सपर्ट आचार्य जी के साथ",
+    benefit2: "⚡ इमीडिएट इंस्टेंट रिपोर्ट (बिना किसी वेटिंग के)",
+    benefit3: "🤝 पर्सनल वास्तु एजेंट & गाइडेंस सपोर्ट",
+    claimBtn: "🎉 10% अतिरिक्त डिस्काउंट क्लेम करें",
+    claimedBtn: "🚀 ₹1,799 में VIP अपग्रेड करें (Direct Payment)",
+    dismissText: "नहीं धन्यवाद, स्टैंडर्ड रिपोर्ट ही रखें"
   } : {
-    badge: "Payment Completed Successfully!",
-    mainTitle: "✨ Thank You! Your Order Has Been Confirmed ✨",
-    subMessage: "You have taken the first step towards unlocking peace, prosperity, and growth with 100% Non-Demolition Vedic Vastu Analysis!",
+    badge: isVipUpgraded ? "🎉 VIP Upgrade Payment Completed!" : "Payment Completed Successfully",
+    mainTitle: isVipUpgraded ? "✨ Congratulations! Your VIP 1-on-1 Upgrade Is Confirmed ✨" : "Thank You! Your Order Has Been Confirmed",
+    subMessage: isVipUpgraded
+      ? "Our expert Vastu team will contact you shortly for your 1-on-1 consultation session and immediate express report delivery."
+      : "Your 16-Zone Personalized Vastu Report is being prepared and will be delivered within 48 hours.",
+    whatsappGroupTitle: "Join Official WhatsApp Group",
+    whatsappBtnText: "Join WhatsApp Group",
     summaryTitle: "Order & Payment Summary (Payment Receipt)",
-    teamNoticeTitle: "📞 Our Team Will Contact You (48 Hours Assurance)",
-    teamNoticeText: `Our expert Vastu team will contact you at (+91 ${phone || 'XXXXXXXXXX'}) within the next 48 hours and deliver your personalized 16-Zone Vastu Report directly to your WhatsApp & Email (${email || 'your email'}).`,
-    supportContact: "For any assistance, Helpline: +91 9217664304 | globalinchpvt@gmail.com"
+    teamNoticeTitle: "Our Team Will Contact You (48 Hours Assurance)",
+    teamNoticeText: `Our expert Vastu team will contact you at (+91 ${phone || 'XXXXXXXXXX'}) within the next 48 hours and deliver your personalized report directly to your WhatsApp & Email (${email || 'globalinchpvt@gmail.com'}).`,
+    supportContact: "Helpline: +91 9217664304 | globalinchpvt@gmail.com",
+    // Popup English Content
+    popupHeader: "🎁 CONGRATULATIONS! YOU ARE A LUCKY CUSTOMER!",
+    popupSubHeader: "Special VIP Upgrade Offer Only For Today",
+    originalPriceLabel: "Regular Price:",
+    vipPriceLabel: "VIP Upgrade Price:",
+    benefit1: "📞 1-on-1 Free Personal Consultation Session with Vastu Expert",
+    benefit2: "⚡ Immediate Express Vastu Report Delivery (Zero waiting)",
+    benefit3: "🤝 Dedicated Personal Vastu Agent & Guidance Support",
+    claimBtn: "🎉 Claim Extra 10% INSTANT Discount",
+    claimedBtn: "🚀 Upgrade VIP Order Now at ₹1,799",
+    dismissText: "No thanks, I will keep standard report"
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sora relative overflow-hidden flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-[#fffbf7] text-slate-900 font-sora relative overflow-hidden flex flex-col justify-between selection:bg-orange-500 selection:text-white">
       
-      {/* Deep Cosmic Starfield & Glowing Radial Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/40 via-slate-950 to-slate-950 pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-r from-orange-500/20 via-purple-500/20 to-amber-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
-      <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
+      {/* 🎁 LUCKY CUSTOMER VIP UPGRADE POPUP MODAL */}
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-fadeIn">
+          
+          {/* Confetti Party Popper Animation Burst */}
+          {particles.length > 0 && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden z-50">
+              {particles.map((p) => (
+                <div
+                  key={p.id}
+                  className="absolute rounded-full animate-ping"
+                  style={{
+                    left: `${p.x}%`,
+                    top: `${p.y}%`,
+                    width: `${p.size}px`,
+                    height: `${p.size}px`,
+                    backgroundColor: p.color,
+                    boxShadow: `0 0 12px ${p.color}`,
+                    transition: "all 1s ease-out"
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="bg-gradient-to-b from-white via-orange-50/40 to-amber-50 border-4 border-orange-400 max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden text-center space-y-5 animate-scaleUp">
+            
+            {/* Close Button */}
+            <button
+              onClick={handleClosePopup}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-white p-2 rounded-full border border-slate-200 shadow-sm transition-all cursor-pointer"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Lucky Tag Badge */}
+            <div className="inline-flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md animate-pulse">
+              <Gift size={15} />
+              <span>LUCKY CUSTOMER SPECIAL</span>
+            </div>
+
+            {/* Title & Subtitle */}
+            <div className="space-y-1">
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-sora leading-tight">
+                {content.popupHeader}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#ea580c] font-bold">
+                {content.popupSubHeader}
+              </p>
+            </div>
+
+            {/* Price Box with Fast Rolling Counter */}
+            <div className="bg-white border-2 border-orange-300 p-4 rounded-2xl shadow-inner space-y-2 relative">
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-xs text-slate-400 font-bold line-through">
+                  ₹4,999
+                </span>
+                <div className="flex items-baseline gap-1 text-2xl sm:text-3xl font-black text-[#ea580c] font-sora">
+                  <span className="text-sm font-bold text-slate-700">₹</span>
+                  <span className={`transition-all duration-100 ${isRolling ? "scale-125 text-emerald-600" : ""}`}>
+                    {displayPrice}
+                  </span>
+                </div>
+              </div>
+
+              {discountClaimed && (
+                <div className="inline-block bg-emerald-500 text-white text-[11px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider shadow-sm animate-bounce">
+                  ✨ EXTRA 10% DISCOUNT APPLIED (SAVE ₹3,200)
+                </div>
+              )}
+            </div>
+
+            {/* Included VIP Benefits */}
+            <div className="bg-orange-100/60 border border-orange-200 p-4 rounded-2xl text-left space-y-2.5 text-xs text-slate-800 font-semibold">
+              <div className="flex items-center gap-2 text-slate-900">
+                <Headphones size={16} className="text-[#ea580c] shrink-0" />
+                <span>{content.benefit1}</span>
+              </div>
+              <div className="flex items-center gap-2 text-slate-900">
+                <Zap size={16} className="text-[#ea580c] shrink-0" />
+                <span>{content.benefit2}</span>
+              </div>
+              <div className="flex items-center gap-2 text-slate-900">
+                <ShieldCheck size={16} className="text-[#ea580c] shrink-0" />
+                <span>{content.benefit3}</span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3 pt-1">
+              {!discountClaimed ? (
+                <button
+                  onClick={handleClaimDiscount}
+                  className="w-full bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600 hover:from-orange-600 hover:to-amber-600 text-white font-black text-sm sm:text-base py-4 rounded-2xl shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300"
+                >
+                  <Sparkles size={20} className="text-amber-200 animate-spin" />
+                  <span>{content.claimBtn}</span>
+                </button>
+              ) : (
+                <button
+                  onClick={handleOpenRazorpayUpgrade}
+                  disabled={isUpgrading}
+                  className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white font-black text-sm sm:text-base py-4 rounded-2xl shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-emerald-300"
+                >
+                  <CreditCard size={20} className="text-white shrink-0" />
+                  <span>{isUpgrading ? "Opening Payment Gateway..." : content.claimedBtn}</span>
+                </button>
+              )}
+
+              <button
+                onClick={handleClosePopup}
+                className="text-xs text-slate-500 hover:text-slate-800 font-bold underline transition-colors cursor-pointer block mx-auto"
+              >
+                {content.dismissText}
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* Ambient Radial Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/50 via-[#fffbf7] to-[#fff5ea] pointer-events-none" />
 
       {/* Top Header Bar */}
-      <header className="relative z-20 border-b border-slate-800/80 px-4 md:px-8 py-4 bg-slate-950/60 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+      <header className="relative z-20 border-b border-orange-200 px-4 md:px-8 py-4 bg-white/80 backdrop-blur-md">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
           <img 
             src={vwLogo} 
             alt="Vastu Wheels Logo" 
             onClick={onBackToHome}
-            className="h-9 md:h-11 w-auto object-contain brightness-110 cursor-pointer transition-transform hover:scale-105" 
+            className="h-9 md:h-11 w-auto object-contain cursor-pointer transition-transform hover:scale-105" 
           />
           <button
             onClick={onBackToHome}
-            className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-xs md:text-sm px-4 py-2 rounded-full transition-all border border-slate-700 cursor-pointer"
+            className="inline-flex items-center gap-2 bg-orange-50 hover:bg-orange-100 text-[#ea580c] font-bold text-xs md:text-sm px-4 py-2 rounded-full transition-all border border-orange-300 cursor-pointer shadow-sm"
           >
             <ArrowLeft size={16} />
             <span>Back to Homepage</span>
@@ -70,116 +344,124 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       </header>
 
       {/* Main Thank You & Payment Confirmation Content */}
-      <main className="relative z-20 max-w-2xl w-full mx-auto px-4 py-10 md:py-14 text-center space-y-8 flex-1 flex flex-col justify-center">
+      <main className="relative z-20 max-w-4xl md:max-w-5xl w-full mx-auto px-4 py-8 md:py-12 text-center space-y-6 flex-1 flex flex-col justify-center">
         
         {/* Success Confirmation Badge */}
-        <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-5 py-2.5 rounded-full text-xs md:text-sm font-extrabold text-emerald-400 mx-auto shadow-lg shadow-emerald-950/50">
-          <CheckCircle2 size={20} className="text-emerald-400 shrink-0" />
+        <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-300 px-4 py-2 rounded-full text-xs md:text-sm font-extrabold text-emerald-800 mx-auto shadow-sm">
+          <CheckCircle2 size={18} className="text-emerald-600 shrink-0" />
           <span>{content.badge}</span>
         </div>
 
-        {/* Main Title */}
-        <div className="space-y-3">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black font-sora leading-tight tracking-tight bg-gradient-to-r from-amber-200 via-orange-100 to-amber-300 bg-clip-text text-transparent">
+        {/* Clean Main Title */}
+        <div className="space-y-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold font-sora leading-tight tracking-tight text-slate-900">
             {content.mainTitle}
           </h1>
-          <p className="text-xs sm:text-sm md:text-base text-amber-200/90 font-semibold max-w-xl mx-auto leading-relaxed">
-            "{content.subMessage}"
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 font-semibold max-w-2xl mx-auto leading-relaxed">
+            {content.subMessage}
           </p>
         </div>
 
-        {/* Payment & Order Summary Receipt Box */}
-        <div className="bg-slate-900/90 border border-slate-800 p-6 md:p-8 rounded-3xl backdrop-blur-md text-left space-y-5 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
+        {/* 💬 CLEAN PROFESSIONAL WHATSAPP GROUP JOIN CTA BOX */}
+        <div className="bg-white border-2 border-emerald-500 p-6 md:p-8 rounded-3xl text-center space-y-4 shadow-lg relative overflow-hidden">
+          <h3 className="text-lg md:text-xl font-extrabold text-slate-900 font-sora">
+            {content.whatsappGroupTitle}
+          </h3>
 
-          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-            <h3 className="text-sm md:text-base font-extrabold text-white uppercase tracking-wider flex items-center gap-2">
-              <FileCheck size={20} className="text-amber-400" />
+          <div className="flex justify-center">
+            <a 
+              href="https://chat.whatsapp.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1ebd59] text-white font-black text-sm md:text-base px-10 py-4 rounded-full shadow-md shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all duration-200 transform hover:scale-[1.02] cursor-pointer border border-emerald-400"
+            >
+              <MessageCircle size={22} className="text-white shrink-0 fill-white" />
+              <span>{content.whatsappBtnText}</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Payment & Order Summary Receipt Box */}
+        <div className="bg-white border-2 border-orange-300 p-6 md:p-8 rounded-3xl text-left space-y-5 shadow-md relative overflow-hidden">
+          <div className="flex items-center justify-between border-b border-orange-200 pb-3">
+            <h3 className="text-xs md:text-sm font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2 font-sora">
+              <FileCheck size={18} className="text-[#ea580c]" />
               <span>{content.summaryTitle}</span>
             </h3>
-            <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
-              <ShieldCheck size={13} />
-              <span>PAID ₹996</span>
+            <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-extrabold px-3 py-0.5 rounded-full flex items-center gap-1">
+              <ShieldCheck size={13} className="text-emerald-700" />
+              <span>{isVipUpgraded ? "PAID ₹1,799 (VIP UPGRADE)" : "PAID ₹996"}</span>
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs md:text-sm">
-            <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/80 space-y-1">
-              <span className="text-slate-400 text-[11px] uppercase font-bold flex items-center gap-1.5">
-                <CreditCard size={14} className="text-orange-400" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-500 text-[10px] uppercase font-bold flex items-center gap-1.5">
+                <CreditCard size={13} className="text-[#ea580c]" />
                 <span>Payment ID</span>
               </span>
-              <p className="font-mono font-bold text-amber-300 text-xs md:text-sm truncate">
-                {displayPaymentId}
+              <p className="font-mono font-bold text-[#ea580c] text-xs truncate">
+                {isVipUpgraded ? vipPaymentId : displayPaymentId}
               </p>
             </div>
 
-            <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/80 space-y-1">
-              <span className="text-slate-400 text-[11px] uppercase font-bold flex items-center gap-1.5">
-                <User size={14} className="text-orange-400" />
+            <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-500 text-[10px] uppercase font-bold flex items-center gap-1.5">
+                <User size={13} className="text-[#ea580c]" />
                 <span>Customer Name</span>
               </span>
-              <p className="font-bold text-white text-xs md:text-sm truncate">
+              <p className="font-bold text-slate-900 text-xs truncate">
                 {fullName || "Valued Customer"}
               </p>
             </div>
 
-            <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/80 space-y-1">
-              <span className="text-slate-400 text-[11px] uppercase font-bold flex items-center gap-1.5">
-                <Phone size={14} className="text-orange-400" />
+            <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-500 text-[10px] uppercase font-bold flex items-center gap-1.5">
+                <Phone size={13} className="text-[#ea580c]" />
                 <span>WhatsApp Number</span>
               </span>
-              <p className="font-bold text-white text-xs md:text-sm">
+              <p className="font-bold text-slate-900 text-xs">
                 +91 {phone || "XXXXXXXXXX"}
               </p>
             </div>
 
-            <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/80 space-y-1">
-              <span className="text-slate-400 text-[11px] uppercase font-bold flex items-center gap-1.5">
-                <Mail size={14} className="text-orange-400" />
+            <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+              <span className="text-slate-500 text-[10px] uppercase font-bold flex items-center gap-1.5">
+                <Mail size={13} className="text-[#ea580c]" />
                 <span>Report Language</span>
               </span>
-              <p className="font-bold text-emerald-400 text-xs md:text-sm">
-                {selectedLanguage || "Hindi"} Report
+              <p className="font-bold text-emerald-700 text-xs">
+                {selectedLanguage || "Hindi"} Report {isVipUpgraded ? "(VIP 1-on-1)" : ""}
               </p>
             </div>
           </div>
 
-          <div className="bg-slate-950/40 p-3 rounded-xl border border-slate-800 text-xs text-slate-300 flex items-center gap-2">
-            <Mail size={14} className="text-slate-400 shrink-0" />
-            <span className="truncate">Email: {email || "globalinchpvt@gmail.com"}</span>
+          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-700 flex items-center gap-2">
+            <Mail size={14} className="text-[#ea580c] shrink-0" />
+            <span className="truncate font-semibold">Email: {email || "globalinchpvt@gmail.com"}</span>
           </div>
         </div>
 
         {/* 48 Hours Team Contact Assurance Notice */}
-        <div className="bg-gradient-to-r from-orange-950/60 via-slate-900/90 to-amber-950/60 border border-orange-500/40 p-6 md:p-8 rounded-3xl text-left space-y-3 shadow-xl backdrop-blur-md">
-          <h4 className="font-extrabold text-amber-300 text-sm md:text-base tracking-wide flex items-center gap-2">
-            <Clock size={20} className="text-orange-400 animate-pulse shrink-0" />
+        <div className="bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border border-orange-300 p-5 md:p-6 rounded-2xl text-left space-y-2 shadow-sm">
+          <h4 className="font-extrabold text-[#ea580c] text-xs md:text-sm tracking-wide flex items-center gap-2 font-sora">
+            <Clock size={18} className="text-[#ea580c] shrink-0" />
             <span>{content.teamNoticeTitle}</span>
           </h4>
-          <p className="text-xs sm:text-sm md:text-base text-slate-200 font-medium leading-relaxed">
+          <p className="text-xs text-slate-700 font-semibold leading-relaxed">
             {content.teamNoticeText}
           </p>
-          <div className="pt-2 border-t border-slate-800 text-[11px] md:text-xs text-slate-400 font-semibold">
+          <div className="pt-2 border-t border-orange-200 text-[11px] text-slate-600 font-bold">
             {content.supportContact}
-          </div>
-        </div>
-
-        {/* Target Shield Symbol Graphic */}
-        <div className="flex justify-center pt-2">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-amber-600 p-0.5 shadow-xl shadow-orange-500/20">
-            <div className="w-full h-full bg-slate-950 rounded-full flex items-center justify-center">
-              <ShieldCheck size={28} className="text-amber-400" />
-            </div>
           </div>
         </div>
 
       </main>
 
-      {/* Footer Disclaimer */}
-      <footer className="relative z-20 border-t border-slate-800/80 px-4 py-4 text-center text-xs text-slate-500 bg-slate-950/80">
+      {/* Footer */}
+      <footer className="relative z-20 border-t border-orange-200 px-4 py-3 text-center text-[11px] text-slate-600 font-semibold bg-white/90">
         <div className="max-w-4xl mx-auto">
-          Copyright 2026 - VastuWheels (Powered & Managed by GlobalInch) | Instant Support Helpline: +91 9217664304
+          Copyright 2026 - VastuWheels (Powered & Managed by GlobalInch) | Helpline: +91 9217664304
         </div>
       </footer>
 
