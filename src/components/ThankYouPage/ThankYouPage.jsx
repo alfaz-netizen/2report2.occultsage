@@ -158,6 +158,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       : "आपकी 16-ज़ोन वैदिक वास्तु विश्लेषण रिपोर्ट तैयार की जा रही है और 48 घंटे के भीतर डिलीवर कर दी जाएगी।",
     whatsappGroupTitle: "आधिकारिक WhatsApp ग्रुप जॉइन करें",
     whatsappBtnText: "WhatsApp ग्रुप जॉइन करें",
+    whatsappLink: "https://chat.whatsapp.com/EO8jo2u84lFLkpeIInf4He",
     summaryTitle: "ऑर्डर एवं भुगतान विवरण (Payment Receipt)",
     teamNoticeTitle: "हमारी टीम आपसे संपर्क करेगी (48 Hours Assurance)",
     teamNoticeText: `हमारी एक्सपर्ट वास्तु टीम अगले 48 घंटे के भीतर आपसे (+91 ${phone || 'XXXXXXXXXX'}) पर संपर्क करेगी और आपकी रिपोर्ट आपके WhatsApp एवं Email (${email || 'globalinchpvt@gmail.com'}) पर डिलीवर कर देगी।`,
@@ -181,6 +182,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       : "Your 16-Zone Personalized Vastu Report is being prepared and will be delivered within 48 hours.",
     whatsappGroupTitle: "Join Official WhatsApp Group",
     whatsappBtnText: "Join WhatsApp Group",
+    whatsappLink: "https://chat.whatsapp.com/EO8jo2u84lFLkpeIInf4He",
     summaryTitle: "Order & Payment Summary (Payment Receipt)",
     teamNoticeTitle: "Our Team Will Contact You (48 Hours Assurance)",
     teamNoticeText: `Our expert Vastu team will contact you at (+91 ${phone || 'XXXXXXXXXX'}) within the next 48 hours and deliver your personalized report directly to your WhatsApp & Email (${email || 'globalinchpvt@gmail.com'}).`,
@@ -375,7 +377,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
           <div className="flex justify-center">
             <a 
-              href="https://chat.whatsapp.com/EO8jo2u84lFLkpeIInf4He" 
+              href={content.whatsappLink} 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full sm:w-auto bg-[#25D366] hover:bg-[#1ebd59] text-white font-black text-sm md:text-base px-10 py-4 rounded-full shadow-md shadow-emerald-600/25 flex items-center justify-center gap-2.5 transition-all duration-200 transform hover:scale-[1.02] cursor-pointer border border-emerald-400"
