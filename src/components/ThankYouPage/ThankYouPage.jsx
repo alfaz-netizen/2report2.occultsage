@@ -56,8 +56,8 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     setParticles(newParticles);
 
     // Fast Rolling Number Counter Effect (1999 -> 1799)
-    let current = 1999;
-    const target = 1799;
+    let current = 1;
+    const target = 1;
     const step = 20;
     const interval = setInterval(() => {
       current -= step;
