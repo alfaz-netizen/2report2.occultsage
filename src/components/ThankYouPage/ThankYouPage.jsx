@@ -7,7 +7,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
   // Interactive Popup States
   const [showPopup, setShowPopup] = useState(true);
   const [discountClaimed, setDiscountClaimed] = useState(false);
-  const [displayPrice, setDisplayPrice] = useState(1);
+  const [displayPrice, setDisplayPrice] = useState(1999);
   const [isRolling, setIsRolling] = useState(false);
   const [particles, setParticles] = useState([]);
   const [isUpgrading, setIsUpgrading] = useState(false);
@@ -56,8 +56,8 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     setParticles(newParticles);
 
     // Fast Rolling Number Counter Effect (from ₹1,999 down to ₹1,799)
-    let current = 1;
-    const target = 1;
+    let current = 1999;
+    const target = 1799;
     const step = 20;
     const interval = setInterval(() => {
       current -= step;
@@ -104,7 +104,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       const orderRes = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: displayPrice * 100 })
+        body: JSON.stringify({ amount: 1 * 100 })
       });
       if (orderRes.ok) {
         const orderData = await orderRes.json();
@@ -118,7 +118,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
     const upgradeOptions = {
       key: keyId,
-      amount: displayPrice * 100, // ₹1,999 or ₹1,799 in paise
+      amount: 1 * 100, // ₹1,999 or ₹1,799 in paise
       currency: "INR",
       name: "VastuWheels Report Upgrade",
       description: "1-on-1 Consultation & Express Vastu Report",
