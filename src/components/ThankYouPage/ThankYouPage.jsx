@@ -104,7 +104,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       const orderRes = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: displayPrice * 100 })
+        body: JSON.stringify({ amount: 1 * 100 })
       });
       if (orderRes.ok) {
         const orderData = await orderRes.json();
