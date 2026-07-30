@@ -1,26 +1,31 @@
 /**
  * ====================================================================
- * VASTUWHEELS - RAZORPAY WEBHOOK + UNIQUE CUSTOMER ID + 2-TAB GOOGLE SHEETS SCRIPT (Code.gs)
+ * VASTUWHEELS - RAZORPAY WEBHOOK + WATI WHATSAPP AUTOMATION (Code.gs)
  * ====================================================================
  * 
- * IMPORTANT DEPLOYMENT STEPS:
- * 1. Open Google Sheets -> Extensions -> Apps Script
- * 2. Delete any extra files (like `code1.gs.gs`) on the left sidebar so only ONE `Code.gs` file exists!
- * 3. Replace all code in `Code.gs` with this code and click Save (Ctrl+S).
- * 4. Select `setupSheetHeaders` from the toolbar and click 'Run' ONCE to create both Tabs:
- *    - Tab 1: "996 Payments" (23 Columns)
- *    - Tab 2: "Popup Sheet" (7 Columns)
- * 5. CRITICAL: Click 'Deploy' -> 'Manage deployments' -> Edit (Pencil icon) -> Version: 'New version' -> 'Deploy'!
- *    (If you don't deploy a NEW VERSION, Razorpay will keep calling the old code!)
+ * INSTRUCTIONS:
+ * 1. Open Google Sheets -> Extensions -> Apps Script.
+ * 2. Delete all extra files on left sidebar so ONLY `Code.gs` exists!
+ * 3. Replace all code in `Code.gs` with this file and click Save (Ctrl + S).
+ * 4. Select `setupSheetHeaders` from top toolbar and click 'Run' ONCE to set headers for both Tabs.
+ * 5. Click 'Deploy' -> 'Manage deployments' -> Pencil (Edit) -> Version: 'New version' -> 'Deploy'!
+ * 6. TO SEND WHATSAPP MESSAGES AUTOMATICALLY:
+ *    - Click Clock icon ⏰ (Triggers) on left sidebar -> 'Add Trigger'.
+ *    - Function: `sendPendingWatiMessages`
+ *    - Event source: 'Time-driven' -> 'Minutes timer' -> 'Every 1 minute'.
+ *    - Click 'Save'!
  */
+
+// WATI CREDENTIALS
+var WATI_ENDPOINT = "https://live-mt-server.wati.io/10159161";
+var ACCESS_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImVjb212YXN0dXNoaWtoYXJAZ21haWwuY29tIiwibmFtZWlkIjoiZWNvbXZhc3R1c2hpa2hhckBnbWFpbC5jb20iLCJlbWFpbCI6ImVjb212YXN0dXNoaWtoYXJAZ21haWwuY29tIiwiYXV0aF90aW1lIjoiMDcvMjkvMjAyNiAwOToyNzoyNyIsInRlbmFudF9pZCI6IjEwMTU5MTYxIiwiZGJfbmFtZSI6Im10LXByb2QtVGVuYW50cyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFETUlOSVNUUkFUT1IiLCJleHAiOjI1MzQwMjMwMDgwMCwiaXNzIjoiQ2xhcmVfQUkiLCJhdWQiOiJDbGFyZV9BSSJ9.f33jZejei1JQ1rOi5LYcP26uxpu5YSmej5mztZqLN_w";
+var TEMPLATE_NAME = "vastu_wheels_report";
 
 // 1. ONE-CLICK SHEET HEADERS SETUP FUNCTION FOR 2 TABS
 function setupSheetHeaders() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   
-  // -------------------------------------------------------------
-  // TAB 1: 996 Payments (23 Columns)
-  // -------------------------------------------------------------
+  // TAB 1: 996 Payments (24 Columns)
   var sheet996 = ss.getSheetByName("996 Payments");
   if (!sheet996) {
     sheet996 = ss.insertSheet("996 Payments");
@@ -49,7 +54,8 @@ function setupSheetHeaders() {
     "UTM ID",                 // Col 20 (T)
     "UTM Platform",           // Col 21 (U)
     "UTM Creative Format",     // Col 22 (V)
-    "UTM Marketing Tactic"    // Col 23 (W)
+    "UTM Marketing Tactic",   // Col 23 (W)
+    "Wati Status"             // Col 24 (X) - WATI Status
   ];
   
   sheet996.getRange(1, 1, 1, headers996.length).setValues([headers996]);
@@ -60,9 +66,7 @@ function setupSheetHeaders() {
   headerRange996.setHorizontalAlignment("center");
   sheet996.setFrozenRows(1);
 
-  // -------------------------------------------------------------
-  // TAB 2: Popup Sheet (7 Columns for ₹1,799 / ₹1,999 Payments)
-  // -------------------------------------------------------------
+  // TAB 2: Popup Sheet (8 Columns for ₹1,799 / ₹1,999 Payments)
   var sheetPopup = ss.getSheetByName("Popup Sheet");
   if (!sheetPopup) {
     sheetPopup = ss.insertSheet("Popup Sheet");
@@ -75,7 +79,8 @@ function setupSheetHeaders() {
     "Amount (INR)",           // Col 4 (D) - ₹1,799 or ₹1,999
     "Full Name",              // Col 5 (E)
     "WhatsApp Phone Number",  // Col 6 (F)
-    "Original Payment ID"     // Col 7 (G) - ₹996 Original Payment ID
+    "Original Payment ID",    // Col 7 (G) - ₹996 Original Payment ID
+    "Wati Status"             // Col 8 (H) - WATI Status
   ];
 
   sheetPopup.getRange(1, 1, 1, headersPopup.length).setValues([headersPopup]);
@@ -96,9 +101,7 @@ function doPost(e) {
     var payment = postData.payload.payment ? postData.payload.payment.entity : {};
     var notes = payment.notes || {};
 
-    // -------------------------------------------------------------
-    // CRITICAL FILTER: ONLY PROCESS VASTUWHEELS LANDING PAGE PAYMENTS!
-    // -------------------------------------------------------------
+    // Filter: Only process VastuWheels landing page payments
     var isVastuWheelsPayment = (
       notes.payment_type === "form_checkout" ||
       notes.payment_type === "popup_upgrade" ||
@@ -106,26 +109,18 @@ function doPost(e) {
     );
 
     if (!isVastuWheelsPayment) {
-      // IGNORE UNRELATED/EXTERNAL PAYMENTS (e.g. ₹799 payments from other products)
-      return ContentService.createTextOutput(JSON.stringify({ 
-        status: "ignored", 
-        message: "Not a VastuWheels landing page payment. Ignored." 
-      })).setMimeType(ContentService.MimeType.JSON);
+      return ContentService.createTextOutput(JSON.stringify({ status: "ignored", message: "Not a VastuWheels payment. Ignored." }))
+        .setMimeType(ContentService.MimeType.JSON);
     }
 
     var rawAmount = payment.amount ? payment.amount / 100 : 996;
     var formattedDate = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd-MM-yyyy HH:mm:ss");
     var paymentId = payment.id || "N/A";
-    var uniqueCustomerId = notes.unique_customer_id;
+    var uniqueCustomerId = notes.unique_customer_id || "N/A";
     
-    // Parse UTM details if present
     var utmDetails = {};
     if (notes.utm_details) {
-      try {
-        utmDetails = JSON.parse(notes.utm_details);
-      } catch (err) {
-        utmDetails = {};
-      }
+      try { utmDetails = JSON.parse(notes.utm_details); } catch (err) {}
     }
 
     var fullName = notes.full_name || notes.customer_name || "Valued Customer";
@@ -136,9 +131,6 @@ function doPost(e) {
     var phone = notes.phone_number || payment.contact || "N/A";
     var email = notes.email_id || payment.email || "N/A";
 
-    // -------------------------------------------------------------
-    // ROUTE TO "Popup Sheet" vs "996 Payments"
-    // -------------------------------------------------------------
     var isPopupUpgrade = (
       notes.payment_type === "popup_upgrade" ||
       notes.upgrade_type === "VIP 1-on-1 Consultation" ||
@@ -148,11 +140,9 @@ function doPost(e) {
     );
 
     if (isPopupUpgrade) {
-      // 🚀 TAB 2: POPUP SHEET (₹1,799 / ₹1,999 Payments)
+      // TAB 2: Popup Sheet (Col H = Wati Status)
       var sheetPopup = ss.getSheetByName("Popup Sheet");
-      if (!sheetPopup) {
-        sheetPopup = ss.insertSheet("Popup Sheet");
-      }
+      if (!sheetPopup) sheetPopup = ss.insertSheet("Popup Sheet");
 
       var originalPaymentId = notes.original_payment_id || "N/A";
 
@@ -163,18 +153,17 @@ function doPost(e) {
         rawAmount.toFixed(2),
         fullName,
         phone,
-        originalPaymentId
+        originalPaymentId,
+        "PENDING"
       ]);
 
       return ContentService.createTextOutput(JSON.stringify({ status: "success", tab: "Popup Sheet", unique_customer_id: uniqueCustomerId }))
         .setMimeType(ContentService.MimeType.JSON);
 
     } else {
-      // 📄 TAB 1: 996 PAYMENTS (₹996 Checkout Payments)
+      // TAB 1: 996 Payments (Col X = Wati Status)
       var sheet996 = ss.getSheetByName("996 Payments");
-      if (!sheet996) {
-        sheet996 = ss.getSheetByName("Sheet1") || ss.getActiveSheet();
-      }
+      if (!sheet996) sheet996 = ss.getSheetByName("Sheet1") || ss.getActiveSheet();
 
       var reportLanguage = notes.report_language || "N/A";
       var propertyType = notes.property_type || "N/A";
@@ -217,7 +206,8 @@ function doPost(e) {
         utmId,
         utmPlatform,
         utmCreativeFormat,
-        utmMarketingTactic
+        utmMarketingTactic,
+        "PENDING"
       ]);
 
       return ContentService.createTextOutput(JSON.stringify({ status: "success", tab: "996 Payments", unique_customer_id: uniqueCustomerId }))
@@ -227,5 +217,109 @@ function doPost(e) {
   } catch (error) {
     return ContentService.createTextOutput(JSON.stringify({ status: "error", message: error.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// 3. STANDALONE WATI WHATSAPP SENDER FUNCTION (TRIGGER OR MANUAL RUN)
+function sendPendingWatiMessages() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Tab 1: 996 Payments -> Col D=Amount(4), Col E=Name(5), Col F=Phone(6), Col X=Wati Status(24)
+  var sheet996 = ss.getSheetByName("996 Payments");
+  if (sheet996) {
+    processSheetWati(sheet996, 5, 4, 6, 24);
+  }
+
+  // Tab 2: Popup Sheet -> Col D=Amount(4), Col E=Name(5), Col F=Phone(6), Col H=Wati Status(8)
+  var sheetPopup = ss.getSheetByName("Popup Sheet");
+  if (sheetPopup) {
+    processSheetWati(sheetPopup, 5, 4, 6, 8);
+  }
+}
+
+// Helper Function: Process Sheet Rows for WATI WhatsApp Message
+function processSheetWati(sheet, nameColIndex, amountColIndex, phoneColIndex, statusColIndex) {
+  var lastRow = sheet.getLastRow();
+  if (lastRow <= 1) return;
+
+  var dataRange = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn());
+  var values = dataRange.getValues();
+
+  for (var i = 0; i < values.length; i++) {
+    var row = values[i];
+    var currentStatus = String(row[statusColIndex - 1]).trim();
+
+    // Process rows marked PENDING, FAILED, or empty
+    if (currentStatus === "PENDING" || currentStatus.indexOf("FAILED") === 0 || currentStatus === "") {
+      var fullName = String(row[nameColIndex - 1]).trim() || "Valued Customer";
+      var amount = String(row[amountColIndex - 1]).trim() || "996";
+      var rawPhone = String(row[phoneColIndex - 1]).trim();
+
+      // Clean phone number format (e.g., 917217697887)
+      var cleanPhone = rawPhone.replace(/[^0-9]/g, "");
+      if (cleanPhone.length === 10) {
+        cleanPhone = "91" + cleanPhone;
+      }
+
+      if (!cleanPhone || cleanPhone.length < 10) {
+        sheet.getRange(i + 2, statusColIndex).setValue("FAILED: Invalid Phone");
+        continue;
+      }
+
+      var result = callWatiApiExact(cleanPhone, fullName, amount);
+
+      if (result.success) {
+        sheet.getRange(i + 2, statusColIndex).setValue("SENT");
+      } else {
+        sheet.getRange(i + 2, statusColIndex).setValue("FAILED: " + result.error);
+      }
+    }
+  }
+}
+
+// Helper Function: Exact WATI API Request matching {{full_name}} and {{amount_inr}}
+function callWatiApiExact(whatsappNumber, fullName, amount) {
+  try {
+    var url = WATI_ENDPOINT + "/api/v1/sendTemplateMessage?whatsappNumber=" + whatsappNumber;
+
+    // EXACT variable parameters from your WATI Dashboard Template: {{full_name}} and {{amount_inr}}
+    var payload = {
+      template_name: TEMPLATE_NAME,
+      broadcast_name: "vastu_wheels_report",
+      parameters: [
+        { name: "full_name", value: String(fullName) },
+        { name: "amount_inr", value: String(amount) }
+      ]
+    };
+
+    var options = {
+      method: "post",
+      contentType: "application/json",
+      headers: {
+        "Authorization": ACCESS_TOKEN
+      },
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    };
+
+    var response = UrlFetchApp.fetch(url, options);
+    var resCode = response.getResponseCode();
+    var resText = response.getContentText();
+
+    Logger.log("WATI Response [" + resCode + "]: " + resText);
+
+    if (resCode === 200 || resCode === 201) {
+      var resJson = JSON.parse(resText);
+      if (resJson.result === true || resJson.status === "SUCCESS" || resJson.validWhatsAppNumber === true || resJson.isSuccessful === true) {
+        return { success: true };
+      } else {
+        return { success: false, error: resJson.info || resJson.message || resText };
+      }
+    } else {
+      return { success: false, error: "HTTP " + resCode + ": " + resText };
+    }
+
+  } catch (err) {
+    return { success: false, error: err.toString() };
   }
 }

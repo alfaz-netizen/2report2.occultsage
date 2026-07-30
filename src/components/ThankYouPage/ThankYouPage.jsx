@@ -7,7 +7,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
   // Interactive Popup States
   const [showPopup, setShowPopup] = useState(true);
   const [discountClaimed, setDiscountClaimed] = useState(false);
-  const [displayPrice, setDisplayPrice] = useState(1);
+  const [displayPrice, setDisplayPrice] = useState(1999);
   const [isRolling, setIsRolling] = useState(false);
   const [particles, setParticles] = useState([]);
   const [isUpgrading, setIsUpgrading] = useState(false);
@@ -55,9 +55,9 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     }));
     setParticles(newParticles);
 
-    // Fast Rolling Number Counter Effect
-    let current = 1;
-    const target = 1;
+    // Fast Rolling Number Counter Effect (from ₹1,999 down to ₹1,799)
+    let current = 1999;
+    const target = 1799;
     const step = 20;
     const interval = setInterval(() => {
       current -= step;
