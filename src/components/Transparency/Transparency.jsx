@@ -121,14 +121,14 @@ export default function Transparency() {
       <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="bg-orange-500/10 text-[#ea580c] border border-orange-300 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
+        <div className="text-center max-w-3xl mx-auto flex flex-col items-center">
+          <span className="inline-block bg-orange-500/10 text-[#ea580c] border border-orange-300 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-3 sm:mb-4">
             Verified Success Stories (10,000+ Reviews)
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 font-sora">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 font-sora leading-tight sm:leading-snug mb-3">
             Trusted By Over <span className="orange-gradient-text">60,000+ Indian Families</span>
           </h2>
-          <p className="text-slate-600 text-base font-medium">
+          <p className="text-slate-600 text-xs sm:text-base font-medium leading-relaxed">
             See real experiences from homeowners and business owners across India who transformed their wealth, health, and family peace using Acharya Ji's zero-demolition remedies.
           </p>
         </div>

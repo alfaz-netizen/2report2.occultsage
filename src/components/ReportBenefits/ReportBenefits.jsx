@@ -126,9 +126,9 @@ export default function ReportBenefits({ onNavigateCheckout }) {
             <ArrowRight size={20} className="text-white shrink-0" />
           </button>
 
-          <p className="text-xs text-slate-500 font-medium">
+          {/* <p className="text-xs text-slate-500 font-medium">
             100% Non-Demolition Remedies • Personalised Vastu PDF Analysis
-          </p>
+          </p> */}
         </div>
 
       </div>

@@ -4,7 +4,7 @@ import {
   Award, Star, 
   ShieldCheck, ArrowRight, Sparkles, Lock 
 } from "lucide-react";
-import acharyaGroupImg from "../../assets/Elite Presentation (1).png";
+import acharyaGroupImg from "../../assets/Elite Presentation (1).webp";
 import vwLogo from "../../assets/VW-HR.png";
 
 export default function Hero({ onNavigateCheckout, onBackToHome }) {
@@ -124,6 +124,8 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
                 src={acharyaGroupImg} 
                 alt="Acharya Ji - Vastu Scholar Energy Graphics" 
                 className="hero-acharya-img"
+                fetchPriority="high"
+                decoding="sync"
               />
             </div>
 
@@ -157,34 +159,36 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
                 src={acharyaGroupImg} 
                 alt="Acharya Ji - Vastu Scholar Energy Graphics" 
                 className="hero-acharya-img"
+                fetchPriority="high"
+                decoding="sync"
               />
             </div>
           </div>
 
         </div>
 
-        {/* SLEEK FLOATING TRUST BAR Layer */}
-        <div className="mt-4 lg:mt-2 xl:mt-3 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-3.5 sm:p-4 md:p-5 rounded-3xl shadow-xl w-full grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 items-center justify-between text-center relative z-20">
+        {/* SLEEK FLOATING TRUST BAR Layer - 1 Single Row Across Mobile & Desktop */}
+        <div className="mt-4 lg:mt-2 xl:mt-3 bg-white/95 backdrop-blur-md border-2 border-orange-200 p-2 sm:p-4 md:p-5 rounded-2xl sm:rounded-3xl shadow-xl w-full grid grid-cols-3 gap-1 sm:gap-4 items-center justify-between text-center relative z-20">
           
-          <div className="flex flex-col items-center justify-center space-y-0.5 border-b sm:border-b-0 sm:border-r border-orange-100 pb-2 sm:pb-0">
-            <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>
-            <span className="text-[10px] sm:text-xs text-slate-600 font-bold">Happy Consultations</span>
+          <div className="flex flex-col items-center justify-center space-y-0.5 border-r border-orange-100 pr-1 sm:pr-0">
+            <span className="text-xs sm:text-xl md:text-2xl font-extrabold text-[#ea580c] font-sora">60,000+</span>
+            <span className="text-[8px] sm:text-xs text-slate-600 font-bold leading-tight">Happy Consultations</span>
           </div>
 
-          <div className="flex flex-col items-center justify-center space-y-0.5 border-b sm:border-b-0 sm:border-r border-orange-100 pb-2 sm:pb-0">
-            <div className="flex items-center gap-1 text-lg sm:text-xl md:text-2xl font-extrabold text-amber-500 font-sora">
-              <Star size={18} className="fill-amber-500" />
+          <div className="flex flex-col items-center justify-center space-y-0.5 border-r border-orange-100 px-1 sm:px-0">
+            <div className="flex items-center gap-0.5 sm:gap-1 text-xs sm:text-xl md:text-2xl font-extrabold text-amber-500 font-sora">
+              <Star size={12} className="fill-amber-500 shrink-0 sm:w-5 sm:h-5" />
               <span>4.7 / 5</span>
             </div>
-            <span className="text-[10px] sm:text-xs text-slate-600 font-bold">12,840+ User Reviews</span>
+            <span className="text-[8px] sm:text-xs text-slate-600 font-bold leading-tight">12,840+ User Reviews</span>
           </div>
 
-          <div className="flex flex-col items-center justify-center space-y-0.5">
-            <div className="flex items-center gap-1 text-[11px] sm:text-xs md:text-sm font-extrabold text-emerald-700">
-              <ShieldCheck size={16} className="text-emerald-600" />
+          <div className="flex flex-col items-center justify-center space-y-0.5 pl-1 sm:pl-0">
+            <div className="flex items-center gap-0.5 sm:gap-1 text-[9px] sm:text-xs md:text-sm font-extrabold text-emerald-700">
+              <ShieldCheck size={12} className="text-emerald-600 shrink-0 sm:w-4 sm:h-4" />
               <span>100% Non-Demolition</span>
             </div>
-            <span className="text-[10px] sm:text-xs text-slate-600 font-bold">Zero Wall Breaking</span>
+            <span className="text-[8px] sm:text-xs text-slate-600 font-bold leading-tight">Zero Wall Breaking</span>
           </div>
 
         </div>

@@ -205,16 +205,16 @@ export default function ReportValueStack({ onNavigateCheckout }) {
                 </div>
 
                 {/* Active Page Caption & Key Highlights */}
-                <div className="space-y-2 pt-1 text-left">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-base font-extrabold text-slate-900 font-sora">
-                      {activePage.subtitle}
-                    </h3>
-                    <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-orange-50 text-[#ea580c] border border-orange-200 shrink-0">
+                <div className="space-y-1.5 pt-1 text-left">
+                  <div className="flex flex-col items-start gap-1">
+                    <span className="inline-block text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-orange-100/80 text-[#ea580c] border border-orange-300/80">
                       {activePage.badge}
                     </span>
+                    <h3 className="text-sm sm:text-base md:text-lg font-extrabold text-slate-900 font-sora leading-snug w-full">
+                      {activePage.subtitle}
+                    </h3>
                   </div>
-                  <p className="text-xs text-slate-600 font-medium leading-snug">
+                  <p className="text-xs text-slate-600 font-medium leading-snug pt-0.5">
                     {activePage.desc}
                   </p>
                 </div>
