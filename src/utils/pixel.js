@@ -1,4 +1,4 @@
-// Safe Meta Facebook Pixel Helper (Pixel ID: 784709589609056)
+// Safe Meta Facebook Pixel Helper (Pixel ID: 1784709589609056)
 export const trackPixelEvent = (eventName, params = {}, isCustom = false) => {
   if (typeof window !== "undefined" && window.fbq) {
     try {

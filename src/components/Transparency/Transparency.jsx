@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Transparency.css";
 import { Star, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -12,6 +12,12 @@ import indianItProImg from "../../assets/indian_it_pro_review.png";
 import indianLawyerFemaleImg from "../../assets/indian_lawyer_female_review.png";
 import indianTechFounderImg from "../../assets/indian_tech_founder_review.png";
 import indianHomemakerImg from "../../assets/indian_homemaker_woman_review.png";
+import indianDoctorImg from "../../assets/indian_doctor_review.png";
+import indianEngineerImg from "../../assets/indian_engineer_review.png";
+import indianTraderImg from "../../assets/indian_trader_review.png";
+import indianConsultantImg from "../../assets/indian_consultant_review.png";
+import indianTeacherImg from "../../assets/indian_teacher_review.png";
+import indianStoreOwnerImg from "../../assets/indian_store_owner_review.png";
 
 export default function Transparency() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -96,6 +102,54 @@ export default function Transparency() {
       issue: "Ancestral property sale stuck for 2 years without buyers",
       result: "Applied West Varun zone remedy as per report instructions. Property sold at full market price within 45 days!",
       image: indianHomemakerImg
+    },
+    {
+      name: "Amitabh & Neha Banerjee",
+      location: "Kolkata, West Bengal",
+      rating: 5,
+      issue: "North-West storage defect causing repeated loan rejections",
+      result: "Placed elemental metal strip and brass spiral. Received ₹25 Lakh commercial loan approval within 3 weeks!",
+      image: indianTraderImg
+    },
+    {
+      name: "Sunil Kumar Nair",
+      location: "Kochi, Kerala",
+      rating: 5,
+      issue: "South-West main entrance causing high employee turnover",
+      result: "Applied copper door boundary remedy. Team stability, office productivity, and client trust restored completely!",
+      image: indianEngineerImg
+    },
+    {
+      name: "Meenakshi & Suresh Sundaram",
+      location: "Madurai, Tamil Nadu",
+      rating: 5,
+      issue: "East zone kitchen defect creating health lethargy & fatigue",
+      result: "Installed green marble stone base & elemental air balancing remedy. Health & energy levels improved remarkably!",
+      image: indianDoctorImg
+    },
+    {
+      name: "Deepak & Shalini Joshi",
+      location: "Dehradun, Uttarakhand",
+      rating: 5,
+      issue: "South-East bedroom defect causing sudden household cash drain",
+      result: "Shifted bed alignment to South-West and placed red zone element. Monthly savings increased by 40% in 30 days!",
+      image: indianConsultantImg
+    },
+    {
+      name: "Manish & Pooja Chawla",
+      location: "Ludhiana, Punjab",
+      rating: 5,
+      issue: "North-East toilet creating severe career blockage & stagnation",
+      result: "Applied Acharya Ji's zero-demolition color tape & crystal pyramid remedy. Received dream job offer in top MNC!",
+      image: indianTeacherImg
+    },
+    {
+      name: "Harish Chandra Patel",
+      location: "Indore, Madhya Pradesh",
+      rating: 5,
+      issue: "West zone energy defect blocking commercial showroom footfall",
+      result: "Placed West Varun element & brass helix as advised. Showroom footfall and sales doubled in 30 days!",
+      image: indianStoreOwnerImg
     }
   ];
 
@@ -106,7 +160,18 @@ export default function Transparency() {
     { label: "ISO Certified Rating", val: "4.7 / 5" }
   ];
 
-  const maxIndex = reviews.length - 3; // 10 reviews -> 7 slides for 3-card view
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxIndex = isMobile ? reviews.length - 1 : reviews.length - 3;
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
@@ -167,8 +232,8 @@ export default function Transparency() {
           {/* Carousel Track Wrapper */}
           <div className="overflow-hidden rounded-3xl">
             <div 
-              className="flex transition-transform duration-500 ease-out gap-6"
-              style={{ transform: `translateX(-${currentIndex * (100 / 3 + 0.8)}%)` }}
+              className="flex transition-transform duration-500 ease-out gap-0 md:gap-6"
+              style={{ transform: `translateX(-${currentIndex * (isMobile ? 100 : (100 / 3 + 0.8))}%)` }}
             >
               {reviews.map((r, idx) => (
                 <div 
@@ -223,19 +288,50 @@ export default function Transparency() {
               <ChevronLeft size={20} />
             </button>
 
-            {/* Pagination Dot Indicators */}
+            {/* Smart 5-Dot Dynamic Sliding Window Pagination */}
             <div className="flex justify-center items-center gap-2">
-              {[...Array(maxIndex + 1)].map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                    currentIndex === idx 
-                      ? "w-8 bg-[#ea580c]" 
-                      : "w-2.5 bg-orange-200 hover:bg-orange-300"
-                  }`}
-                />
-              ))}
+              {(() => {
+                const totalDots = maxIndex + 1;
+                const maxVisibleDots = 5;
+                
+                if (totalDots <= maxVisibleDots) {
+                  return [...Array(totalDots)].map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        currentIndex === idx 
+                          ? "w-8 bg-[#ea580c]" 
+                          : "w-2.5 bg-orange-200 hover:bg-orange-300"
+                      }`}
+                    />
+                  ));
+                }
+
+                // Dynamic 5-dot sliding window logic centered around currentIndex
+                let start = Math.max(0, Math.min(currentIndex - 2, totalDots - maxVisibleDots));
+                let end = start + maxVisibleDots;
+
+                const visibleDots = [];
+                for (let i = start; i < end; i++) {
+                  visibleDots.push(i);
+                }
+
+                return visibleDots.map((dotIdx) => {
+                  const isActive = currentIndex === dotIdx;
+                  return (
+                    <button
+                      key={dotIdx}
+                      onClick={() => setCurrentIndex(dotIdx)}
+                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                        isActive 
+                          ? "w-8 bg-[#ea580c]" 
+                          : "w-2.5 bg-orange-200 hover:bg-orange-300"
+                      }`}
+                    />
+                  );
+                });
+              })()}
             </div>
 
             <button
