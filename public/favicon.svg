@@ -1,32 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <defs>
-    <linearGradient id="vwOrangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff9f43"/>
-      <stop offset="50%" stop-color="#f97316"/>
-      <stop offset="100%" stop-color="#ea580c"/>
-    </linearGradient>
-    <linearGradient id="vwBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#fff5eb"/>
-    </linearGradient>
-    <filter id="vwShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#ea580c" flood-opacity="0.25"/>
-    </filter>
-  </defs>
+  <!-- White Circle Background -->
+  <circle cx="256" cy="256" r="256" fill="#ffffff"/>
   
-  <!-- Rounded Square Container -->
-  <rect width="512" height="512" rx="128" fill="url(#vwBgGrad)"/>
-  <rect width="500" height="500" x="6" y="6" rx="122" fill="none" stroke="#f97316" stroke-width="8" stroke-opacity="0.2"/>
-
-  <!-- VastuWheels Stylized 'W' Symbol -->
-  <path d="M 96,140 L 176,380 L 256,230 L 336,380 L 416,140" 
-        fill="none" 
-        stroke="url(#vwOrangeGrad)" 
-        stroke-width="54" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-        filter="url(#vwShadow)"/>
-  
-  <!-- Central Diamond Sparkle accent -->
-  <circle cx="256" cy="150" r="24" fill="#ea580c"/>
+  <!-- Exact VastuWheels Double-V Logo Symbol -->
+  <g transform="translate(0, 5)">
+    <!-- Left Dark Grey V -->
+    <path d="M 100,135 L 205,375 L 310,135" 
+          fill="none" 
+          stroke="#525659" 
+          stroke-width="52" 
+          stroke-linecap="butt" 
+          stroke-linejoin="miter"/>
+    
+    <!-- Right Orange V -->
+    <path d="M 202,135 L 307,375 L 412,135" 
+          fill="none" 
+          stroke="#f26522" 
+          stroke-width="52" 
+          stroke-linecap="butt" 
+          stroke-linejoin="miter"/>
+  </g>
 </svg>
