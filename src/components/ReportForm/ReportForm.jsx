@@ -152,7 +152,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       const orderRes = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 996 * 100 }) // ₹996 in paise = 99600
+        body: JSON.stringify({ amount: 1499 * 100 }) // ₹996 in paise = 99600
       });
       if (orderRes.ok) {
         const orderData = await orderRes.json();
@@ -169,7 +169,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
     const options = {
       key: keyId,
-      amount: 996 * 100, // ₹996 in paise = 99600
+      amount: 1499 * 100, // ₹996 in paise = 99600
       currency: "INR",
       name: "VastuWheels (Powered & Managed by GlobalInch)",
       description: "Personalised Vastu Science Report",
