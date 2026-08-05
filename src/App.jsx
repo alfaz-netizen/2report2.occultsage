@@ -46,12 +46,13 @@ export default function App() {
         setCurrentPage("thankyou");
       } else if (rawPath.includes("checkout")) {
         setCurrentPage("checkout");
-      } else if (rawPath.includes("privacy") || rawPath.includes("tnc") || rawPath.includes("about") || rawPath.includes("refund") || rawPath.includes("disclaimer") || rawPath.includes("legal")) {
+      } else if (rawPath.includes("privacy") || rawPath.includes("tnc") || rawPath.includes("about") || rawPath.includes("refund") || rawPath.includes("disclaimer") || rawPath.includes("contact") || rawPath.includes("legal")) {
         setCurrentPage("legal");
         if (rawPath.includes("tnc")) setActiveLegalDoc("tnc");
         else if (rawPath.includes("about")) setActiveLegalDoc("about");
         else if (rawPath.includes("refund")) setActiveLegalDoc("refund");
         else if (rawPath.includes("disclaimer")) setActiveLegalDoc("disclaimer");
+        else if (rawPath.includes("contact")) setActiveLegalDoc("contact");
         else setActiveLegalDoc("privacy");
       } else {
         setCurrentPage("landing");

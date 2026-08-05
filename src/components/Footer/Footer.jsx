@@ -75,7 +75,7 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
                   onClick={() => onNavigateLegal("refund")} 
                   className="hover:text-orange-400 transition-colors cursor-pointer text-amber-300 font-bold"
                 >
-                  Refund & Cancellation (Non-Refundable Policy)
+                  Refund & Cancellation Policy
                 </button>
               </li>
               <li>
@@ -84,6 +84,14 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
                   className="hover:text-orange-400 transition-colors cursor-pointer"
                 >
                   Disclaimer
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigateLegal("contact")} 
+                  className="hover:text-orange-400 transition-colors cursor-pointer text-emerald-400 font-bold"
+                >
+                  Contact Us
                 </button>
               </li>
             </ul>
@@ -143,26 +151,26 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
           
           {/* Corporate Details */}
           <div className="text-slate-300 font-semibold space-y-1">
-            <p>VastuWheels (Powered & Managed by GlobalInch) | globalinchpvt@gmail.com</p>
+            <p>astrosamhita.com (VastuWheels Powered & Managed by GlobalInch Private Limited) | globalinchpvt@gmail.com</p>
             <p className="text-slate-400 font-normal">Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075 | Phone: +91 9217664304</p>
           </div>
 
           {/* Meta & Google Disclaimers */}
           <div className="space-y-1 text-slate-500 leading-relaxed max-w-4xl mx-auto">
             <p>
-              VastuWheels Private Limited is not a part of Facebook.com or Facebook Inc or Google.com or Google Inc.
+              astrosamhita.com and GlobalInch Private Limited are not a part of Facebook.com or Facebook Inc or Google.com or Google Inc.
             </p>
             <p>
-              Additionally, VastuWheels Private Limited is not endorsed by Facebook.com or Facebook Inc or Google.com or Google Inc.
+              Additionally, astrosamhita.com is not endorsed by Facebook.com or Facebook Inc or Google.com or Google Inc.
             </p>
             <p className="text-amber-400/90 font-medium pt-1">
-              * Refund Notice: All digital Vastu reports & services purchased on this platform are custom generated and strictly NON-REFUNDABLE under any circumstances.
+              * Refund Notice: All digital Vastu reports & services purchased on astrosamhita.com are custom generated and strictly NON-REFUNDABLE under any circumstances.
             </p>
           </div>
 
           {/* Copyright */}
           <div className="text-slate-400 font-bold text-xs pt-2">
-            Copyright 2026 - VastuWheels Private Limited. All Rights Reserved.
+            Copyright 2026 - astrosamhita.com (GlobalInch Private Limited). All Rights Reserved.
           </div>
 
         </div>
