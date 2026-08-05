@@ -15,7 +15,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       content: (
         <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
           <p className="text-base font-medium text-slate-800">
-            This Privacy Policy applies to the website <strong>astrosamhita.com</strong> ("Website"), which is owned, operated, and managed by <strong>GlobalInch Private Limited</strong> ("Company", "We", "Us", "Our"), providing <strong>VastuWheels</strong> personalized Vastu analysis reports and architectural consultation services.
+            This Privacy Policy applies to the website <strong>report.occultsage.com</strong> ("Website"), which is owned, operated, and managed by <strong>GlobalInch Private Limited</strong> ("Company", "We", "Us", "Our"), providing <strong>VastuWheels</strong> personalized Vastu analysis reports and architectural consultation services.
           </p>
           <p>
             Registered Address: <strong>GlobalInch Private Limited, Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</strong>. Contact Email: <strong>globalinchpvt@gmail.com</strong> | Phone: <strong>+91 9217664304</strong>.
@@ -24,7 +24,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
           <div className="border-l-4 border-emerald-500 pl-4 py-1 bg-emerald-50/40 rounded-r-xl">
             <h4 className="font-extrabold text-slate-900 text-base">1. Information We Collect</h4>
             <p className="mt-1 text-slate-600">
-              When you place an order on <strong>astrosamhita.com</strong>, we collect personal information voluntarily provided by you, including your Full Name, Email Address, WhatsApp Phone Number, Date of Birth, Property Type, Main Entrance Direction, Primary Vastu Challenge, and Current City.
+              When you place an order on <strong>report.occultsage.com</strong>, we collect personal information voluntarily provided by you, including your Full Name, Email Address, WhatsApp Phone Number, Date of Birth, Property Type, Main Entrance Direction, Primary Vastu Challenge, and Current City.
             </p>
           </div>
 
@@ -38,14 +38,14 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
           <div className="border-l-4 border-emerald-500 pl-4 py-1 bg-emerald-50/40 rounded-r-xl">
             <h4 className="font-extrabold text-slate-900 text-base">3. Payment Security & Processing</h4>
             <p className="mt-1 text-slate-600">
-              All payments made on <strong>astrosamhita.com</strong> are processed securely under <strong>GlobalInch Private Limited</strong> through PCI-DSS compliant payment gateways (Razorpay) using 256-bit SSL encryption. We do NOT store or retain credit card numbers, net banking credentials, or UPI PINs.
+              All payments made on <strong>report.occultsage.com</strong> are processed securely under <strong>GlobalInch Private Limited</strong> through PCI-DSS compliant payment gateways (Razorpay) using 256-bit SSL encryption. We do NOT store or retain credit card numbers, net banking credentials, or UPI PINs.
             </p>
           </div>
 
           <div className="border-l-4 border-emerald-500 pl-4 py-1 bg-emerald-50/40 rounded-r-xl">
             <h4 className="font-extrabold text-slate-900 text-base">4. Data Sharing & Third Parties</h4>
             <p className="mt-1 text-slate-600">
-              <strong>GlobalInch Private Limited</strong> does not sell, rent, or trade user data to external marketing agencies. Data is shared strictly with essential technology partners (Razorpay for payment processing and messaging APIs for PDF delivery) solely for fulfilling your order on astrosamhita.com.
+              <strong>GlobalInch Private Limited</strong> does not sell, rent, or trade user data to external marketing agencies. Data is shared strictly with essential technology partners (Razorpay for payment processing and messaging APIs for PDF delivery) solely for fulfilling your order on report.occultsage.com.
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       content: (
         <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
           <p className="text-base font-medium text-slate-800">
-            <strong>astrosamhita.com</strong> is an online portal owned, operated, and managed by <strong>GlobalInch Private Limited</strong>, dedicated to offering scientific Vedic Vastu Science reports, Astro-Vastu analysis, and architectural space energy consultations under the brand name <strong>VastuWheels</strong>.
+            <strong>report.occultsage.com</strong> is an online portal owned, operated, and managed by <strong>GlobalInch Private Limited</strong>, dedicated to offering scientific Vedic Vastu Science reports, Astro-Vastu analysis, and architectural space energy consultations under the brand name <strong>VastuWheels</strong>.
           </p>
           <p>
             Operating from our corporate office at <strong>Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</strong>, our mission is to empower homeowners, business owners, tenants, and commercial space owners with practical, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
@@ -69,7 +69,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
             <h4 className="font-extrabold text-slate-900 text-base">Key Highlights & Credentials</h4>
             <ul className="list-disc pl-5 space-y-2 text-slate-700 font-semibold">
               <li><strong>Parent Legal Entity:</strong> GlobalInch Private Limited</li>
-              <li><strong>Official Website Domain:</strong> astrosamhita.com</li>
+              <li><strong>Official Website Domain:</strong> report.occultsage.com</li>
               <li><strong>Brand / Product:</strong> VastuWheels Personalized Vastu Science Report</li>
               <li><strong>60,000+ Consultations:</strong> Trusted across India for authentic directional alignment & non-demolition remedies.</li>
               <li><strong>Customer Support Helpline:</strong> +91 9217664304 | Email: globalinchpvt@gmail.com</li>
@@ -86,13 +86,13 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       content: (
         <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
           <p className="text-base font-medium text-slate-800">
-            Welcome to <strong>astrosamhita.com</strong>, operated by <strong>GlobalInch Private Limited</strong> (Registered Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075). By accessing, browsing, or purchasing services on astrosamhita.com, you agree to comply with and be bound by the following Terms and Conditions.
+            Welcome to <strong>report.occultsage.com</strong>, operated by <strong>GlobalInch Private Limited</strong> (Registered Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075). By accessing, browsing, or purchasing services on report.occultsage.com, you agree to comply with and be bound by the following Terms and Conditions.
           </p>
 
           <div className="border-l-4 border-orange-500 pl-4 py-1 bg-orange-50/50 rounded-r-xl">
             <h4 className="font-extrabold text-slate-900 text-base">1. Merchant & Billing Entity</h4>
             <p className="mt-1 text-slate-600">
-              All financial transactions, invoices, and payment gateway billing on <strong>astrosamhita.com</strong> are conducted under the merchant account of <strong>GlobalInch Private Limited</strong>.
+              All financial transactions, invoices, and payment gateway billing on <strong>report.occultsage.com</strong> are conducted under the merchant account of <strong>GlobalInch Private Limited</strong>.
             </p>
           </div>
 
@@ -113,7 +113,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
           <div className="border-l-4 border-orange-500 pl-4 py-1 bg-orange-50/50 rounded-r-xl">
             <h4 className="font-extrabold text-slate-900 text-base">4. Governing Law & Jurisdiction</h4>
             <p className="mt-1 text-slate-600">
-              These terms shall be governed by and construed in accordance with the laws of India. Any legal proceedings or disputes relating to astrosamhita.com or GlobalInch Private Limited shall be subject to the exclusive jurisdiction of the courts in New Delhi, Delhi.
+              These terms shall be governed by and construed in accordance with the laws of India. Any legal proceedings or disputes relating to report.occultsage.com or GlobalInch Private Limited shall be subject to the exclusive jurisdiction of the courts in New Delhi, Delhi.
             </p>
           </div>
         </div>
@@ -129,14 +129,14 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
           <div className="bg-rose-50 border-2 border-rose-400 p-5 rounded-2xl space-y-2 text-rose-900 font-bold">
             <h3 className="text-base text-rose-700 uppercase tracking-wide">⚠️ STRICT DIGITAL SERVICE NON-REFUNDABLE POLICY</h3>
             <p className="text-xs leading-relaxed font-semibold text-rose-800">
-              Please read carefully: All products and services offered on <strong>astrosamhita.com</strong> by <strong>GlobalInch Private Limited</strong> (including VastuWheels customized Vastu reports and consultations) are personalized digital deliverables. Therefore, <strong>ALL PAYMENTS ARE STRICTLY NON-REFUNDABLE AND NO REFUNDS WILL BE ISSUED ONCE PAYMENT IS COMPLETED.</strong>
+              Please read carefully: All products and services offered on <strong>report.occultsage.com</strong> by <strong>GlobalInch Private Limited</strong> (including VastuWheels customized Vastu reports and consultations) are personalized digital deliverables. Therefore, <strong>ALL PAYMENTS ARE STRICTLY NON-REFUNDABLE AND NO REFUNDS WILL BE ISSUED ONCE PAYMENT IS COMPLETED.</strong>
             </p>
           </div>
 
           <div className="border-l-4 border-orange-500 pl-4 py-1 bg-orange-50/40 rounded-r-xl space-y-2">
             <h4 className="font-extrabold text-slate-900 text-base">1. Order Cancellation Policy</h4>
             <p className="text-slate-600">
-              Since report calculations and personalized directional analysis begin immediately upon order placement, orders on <strong>astrosamhita.com</strong> cannot be cancelled or refunded after successful payment.
+              Since report calculations and personalized directional analysis begin immediately upon order placement, orders on <strong>report.occultsage.com</strong> cannot be cancelled or refunded after successful payment.
             </p>
           </div>
 
@@ -154,7 +154,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
             </p>
             <ul className="list-disc pl-5 text-slate-700 font-semibold space-y-1">
               <li><strong>Merchant Legal Name:</strong> GlobalInch Private Limited</li>
-              <li><strong>Website Domain:</strong> astrosamhita.com</li>
+              <li><strong>Website Domain:</strong> report.occultsage.com</li>
               <li><strong>Email:</strong> globalinchpvt@gmail.com</li>
               <li><strong>Helpline Phone:</strong> +91 9217664304</li>
               <li><strong>Address:</strong> Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</li>
@@ -171,19 +171,19 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       content: (
         <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
           <div className="bg-rose-50/60 border border-rose-200 p-4 rounded-2xl text-slate-800 font-semibold text-sm">
-            <strong>astrosamhita.com</strong> and <strong>GlobalInch Private Limited</strong> are not affiliated with, associated with, or endorsed by Facebook.com, Meta Platforms Inc., Google.com, or Google LLC.
+            <strong>report.occultsage.com</strong> and <strong>GlobalInch Private Limited</strong> are not affiliated with, associated with, or endorsed by Facebook.com, Meta Platforms Inc., Google.com, or Google LLC.
           </div>
 
           <div className="border-l-4 border-rose-500 pl-4 py-1 bg-rose-50/30 rounded-r-xl space-y-2">
             <h4 className="font-extrabold text-slate-900 text-base">Vastu & Advisory Service Disclaimer</h4>
             <p className="text-slate-600">
-              The recommendations provided on astrosamhita.com in the Vastu Wheels Report are based on traditional Vedic Vastu principles and directional calculations. These services are intended for spatial harmony and positive environment alignment.
+              The recommendations provided on report.occultsage.com in the Vastu Wheels Report are based on traditional Vedic Vastu principles and directional calculations. These services are intended for spatial harmony and positive environment alignment.
             </p>
             <p className="text-slate-600">
               Our recommendations focus on 100% non-demolition remedies (color therapy, metallic strip placements, and layout alignment) and do not advocate structural wall tearing. Vastu guidance is advisory and should not replace professional medical, legal, or financial advice.
             </p>
             <p className="text-slate-700 font-semibold pt-1">
-              Legal Entity: GlobalInch Private Limited | Website: astrosamhita.com | Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075 | Email: globalinchpvt@gmail.com | Phone: +91 9217664304
+              Legal Entity: GlobalInch Private Limited | Website: report.occultsage.com | Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075 | Email: globalinchpvt@gmail.com | Phone: +91 9217664304
             </p>
           </div>
         </div>
@@ -197,7 +197,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       content: (
         <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
           <p className="text-base font-medium text-slate-800">
-            Have questions about your Vastu Report order on <strong>astrosamhita.com</strong>? Get in touch with <strong>GlobalInch Private Limited</strong> customer support team.
+            Have questions about your Vastu Report order on <strong>report.occultsage.com</strong>? Get in touch with <strong>GlobalInch Private Limited</strong> customer support team.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -206,7 +206,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
                 <Globe size={18} className="text-[#ea580c]" />
                 <span>Website Domain</span>
               </div>
-              <p className="text-slate-600 text-sm font-semibold">astrosamhita.com</p>
+              <p className="text-slate-600 text-sm font-semibold">report.occultsage.com</p>
             </div>
 
             <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl space-y-2">
@@ -321,7 +321,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
             <div className="pt-4 border-t border-slate-200 text-xs text-slate-600 space-y-2">
               <div className="flex items-center gap-2 text-slate-800 font-bold">
                 <Globe size={14} className="text-[#ea580c]" />
-                <span>astrosamhita.com</span>
+                <span>report.occultsage.com</span>
               </div>
               <div className="flex items-center gap-2 text-slate-800 font-bold">
                 <Phone size={14} className="text-[#ea580c]" />
@@ -363,7 +363,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       {/* Legal Footer */}
       <footer className="bg-slate-900 text-slate-400 text-xs py-6 px-4 text-center border-t border-slate-800 mt-auto">
         <p className="text-slate-400">
-          Copyright 2026 - astrosamhita.com (Owned & Operated by GlobalInch Private Limited) | Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075
+          Copyright 2026 - report.occultsage.com (Owned & Operated by GlobalInch Private Limited) | Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075
         </p>
       </footer>
 

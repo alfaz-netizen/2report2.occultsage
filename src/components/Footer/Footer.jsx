@@ -151,26 +151,26 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
           
           {/* Corporate Details */}
           <div className="text-slate-300 font-semibold space-y-1">
-            <p>astrosamhita.com (VastuWheels Powered & Managed by GlobalInch Private Limited) | globalinchpvt@gmail.com</p>
+            <p>report.occultsage.com (VastuWheels Powered & Managed by GlobalInch Private Limited) | globalinchpvt@gmail.com</p>
             <p className="text-slate-400 font-normal">Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075 | Phone: +91 9217664304</p>
           </div>
 
           {/* Meta & Google Disclaimers */}
           <div className="space-y-1 text-slate-500 leading-relaxed max-w-4xl mx-auto">
             <p>
-              astrosamhita.com and GlobalInch Private Limited are not a part of Facebook.com or Facebook Inc or Google.com or Google Inc.
+              report.occultsage.com and GlobalInch Private Limited are not a part of Facebook.com or Facebook Inc or Google.com or Google Inc.
             </p>
             <p>
-              Additionally, astrosamhita.com is not endorsed by Facebook.com or Facebook Inc or Google.com or Google Inc.
+              Additionally, report.occultsage.com is not endorsed by Facebook.com or Facebook Inc or Google.com or Google Inc.
             </p>
             <p className="text-amber-400/90 font-medium pt-1">
-              * Refund Notice: All digital Vastu reports & services purchased on astrosamhita.com are custom generated and strictly NON-REFUNDABLE under any circumstances.
+              * Refund Notice: All digital Vastu reports & services purchased on report.occultsage.com are custom generated and strictly NON-REFUNDABLE under any circumstances.
             </p>
           </div>
 
           {/* Copyright */}
           <div className="text-slate-400 font-bold text-xs pt-2">
-            Copyright 2026 - astrosamhita.com (GlobalInch Private Limited). All Rights Reserved.
+            Copyright 2026 - report.occultsage.com (GlobalInch Private Limited). All Rights Reserved.
           </div>
 
         </div>
