@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Sitemap: https://report.occultsage.com/sitemap.xml
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
