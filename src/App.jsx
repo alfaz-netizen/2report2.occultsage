@@ -66,7 +66,7 @@ export default function App() {
 
   const handleNavigateCheckout = () => {
     // Trigger Meta Facebook Pixel AddToCart Event on CTA Button Clicks
-    trackPixelEvent("AddToCart", { value: 996, currency: "INR" });
+    trackPixelEvent("AddToCart", { value: 1499, currency: "INR" });
     window.history.pushState({}, "", "/checkout");
     setCurrentPage("checkout");
     window.scrollTo({ top: 0, behavior: "smooth" });

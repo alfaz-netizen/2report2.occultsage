@@ -12,7 +12,7 @@ export default function FAQ() {
     },
     {
       q: "How fast will I get my Vastu PDF Report?",
-      a: "Instantly! Once you submit your details and complete the ₹996 processing fee, your customized Vastu report is generated within 2 minutes and sent directly to your WhatsApp and Email ID."
+      a: "Instantly! Once you submit your details and complete the ₹1499 processing fee, your customized Vastu report is generated within 2 minutes and sent directly to your WhatsApp and Email ID."
     },
     {
       q: "Can I apply these Vastu remedies in a rented apartment?",

@@ -137,7 +137,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
                   className="w-full lg:w-auto btn-orange-primary text-white font-black text-sm sm:text-base lg:text-lg px-8 sm:px-11 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight relative z-30"
                 >
                   <Sparkles size={20} className="text-amber-200 animate-pulse shrink-0" />
-                  <span className="text-center tracking-wide">BUY NOW at ₹996 only</span>
+                  <span className="text-center tracking-wide">BUY NOW at ₹1499 only</span>
                   <ArrowRight size={20} className="text-white shrink-0" />
                 </button>
               </div>
@@ -200,7 +200,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
             className="w-full sm:w-auto btn-orange-primary text-white font-black text-xs sm:text-base lg:text-lg px-6 sm:px-12 py-3.5 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-3 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
           >
             <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
-            <span className="text-center tracking-wide">BUY NOW at ₹996 only</span>
+            <span className="text-center tracking-wide">BUY NOW at ₹1499 only</span>
             <ArrowRight size={20} className="text-white shrink-0" />
           </button>
         </div>

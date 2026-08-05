@@ -110,7 +110,7 @@ export default function FingerTip() {
                   }}
                   className="w-full btn-orange-primary text-xs py-3.5 flex items-center justify-center gap-1 cursor-pointer"
                 >
-                  <span>BUY NOW at ₹996 only</span>
+                  <span>BUY NOW at ₹1499 only</span>
                 </button>
               </div>
 

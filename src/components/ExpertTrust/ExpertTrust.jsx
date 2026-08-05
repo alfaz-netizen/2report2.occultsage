@@ -90,7 +90,7 @@ export default function ExpertTrust({ onNavigateCheckout }) {
               onClick={onNavigateCheckout}
               className="btn-orange-primary text-sm md:text-base px-8 py-4 flex items-center justify-center gap-2 cursor-pointer shadow-lg"
             >
-              <span>BUY NOW at ₹996 only</span>
+              <span>BUY NOW at ₹1499 only</span>
               <ArrowRight size={18} />
             </button>
           </div>

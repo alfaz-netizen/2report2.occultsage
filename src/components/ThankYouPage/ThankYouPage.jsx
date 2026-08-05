@@ -31,11 +31,11 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
     // Fire Meta Facebook Pixel Purchase Triggers:
     if (isHindi) {
-      trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels Hindi FB" });
+      trackPixelEvent("Purchase Hindi", { value: 1499, currency: "INR" }, true);
+      trackPixelEvent("Purchase", { value: 1499, currency: "INR", content_name: "Vastu Wheels Hindi FB" });
     } else {
-      trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English FB" });
+      trackPixelEvent("Purchase English", { value: 1499, currency: "INR" }, true);
+      trackPixelEvent("Purchase", { value: 1499, currency: "INR", content_name: "Vastu Wheels English FB" });
     }
   }, [selectedLanguage, showPopup, isHindi]);
 
@@ -417,7 +417,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
             </h3>
             <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-extrabold px-3 py-0.5 rounded-full flex items-center gap-1">
               <ShieldCheck size={13} className="text-emerald-700" />
-              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹996"}</span>
+              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹1499"}</span>
             </span>
           </div>
 

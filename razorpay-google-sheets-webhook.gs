@@ -113,7 +113,7 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    var rawAmount = payment.amount ? payment.amount / 100 : 996;
+    var rawAmount = payment.amount ? payment.amount / 100 : 1499;
     var formattedDate = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd-MM-yyyy HH:mm:ss");
     var paymentId = payment.id || "N/A";
     var uniqueCustomerId = notes.unique_customer_id || "N/A";
