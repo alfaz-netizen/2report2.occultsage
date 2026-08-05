@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://report.occultsage.com/sitemap.xml
+Sitemap: https://report.globalinch.com/sitemap.xml
 
 User-agent: facebookexternalhit
 Allow: /
