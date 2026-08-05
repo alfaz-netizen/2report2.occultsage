@@ -104,7 +104,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       const orderRes = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 1 * 100 })
+        body: JSON.stringify({ amount: displayPrice * 100 })
       });
       if (orderRes.ok) {
         const orderData = await orderRes.json();
@@ -118,7 +118,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
     const upgradeOptions = {
       key: keyId,
-      amount: 1 * 100, // ₹1,999 or ₹1,799 in paise
+      amount: displayPrice * 100, // ₹1,999 or ₹1,799 in paise
       currency: "INR",
       name: "VastuWheels Report Upgrade",
       description: "1-on-1 Consultation & Express Vastu Report",
@@ -417,7 +417,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
             </h3>
             <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-extrabold px-3 py-0.5 rounded-full flex items-center gap-1">
               <ShieldCheck size={13} className="text-emerald-700" />
-              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹1499"}</span>
+              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹996"}</span>
             </span>
           </div>
 
