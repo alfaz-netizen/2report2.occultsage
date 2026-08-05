@@ -1,6 +1,6 @@
 import React from "react";
 import "./CelebrityTrust.css";
-import { Award, Sparkles, ArrowRight, CheckCircle2, Compass, FileText } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, Compass, FileText } from "lucide-react";
 
 export default function CelebrityTrust({ onNavigateCheckout }) {
   const celebData = [

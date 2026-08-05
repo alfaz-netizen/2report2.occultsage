@@ -97,7 +97,7 @@ export default function App() {
     setOrderInfo(newOrder);
     try {
       localStorage.setItem("vastu_order_info", JSON.stringify(newOrder));
-    } catch (e) {}
+    } catch {}
 
     const targetUrl = selectedLang === "Hindi" ? "/thankyou-hindi" : "/thankyou-english";
     window.history.pushState({}, "", targetUrl);

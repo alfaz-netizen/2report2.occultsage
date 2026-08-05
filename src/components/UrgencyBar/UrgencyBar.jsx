@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./UrgencyBar.css";
-import { Flame, Clock, Zap } from "lucide-react";
+import { Flame, Clock } from "lucide-react";
 
 export default function UrgencyBar() {
   const [timeLeft, setTimeLeft] = useState(899); // 14 mins 59 secs

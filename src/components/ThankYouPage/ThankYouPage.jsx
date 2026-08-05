@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowLeft, ShieldCheck, CheckCircle2, Clock, Mail, Phone, CreditCard, FileCheck, User, MessageCircle, X, Sparkles, Zap, Headphones, Gift, ShieldAlert } from "lucide-react";
+import { ArrowLeft, ShieldCheck, CheckCircle2, Clock, Mail, Phone, CreditCard, FileCheck, User, MessageCircle, X, Sparkles, Zap, Headphones, Gift } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
 
@@ -37,7 +37,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
       trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English FB" });
     }
-  }, [selectedLanguage, showPopup]);
+  }, [selectedLanguage, showPopup, isHindi]);
 
   // 🎉 Party Popper Confetti Burst & Fast Rolling Price Animation
   const handleClaimDiscount = () => {

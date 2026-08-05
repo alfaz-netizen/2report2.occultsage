@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ExclusiveBonuses.css";
-import { Award, Sparkles, ArrowRight, Clock, ShieldCheck, Flame, Compass } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 
 import palmistryNotesImg from "../../assets/Palmistry Secrets Notes dd.png";
 import astrologyNotesImg from "../../assets/Astrology Secrets Notes dd.png";

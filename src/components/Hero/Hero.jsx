@@ -2,7 +2,7 @@ import React from "react";
 import "./Hero.css";
 import { 
   Award, Star, 
-  ShieldCheck, ArrowRight, Sparkles, Lock 
+  ShieldCheck, ArrowRight, Sparkles 
 } from "lucide-react";
 import acharyaGroupImg from "../../assets/Elite Presentation (1).webp";
 import vwLogo from "../../assets/VW-HR.png";

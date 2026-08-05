@@ -1,6 +1,6 @@
 import React from "react";
 import "./ReportBenefits.css";
-import { Award, Sparkles, ArrowRight, Heart, ShieldCheck, TrendingUp, Compass, Sun, ShieldAlert, Coins, Home } from "lucide-react";
+import { Award, Sparkles, ArrowRight, Heart, ShieldCheck, TrendingUp, ShieldAlert, Coins, Home } from "lucide-react";
 
 import wealthImg from "../../assets/vastu_benefit_wealth.png";
 import careerImg from "../../assets/vastu_benefit_career.png";
