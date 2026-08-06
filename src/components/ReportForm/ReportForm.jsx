@@ -538,7 +538,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
               <span>Opening Payment Gateway...</span>
             ) : (
               <>
-                <span>Proceed to Pay ₹996 & Get Report</span>
+                <span>Proceed to Pay ₹1499 & Get Report</span>
                 <Sparkles size={18} />
               </>
             )}
