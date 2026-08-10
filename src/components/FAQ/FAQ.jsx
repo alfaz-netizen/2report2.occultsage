@@ -7,8 +7,12 @@ export default function FAQ() {
 
   const faqs = [
     {
-      q: "Do I need to break any walls or reconstruct my home for Vastu remedies?",
-      a: "No! 100% Zero Demolition. Acharya Ji's remedies rely on elemental color balancing, micro metallic strips (copper/brass), crystal pyramid placements, and room usage adjustments. You don't need to break a single brick."
+      q: "Can Vastu Dosha be corrected without demolition?",
+      a: "absolutely. Acharya Ji’s Zero-Demolition Vastu Remedies use colours, copper/brass strips, crystal pyramids, directional corrections, and space adjustments; without breaking walls or reconstructing your home."
+    },
+    {
+      q: "What Information Is Required for an Online Vastu Analysis?",
+      a: "Just your floor plan and house location. That’s all we need to prepare your personalized Vastu analysis."
     },
     {
       q: "How fast will I get my Vastu PDF Report?",
@@ -79,3 +83,10 @@ export default function FAQ() {
     </section>
   );
 }
+
+
+
+
+
+
+

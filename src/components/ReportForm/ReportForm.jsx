@@ -3,7 +3,7 @@ import "./ReportForm.css";
 import { ArrowLeft, ShieldCheck, CheckCircle2, Sparkles, AlertCircle, MapPin, ChevronDown, Search } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
-import { getUtmParamsForNotes } from "../../utils/utm";
+import { getUtmParamsForNotes, captureUtmParams } from "../../utils/utm";
 
 const INDIAN_CITIES = [
   "Delhi NCR (Delhi, Gurgaon, Noida)",
@@ -53,13 +53,13 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
   const [formData, setFormData] = useState({
     fullName: "",
     propertyType: "",
-    direction: "",
-    concern: "",
-    dob: "",
-    gender: "",
+    direction: "N/A",
+    concern: "N/A",
+    dob: "N/A",
+    gender: "N/A",
     phone: "",
     email: "",
-    city: "",
+    city: "N/A",
     reportLanguage: ""
   });
 
@@ -81,10 +81,6 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredCities = INDIAN_CITIES.filter((c) =>
-    c.toLowerCase().includes(citySearch.toLowerCase())
-  );
-
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
       if (window.Razorpay) {
@@ -103,12 +99,8 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     const newErrors = {};
     if (!formData.fullName.trim()) newErrors.fullName = true;
     if (!formData.propertyType) newErrors.propertyType = true;
-    if (!formData.direction) newErrors.direction = true;
-    if (!formData.concern) newErrors.concern = true;
-    if (!formData.dob) newErrors.dob = true;
     if (!formData.phone || formData.phone.length < 10) newErrors.phone = true;
     if (!formData.email || !formData.email.includes("@")) newErrors.email = true;
-    if (!formData.city.trim()) newErrors.city = true;
     if (!formData.reportLanguage) newErrors.reportLanguage = true;
 
     setErrors(newErrors);
@@ -167,6 +159,48 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     // Generate Unique Customer ID for tracking customer across payments (e.g. VW-84920193)
     const uniqueCustomerId = "VW-" + Math.floor(10000000 + Math.random() * 90000000);
 
+    // Track whether payment was completed to ensure ONLY unpaid/dropped-off leads go to Google Sheet
+    let hasPaymentCompleted = false;
+
+    const sendUnpaidLeadToGoogleSheet = () => {
+      if (hasPaymentCompleted) return; // Do not send if user paid successfully!
+      try {
+        const rawUtms = captureUtmParams() || {};
+        const leadPayload = {
+          unique_customer_id: uniqueCustomerId,
+          payment_id: "PENDING / NOT PAID",
+          amount: "1499",
+          full_name: formData.fullName || "N/A",
+          phone_number: formData.phone || "N/A",
+          email_id: formData.email || "N/A",
+          report_language: formData.reportLanguage || "N/A",
+          property_type: formData.propertyType || "N/A",
+          entrance_direction: formData.direction || "N/A",
+          primary_challenge: formData.concern || "N/A",
+          date_of_birth: formData.dob || "N/A",
+          gender: formData.gender || "N/A",
+          current_location: formData.city || "N/A",
+          utm_source: rawUtms.utm_source || "organic / none",
+          utm_medium: rawUtms.utm_medium || "organic / none",
+          utm_campaign: rawUtms.utm_campaign || "N/A",
+          utm_term: rawUtms.utm_term || "N/A",
+          utm_content: rawUtms.utm_content || "N/A",
+          utm_id: rawUtms.utm_id || "N/A",
+          utm_source_platform: rawUtms.utm_source_platform || "N/A",
+          utm_creative_format: rawUtms.utm_creative_format || "N/A",
+          utm_marketing_tactic: rawUtms.utm_marketing_tactic || "N/A"
+        };
+
+        fetch("https://script.google.com/macros/s/AKfycbyr-ZmzmrnrRhEwA5zhxvJWol7M3nTBpklIqQ5gtvmyg6S1W5kbWDVNf50WxfuYgwCX/exec", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(leadPayload)
+        }).catch((err) => console.warn("Google Sheet Lead Capture Warning:", err));
+      } catch (err) {
+        console.warn("Lead Capture Exception:", err);
+      }
+    };
+
     const options = {
       key: keyId,
       amount: 1499 * 100, // ₹1499 in paise = 149900
@@ -176,6 +210,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       order_id: orderId || undefined, // Linked Razorpay Order ID for 100% instant automatic capture!
       payment_capture: 1, // Automatically capture payment (Authorized -> Captured)
       handler: function (response) {
+        hasPaymentCompleted = true; // Mark payment completed
         console.log("Razorpay Payment Success Response:", response);
         setIsSubmitting(false);
         if (onPaymentSuccess) {
@@ -189,6 +224,15 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
           });
         }
       },
+      modal: {
+        ondismiss: function () {
+          console.log("Razorpay Checkout Modal Dismissed / Closed by user");
+          setIsSubmitting(false);
+          if (!hasPaymentCompleted) {
+            sendUnpaidLeadToGoogleSheet(); // Fires ONLY when user closes Razorpay without paying!
+          }
+        }
+      },
       prefill: {
         name: formData.fullName,
         email: formData.email,
@@ -197,25 +241,20 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       notes: {
         payment_type: "form_checkout",
         unique_customer_id: uniqueCustomerId,
-        full_name: formData.fullName,
-        property_type: formData.propertyType,
-        entrance_direction: formData.direction,
-        primary_challenge: formData.concern,
-        date_of_birth: formData.dob,
-        gender: "N/A",
-        phone_number: formData.phone,
-        email_id: formData.email,
-        current_location: formData.city,
+        full_name: formData.fullName || "N/A",
+        property_type: formData.propertyType || "N/A",
+        entrance_direction: formData.direction || "N/A",
+        primary_challenge: formData.concern || "N/A",
+        date_of_birth: formData.dob || "N/A",
+        gender: formData.gender || "N/A",
+        phone_number: formData.phone || "N/A",
+        email_id: formData.email || "N/A",
+        current_location: formData.city || "N/A",
         report_language: languagePayload,
         ...getUtmParamsForNotes()
       },
       theme: {
         color: "#ea580c"
-      },
-      modal: {
-        ondismiss: function () {
-          setIsSubmitting(false);
-        }
       }
     };
 
@@ -261,271 +300,121 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-8" id="checkout-main-form">
-        
-        {/* Main Title & Instructions */}
-        <div className="text-center space-y-1">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#ea580c] font-sora">
+      {/* Main Form Container */}
+      <div id="checkout-main-form" className="max-w-2xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border-2 border-orange-200 shadow-xl relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-400 via-[#ea580c] to-amber-500" />
+
+        {/* Header */}
+        <div className="text-center space-y-2 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-sora">
             Submit Your Details
           </h1>
-          <p className="text-xs md:text-sm text-slate-600">
-            To Tailor make your report, we need these details from you
+          <p className="text-xs sm:text-sm text-slate-600 font-medium">
+            To tailor-make your report, we need these details from you
           </p>
         </div>
 
-        {Object.keys(errors).length > 0 && (
-          <div className="bg-rose-50 border-2 border-rose-400 p-4 rounded-2xl flex items-center gap-3 text-rose-700 text-xs md:text-sm font-bold shadow-md">
-            <AlertCircle size={20} className="shrink-0 text-rose-600" />
-            <span>Please select or fill in all mandatory fields highlighted in Red.</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} noValidate className="white-orange-card p-6 md:p-8 space-y-6 shadow-xl border-2 border-orange-300 bg-white">
+        {/* Form Elements */}
+        <form onSubmit={handleSubmit} className="space-y-5">
           
-          {/* Form Fields */}
-          <div className="space-y-4">
-            
-            {/* Full Name */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Full Name *</label>
+          {/* 1. Full Name */}
+          <div>
+            <label className="block text-xs font-bold text-slate-800 mb-1">Full Name *</label>
+            <input 
+              type="text"
+              placeholder="Enter your full name"
+              value={formData.fullName}
+              onChange={(e) => {
+                setFormData({ ...formData, fullName: e.target.value });
+                if (errors.fullName) setErrors({ ...errors, fullName: false });
+              }}
+              className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                errors.fullName ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+              }`}
+            />
+            {errors.fullName && <p className="text-[11px] text-rose-600 font-bold mt-1">Full Name is required</p>}
+          </div>
+
+          {/* 2. Property Type */}
+          <div>
+            <label className="block text-xs font-bold text-slate-800 mb-1">Property Type *</label>
+            <select 
+              value={formData.propertyType}
+              onChange={(e) => {
+                setFormData({ ...formData, propertyType: e.target.value });
+                if (errors.propertyType) setErrors({ ...errors, propertyType: false });
+              }}
+              className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                errors.propertyType ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+              }`}
+            >
+              <option value="">-- Select Property Type --</option>
+              <option value="Own Property">Own Property</option>
+              <option value="Rental Property">Rental Property</option>
+            </select>
+            {errors.propertyType && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Property Type</p>}
+          </div>
+
+          {/* 3. WhatsApp Phone Number */}
+          <div>
+            <label className="block text-xs font-bold text-slate-800 mb-1">WhatsApp Phone Number *</label>
+            <div className="flex">
+              <span className="bg-slate-100 border border-r-0 border-slate-300 rounded-l-xl px-3 sm:px-4 py-3 text-xs text-slate-700 font-bold flex items-center justify-center whitespace-nowrap shrink-0">
+                IN +91
+              </span>
               <input 
-                type="text"
-                placeholder="Enter your full name"
-                value={formData.fullName}
+                type="tel"
+                maxLength={10}
+                placeholder="9999999999"
+                value={formData.phone}
                 onChange={(e) => {
-                  setFormData({ ...formData, fullName: e.target.value });
-                  if (errors.fullName) setErrors({ ...errors, fullName: false });
+                  setFormData({ ...formData, phone: e.target.value.replace(/\D/g, "") });
+                  if (errors.phone) setErrors({ ...errors, phone: false });
                 }}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                  errors.fullName ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+                className={`w-full bg-slate-50 border rounded-r-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                  errors.phone ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
                 }`}
               />
-              {errors.fullName && <p className="text-[11px] text-rose-600 font-bold mt-1">Full Name is required</p>}
             </div>
+            {errors.phone && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid 10-digit WhatsApp number required</p>}
+          </div>
 
-            {/* Property Type & Main Entrance Direction */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Property Type *</label>
-                <select 
-                  value={formData.propertyType}
-                  onChange={(e) => {
-                    setFormData({ ...formData, propertyType: e.target.value });
-                    if (errors.propertyType) setErrors({ ...errors, propertyType: false });
-                  }}
-                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                    errors.propertyType ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
-                  }`}
-                >
-                  <option value="">-- Select Property Type --</option>
-                  <option value="Apartment / Flat">Apartment / Flat</option>
-                  <option value="Independent House / Villa">Independent House / Villa</option>
-                  <option value="Office / Commercial Space">Office / Commercial Space</option>
-                  <option value="Shop / Factory / Warehouse">Shop / Factory / Warehouse</option>
-                </select>
-                {errors.propertyType && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Property Type</p>}
-              </div>
+          {/* 4. Email ID */}
+          <div>
+            <label className="block text-xs font-bold text-slate-800 mb-1">Email ID *</label>
+            <input 
+              type="email"
+              placeholder="Please enter your Email ID"
+              value={formData.email}
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value });
+                if (errors.email) setErrors({ ...errors, email: false });
+              }}
+              className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                errors.email ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
+              }`}
+            />
+            {errors.email && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid Email ID is required</p>}
+          </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1">Main Entrance Direction *</label>
-                <select 
-                  value={formData.direction}
-                  onChange={(e) => {
-                    setFormData({ ...formData, direction: e.target.value });
-                    if (errors.direction) setErrors({ ...errors, direction: false });
-                  }}
-                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                    errors.direction ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
-                  }`}
-                >
-                  <option value="">-- Select Entrance Direction --</option>
-                  <option value="North (Kuber Zone)">North (Kuber Zone)</option>
-                  <option value="North-East (Ishan Zone)">North-East (Ishan Zone)</option>
-                  <option value="East (Indra Zone)">East (Indra Zone)</option>
-                  <option value="South-East (Agni Zone)">South-East (Agni Zone)</option>
-                  <option value="South (Yama Zone)">South (Yama Zone)</option>
-                  <option value="South-West (Nairitya Zone)">South-West (Nairitya Zone)</option>
-                  <option value="West (Varun Zone)">West (Varun Zone)</option>
-                  <option value="North-West (Vayu Zone)">North-West (Vayu Zone)</option>
-                </select>
-                {errors.direction && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Entrance Direction</p>}
-              </div>
-            </div>
-
-            {/* Primary Challenge Area */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Primary Challenge Area *</label>
-              <select 
-                value={formData.concern}
-                onChange={(e) => {
-                  setFormData({ ...formData, concern: e.target.value });
-                  if (errors.concern) setErrors({ ...errors, concern: false });
-                }}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                  errors.concern ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
-                }`}
-              >
-                <option value="">-- Select Primary Challenge Area --</option>
-                <option value="Financial Growth & Cashflow">Financial Growth & Cashflow</option>
-                <option value="Health Issues & Mental Stress">Health Issues & Mental Stress</option>
-                <option value="Career Stagnation & Business Losses">Career Stagnation & Business Losses</option>
-                <option value="Marriage Delay & Family Disputes">Marriage Delay & Family Disputes</option>
-              </select>
-              {errors.concern && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Primary Challenge Area</p>}
-            </div>
-
-            {/* Date of Birth */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Date of Birth *</label>
-              <input 
-                type="date"
-                value={formData.dob}
-                onChange={(e) => {
-                  setFormData({ ...formData, dob: e.target.value });
-                  if (errors.dob) setErrors({ ...errors, dob: false });
-                }}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                  errors.dob ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
-                }`}
-              />
-              {errors.dob && <p className="text-[11px] text-rose-600 font-bold mt-1">Date of Birth is required</p>}
-            </div>
-
-            {/* WhatsApp Phone Number */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">WhatsApp Phone Number *</label>
-              <div className="flex">
-                <span className="bg-slate-100 border border-r-0 border-slate-300 rounded-l-xl px-3 sm:px-4 py-3 text-xs text-slate-700 font-bold flex items-center justify-center whitespace-nowrap shrink-0">
-                  IN +91
-                </span>
-                <input 
-                  type="tel"
-                  maxLength={10}
-                  placeholder="9999999999"
-                  value={formData.phone}
-                  onChange={(e) => {
-                    setFormData({ ...formData, phone: e.target.value.replace(/\D/g, "") });
-                    if (errors.phone) setErrors({ ...errors, phone: false });
-                  }}
-                  className={`w-full bg-slate-50 border rounded-r-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                    errors.phone ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
-                  }`}
-                />
-              </div>
-              {errors.phone && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid 10-digit WhatsApp number required</p>}
-            </div>
-
-            {/* Email ID */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Email ID *</label>
-              <input 
-                type="email"
-                placeholder="Please enter your Email ID"
-                value={formData.email}
-                onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
-                  if (errors.email) setErrors({ ...errors, email: false });
-                }}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                  errors.email ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
-                }`}
-              />
-              {errors.email && <p className="text-[11px] text-rose-600 font-bold mt-1">Valid Email ID is required</p>}
-            </div>
-
-            {/* Current Location / City with Searchable Dropdown */}
-            <div className="relative" ref={cityDropdownRef}>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Current Location / City *</label>
-              
-              <div className="relative">
-                <input 
-                  type="text"
-                  placeholder="Select or Search City (e.g. Mumbai, Delhi, Thane)"
-                  value={formData.city}
-                  onFocus={() => setIsCityDropdownOpen(true)}
-                  onChange={(e) => {
-                    const query = e.target.value;
-                    setFormData({ ...formData, city: query });
-                    setCitySearch(query);
-                    setIsCityDropdownOpen(true);
-                    if (errors.city) setErrors({ ...errors, city: false });
-                  }}
-                  className={`w-full bg-slate-50 border rounded-xl pl-10 pr-10 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                    errors.city ? "border-2 border-rose-500 bg-rose-50/50" : "border-slate-300 focus:border-[#f97316]"
-                  }`}
-                />
-                <MapPin size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" />
-                <ChevronDown size={18} className={`absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition-transform duration-200 pointer-events-none ${isCityDropdownOpen ? "rotate-180 text-[#ea580c]" : ""}`} />
-              </div>
-
-              {/* Searchable Dropdown Overlay */}
-              {isCityDropdownOpen && (
-                <div className="absolute z-50 left-0 right-0 mt-1.5 bg-white border-2 border-orange-300 rounded-2xl shadow-2xl max-h-60 overflow-y-auto divide-y divide-slate-100 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="p-2.5 bg-orange-50/80 sticky top-0 flex items-center gap-2 border-b border-orange-200 backdrop-blur-sm">
-                    <Search size={16} className="text-[#ea580c] shrink-0 ml-1" />
-                    <input 
-                      type="text"
-                      placeholder="Type city or state to search..."
-                      value={citySearch}
-                      onChange={(e) => setCitySearch(e.target.value)}
-                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-[#f97316]"
-                      autoFocus
-                    />
-                  </div>
-
-                  {filteredCities.length > 0 ? (
-                    filteredCities.map((cityName, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => {
-                          setFormData({ ...formData, city: cityName });
-                          setCitySearch("");
-                          setIsCityDropdownOpen(false);
-                          if (errors.city) setErrors({ ...errors, city: false });
-                        }}
-                        className={`w-full text-left px-4 py-2.5 text-xs font-semibold hover:bg-orange-50 hover:text-[#ea580c] transition-colors flex items-center justify-between cursor-pointer ${
-                          formData.city === cityName ? "bg-orange-100/70 text-[#ea580c] font-bold" : "text-slate-700"
-                        }`}
-                      >
-                        <span>{cityName}</span>
-                        {formData.city === cityName && <CheckCircle2 size={15} className="text-[#ea580c]" />}
-                      </button>
-                    ))
-                  ) : (
-                    <div 
-                      onClick={() => setIsCityDropdownOpen(false)}
-                      className="p-3 text-center text-xs text-slate-500 italic cursor-pointer hover:bg-slate-50"
-                    >
-                      Use custom entered location: "{formData.city}"
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {errors.city && <p className="text-[11px] text-rose-600 font-bold mt-1">Location / City is required</p>}
-            </div>
-
-            {/* Select Report Language - RESTRICTED TO ONLY HINDI AND ENGLISH */}
-            <div>
-              <label className="block text-xs font-bold text-slate-800 mb-1">Select Report Language *</label>
-              <select 
-                value={formData.reportLanguage}
-                onChange={(e) => {
-                  setFormData({ ...formData, reportLanguage: e.target.value });
-                  if (errors.reportLanguage) setErrors({ ...errors, reportLanguage: false });
-                }}
-                className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
-                  errors.reportLanguage ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
-                }`}
-              >
-                <option value="">-- Select Report Language --</option>
-                <option value="Hindi">Hindi</option>
-                <option value="English">English</option>
-              </select>
-              {errors.reportLanguage && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Report Language</p>}
-            </div>
-
+          {/* 5. Select Report Language */}
+          <div>
+            <label className="block text-xs font-bold text-slate-800 mb-1">Select Report Language *</label>
+            <select 
+              value={formData.reportLanguage}
+              onChange={(e) => {
+                setFormData({ ...formData, reportLanguage: e.target.value });
+                if (errors.reportLanguage) setErrors({ ...errors, reportLanguage: false });
+              }}
+              className={`w-full bg-slate-50 border rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none transition-all ${
+                errors.reportLanguage ? "border-2 border-rose-500 bg-rose-50/50 text-rose-700 font-bold" : "border-slate-300 focus:border-[#f97316]"
+              }`}
+            >
+              <option value="">-- Select Report Language --</option>
+              <option value="Hindi">Hindi</option>
+              <option value="English">English</option>
+            </select>
+            {errors.reportLanguage && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Report Language</p>}
           </div>
 
           {/* Submit Button */}

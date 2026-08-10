@@ -18,7 +18,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
             This Privacy Policy applies to the website <strong>report.globalinch.com</strong> ("Website"), which is owned, operated, and managed by <strong>GlobalInch Private Limited</strong> ("Company", "We", "Us", "Our"), providing <strong>VastuWheels</strong> personalized Vastu analysis reports and architectural consultation services.
           </p>
           <p>
-            Registered Address: <strong>GlobalInch Private Limited, Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</strong>. Contact Email: <strong>globalinchpvt@gmail.com</strong> | Phone: <strong>+91 9217664304</strong>.
+            Registered Address: <strong>GlobalInch Private Limited, 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078</strong>. Contact Email: <strong>globalinchpvt@gmail.com</strong> | Phone: <strong>+91 9217664304</strong>.
           </p>
 
           <div className="border-l-4 border-emerald-500 pl-4 py-1 bg-emerald-50/40 rounded-r-xl">
@@ -62,7 +62,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
             <strong>report.globalinch.com</strong> is an online portal owned, operated, and managed by <strong>GlobalInch Private Limited</strong>, dedicated to offering scientific Vedic Vastu Science reports, Astro-Vastu analysis, and architectural space energy consultations under the brand name <strong>VastuWheels</strong>.
           </p>
           <p>
-            Operating from our corporate office at <strong>Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</strong>, our mission is to empower homeowners, business owners, tenants, and commercial space owners with practical, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
+            Operating from our corporate office at <strong>3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078</strong>, our mission is to empower homeowners, business owners, tenants, and commercial space owners with practical, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
           </p>
 
           <div className="bg-amber-50/60 border border-amber-200/80 p-5 rounded-2xl space-y-3">
@@ -86,7 +86,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       content: (
         <div className="space-y-6 text-slate-700 text-sm leading-relaxed">
           <p className="text-base font-medium text-slate-800">
-            Welcome to <strong>report.globalinch.com</strong>, operated by <strong>GlobalInch Private Limited</strong> (Registered Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075). By accessing, browsing, or purchasing services on report.globalinch.com, you agree to comply with and be bound by the following Terms and Conditions.
+            Welcome to <strong>report.globalinch.com</strong>, operated by <strong>GlobalInch Private Limited</strong> (Registered Address: 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078). By accessing, browsing, or purchasing services on report.globalinch.com, you agree to comply with and be bound by the following Terms and Conditions.
           </p>
 
           <div className="border-l-4 border-orange-500 pl-4 py-1 bg-orange-50/50 rounded-r-xl">
@@ -157,7 +157,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
               <li><strong>Website Domain:</strong> report.globalinch.com</li>
               <li><strong>Email:</strong> globalinchpvt@gmail.com</li>
               <li><strong>Helpline Phone:</strong> +91 9217664304</li>
-              <li><strong>Address:</strong> Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</li>
+              <li><strong>Address:</strong> 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078</li>
             </ul>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
               Our recommendations focus on 100% non-demolition remedies (color therapy, metallic strip placements, and layout alignment) and do not advocate structural wall tearing. Vastu guidance is advisory and should not replace professional medical, legal, or financial advice.
             </p>
             <p className="text-slate-700 font-semibold pt-1">
-              Legal Entity: GlobalInch Private Limited | Website: report.globalinch.com | Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075 | Email: globalinchpvt@gmail.com | Phone: +91 9217664304
+              Legal Entity: GlobalInch Private Limited | Website: report.globalinch.com | Address: 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, New Delhi 110078 | Email: globalinchpvt@gmail.com | Phone: +91 9217664304
             </p>
           </div>
         </div>
@@ -243,8 +243,8 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
             </div>
             <p className="text-slate-700 text-sm font-semibold leading-relaxed">
               GlobalInch Private Limited<br />
-              Unit No-1166 Vegas Mall, Sector-14 Dwarka,<br />
-              South West Delhi, New Delhi, Delhi 110075, India
+              3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka,<br />
+              South West Delhi, New Delhi, Delhi 110078, India
             </p>
           </div>
         </div>
@@ -333,7 +333,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
               </div>
               <div className="flex items-start gap-2 text-slate-500 font-normal leading-tight pt-1">
                 <MapPin size={15} className="text-[#ea580c] shrink-0 mt-0.5" />
-                <span>GlobalInch Private Limited | Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075</span>
+                <span>GlobalInch Private Limited | 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, New Delhi 110078</span>
               </div>
             </div>
           </aside>
@@ -363,7 +363,7 @@ export default function LegalPage({ activeDoc, onBackToHome, onSelectDoc }) {
       {/* Legal Footer */}
       <footer className="bg-slate-900 text-slate-400 text-xs py-6 px-4 text-center border-t border-slate-800 mt-auto">
         <p className="text-slate-400">
-          Copyright 2026 - report.globalinch.com (Owned & Operated by GlobalInch Private Limited) | Unit No-1166 Vegas Mall, Sector-14 Dwarka, New Delhi 110075
+          Copyright 2026 - report.globalinch.com (Owned & Operated by GlobalInch Private Limited) | 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, New Delhi 110078
         </p>
       </footer>
 

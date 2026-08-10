@@ -35,7 +35,7 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
               </div>
               <div className="flex items-start justify-center md:justify-start gap-2 text-slate-400 font-normal leading-tight">
                 <MapPin size={15} className="text-orange-400 shrink-0 mt-0.5" />
-                <span>Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075</span>
+                <span>3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078</span>
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
           {/* Corporate Details */}
           <div className="text-slate-300 font-semibold space-y-1">
             <p>report.globalinch.com (VastuWheels Powered & Managed by GlobalInch Private Limited) | globalinchpvt@gmail.com</p>
-            <p className="text-slate-400 font-normal">Address: Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075 | Phone: +91 9217664304</p>
+            <p className="text-slate-400 font-normal">Address: 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078 | Phone: +91 9217664304</p>
           </div>
 
           {/* Meta & Google Disclaimers */}

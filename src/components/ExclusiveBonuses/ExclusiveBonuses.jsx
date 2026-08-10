@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./ExclusiveBonuses.css";
 import { Sparkles, ArrowRight } from "lucide-react";
 
-import palmistryNotesImg from "../../assets/Palmistry Secrets Notes dd.png";
-import astrologyNotesImg from "../../assets/Astrology Secrets Notes dd.png";
+import bonusRemediesReportImg from "../../assets/bonus_remedies_report.jpg";
+import bonusAudioGuidanceImg from "../../assets/bonus_audio_guidance.jpg";
 
 export default function ExclusiveBonuses({ onNavigateCheckout }) {
   // Live Countdown Timer (14 minutes 59 seconds)
@@ -39,27 +39,27 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
           </h2>
         </div>
 
-        {/* 2 Big Bonus Cards with User Provided Notes Images */}
+        {/* 2 Big Bonus Cards with User Provided Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-4">
           
-          {/* BONUS CARD 1: Palmistry Secrets Notes */}
+          {/* BONUS CARD 1: Free Report With Remedies */}
           <div className="bonus-card">
             <div className="bonus-badge">
               FREE BONUS #1
             </div>
 
-            {/* User Provided Palmistry Notes Image */}
+            {/* User Provided Free Report With Remedies Image */}
             <div className="bonus-img-container shadow-md">
               <img 
-                src={palmistryNotesImg} 
-                alt="Palmistry Secrets Notes" 
+                src={bonusRemediesReportImg} 
+                alt="Free Report With Remedies" 
                 className="bonus-img"
               />
             </div>
 
             <div className="space-y-2">
               <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 font-sora">
-                Palmistry Secrets Notes
+                Free Report With Remedies
               </h3>
               <div className="text-base font-extrabold text-[#ea580c]">
                 <span className="line-through text-slate-400 mr-2">₹999</span>
@@ -68,28 +68,28 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Haath ki lakeeron ke chhupe hue secrets ko decode kijiye aur apni strengths, life challenges aur destiny ko samajhiye- Enroll karte hi paaiye Exclusive Palmistry Secrets Notes bilkul FREE! 
+              Apni property ki directional energy blocks ko decode kijiye aur exact non-demolition 16-zone remedies, elemental color balancing, aur directional alignment paayein - Aaj hi order karte hi paaiye ye Remedies Guide bilkul FREE!
             </p>
           </div>
 
-          {/* BONUS CARD 2: Astrology Secrets Notes */}
+          {/* BONUS CARD 2: Free Audio Guidance */}
           <div className="bonus-card">
             <div className="bonus-badge">
               FREE BONUS #2
             </div>
 
-            {/* User Provided Astrology Notes Image */}
+            {/* User Provided Free Audio Guidance Image */}
             <div className="bonus-img-container shadow-md">
               <img 
-                src={astrologyNotesImg} 
-                alt="Astrology Secrets Notes" 
+                src={bonusAudioGuidanceImg} 
+                alt="Free Audio Guidance" 
                 className="bonus-img"
               />
             </div>
 
             <div className="space-y-2">
               <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 font-sora">
-                Astrology Secrets Notes
+                Free Audio Guidance
               </h3>
               <div className="text-base font-extrabold text-[#ea580c]">
                 <span className="line-through text-slate-400 mr-2">₹999</span>
@@ -98,7 +98,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Jaaniye kaise grahon ki gati, aapki janam kundali, aur zodiac signs aapki zindagi ko prabhavit karte hain -Yeh exclusive Astrology Secrets Notes bonus me bilkul FREE milenge.
+              Suniye Acharya Ji ki step-by-step personalized audio remedies aur voice guidance jisse aap apne ghar aur office mein remedies ko perfectly place kar sakein - Ye Audio Guidance bonus me bilkul FREE milenga!
             </p>
           </div>
 

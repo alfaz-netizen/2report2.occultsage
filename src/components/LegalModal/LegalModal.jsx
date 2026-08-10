@@ -11,7 +11,7 @@ export default function LegalModal({ activeModal, onClose }) {
       content: (
         <div className="space-y-4 text-slate-700 text-sm leading-relaxed">
           <p>
-            Welcome to <strong>VastuWheels Private Limited</strong> (Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075). By accessing or purchasing from our platform, you agree to be bound by the following terms and conditions.
+            Welcome to <strong>VastuWheels Private Limited</strong> (3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078). By accessing or purchasing from our platform, you agree to be bound by the following terms and conditions.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">1. Digital Product Delivery</h4>
           <p>
@@ -39,7 +39,7 @@ export default function LegalModal({ activeModal, onClose }) {
       content: (
         <div className="space-y-4 text-slate-700 text-sm leading-relaxed">
           <p>
-            At <strong>VastuWheels Private Limited</strong> (Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075), we respect your privacy and are committed to protecting your personal data.
+            At <strong>VastuWheels Private Limited</strong> (3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078), we respect your privacy and are committed to protecting your personal data.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">1. Information We Collect</h4>
           <p>
@@ -66,7 +66,7 @@ export default function LegalModal({ activeModal, onClose }) {
             <strong>VastuWheels Private Limited</strong> is India's premier research organization dedicated to Vedic Vastu Science, Astro-Vastu Analysis, and Numerology.
           </p>
           <p>
-            Guided by expert Vastu Scholars at our corporate headquarters (Unit No-1166 Vegas Mall, Sector-14 Dwarka, South West Delhi, New Delhi, Delhi 110075), our mission is to empower homeowners, business leaders, couples, and property buyers with scientific, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
+            Guided by expert Vastu Scholars at our corporate headquarters (3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078), our mission is to empower homeowners, business leaders, couples, and property buyers with scientific, <strong>100% Non-Demolition Vastu Remedies</strong> that require zero wall tearing or structural damage.
           </p>
           <h4 className="font-extrabold text-slate-900 text-base pt-2">Why Choose Us?</h4>
           <ul className="list-disc pl-5 space-y-1.5 text-slate-600">

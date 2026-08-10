@@ -7,6 +7,7 @@ import Hero from "./components/Hero/Hero";
 import ReportBenefits from "./components/ReportBenefits/ReportBenefits";
 import ExclusiveBonuses from "./components/ExclusiveBonuses/ExclusiveBonuses";
 import ReportValueStack from "./components/ReportValueStack/ReportValueStack";
+import VideoTestimonials from "./components/VideoTestimonials/VideoTestimonials";
 import Transparency from "./components/Transparency/Transparency";
 import FAQ from "./components/FAQ/FAQ";
 import StickyCTA from "./components/StickyCTA/StickyCTA";
@@ -163,7 +164,10 @@ export default function App() {
         {/* Section 4: What You Get in Vastu Report (Value Stack) */}
         <ReportValueStack onNavigateCheckout={handleNavigateCheckout} />
 
-        {/* Section 5: Verified Customer Success Stories & Reviews */}
+        {/* Section 5A: Customer Video Feedback Testimonials */}
+        <VideoTestimonials onNavigateCheckout={handleNavigateCheckout} />
+
+        {/* Section 5B: Verified Customer Success Stories & Reviews (Trusted By Over 60,000+ Indian Families) */}
         <Transparency />
 
         {/* Section 6: Frequently Asked Questions */}

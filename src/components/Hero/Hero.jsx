@@ -4,7 +4,7 @@ import {
   Award, Star, 
   ShieldCheck, ArrowRight, Sparkles 
 } from "lucide-react";
-import acharyaGroupImg from "../../assets/Elite Presentation (1).webp";
+import heroVideo from "../../assets/Vastu Report Homepage Hero Section.mp4";
 import vwLogo from "../../assets/VW-HR.png";
 
 export default function Hero({ onNavigateCheckout, onBackToHome }) {
@@ -100,7 +100,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
 
           {/* LEFT COLUMN CONTENT */}
-          <div className="lg:col-span-7 space-y-5 lg:space-y-7 text-center lg:text-left pt-1 flex flex-col">
+          <div className="lg:col-span-6 space-y-5 lg:space-y-7 text-center lg:text-left pt-1 flex flex-col">
             
             {/* 1. TOP SLIM BADGE (Phone & Desktop) */}
             <div className="order-1 lg:order-1">
@@ -112,25 +112,51 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
 
             {/* 2. MASTER HEADLINE (Phone & Desktop) */}
             <div className="order-2 lg:order-2 pt-1 lg:pt-2">
-              <h1 className="text-2xl sm:text-3xl lg:text-[36px] xl:text-[40px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-[35px] xl:text-[40px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
                 Get Your <span className="orange-gradient-text">Personalized Vastu Report</span> <br className="hidden sm:inline" />
                 <span className="orange-gradient-text">Improve Your Health, Wealth, Relationships, Career</span>
               </h1>
             </div>
 
-            {/* 3. HERO IMAGE FOR MOBILE ONLY */}
-            <div className="order-3 lg:hidden flex justify-center items-center hero-mobile-img-wrapper relative z-0">
-              <img 
-                src={acharyaGroupImg} 
-                alt="Acharya Ji - Vastu Scholar Energy Graphics" 
-                className="hero-acharya-img"
-                fetchPriority="high"
-                decoding="sync"
-              />
+            {/* 3. HERO VIDEO FOR MOBILE ONLY */}
+            <div className="order-3 lg:hidden flex justify-center items-center py-2 relative z-10 w-full">
+              <div className="w-full max-w-md sm:max-w-lg relative">
+                
+                {/* Soft Warm Ambient Glow */}
+                <div className="absolute -inset-3 bg-gradient-to-r from-orange-400/25 via-amber-400/25 to-orange-500/25 rounded-[28px] blur-xl pointer-events-none" />
+                
+                {/* Frameless Glass Video Card */}
+                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-orange-400/80 shadow-2xl shadow-orange-500/25 bg-slate-950 aspect-[16/9] group">
+                  <video
+                    src={heroVideo}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+
+                  {/* Top Left Floating Pill */}
+                  <div className="absolute top-2.5 left-2.5 pointer-events-none z-10">
+                    <span className="bg-slate-950/80 text-white text-[10px] sm:text-xs font-extrabold px-3 py-1 rounded-full border border-amber-300/40 backdrop-blur-md flex items-center gap-1.5 shadow-md">
+                      <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                      <span>Vastu Report Overview</span>
+                    </span>
+                  </div>
+
+                  {/* Top Right Floating Badge */}
+                  <div className="absolute top-2.5 right-2.5 pointer-events-none z-10">
+                    <span className="bg-orange-500/90 text-white text-[10px] sm:text-xs font-extrabold px-2.5 py-1 rounded-full backdrop-blur-md flex items-center gap-1 shadow-md">
+                      <ShieldCheck size={12} className="text-white" />
+                      <span>Zero Demolition</span>
+                    </span>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             {/* 4. PRIMARY CAPSULE CTA BUTTON */}
-            <div className="order-4 lg:order-5 pt-0 lg:pt-4 relative z-20">
+            <div className="order-4 lg:order-5 pt-0 lg:pt-3 relative z-20">
               <div className="w-full flex justify-center lg:justify-start">
                 <button 
                   onClick={onNavigateCheckout}
@@ -152,16 +178,40 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
 
           </div>
 
-          {/* RIGHT COLUMN IMAGE FOR DESKTOP ONLY (>= 1024px) */}
-          <div className="hidden lg:flex lg:col-span-5 justify-center items-center relative z-10">
-            <div className="max-w-md md:max-w-lg w-full flex justify-center items-center relative">
-              <img 
-                src={acharyaGroupImg} 
-                alt="Acharya Ji - Vastu Scholar Energy Graphics" 
-                className="hero-acharya-img"
-                fetchPriority="high"
-                decoding="sync"
-              />
+          {/* RIGHT COLUMN VIDEO FOR DESKTOP ONLY (>= 1024px) - FRAMELESS SLEEK GLASS VIDEO DISPLAY */}
+          <div className="hidden lg:flex lg:col-span-6 justify-center items-center relative z-10 pl-2">
+            <div className="w-full max-w-xl xl:max-w-2xl relative">
+              
+              {/* Soft Ambient Background Glow */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-orange-400/30 via-amber-300/30 to-orange-500/30 rounded-[36px] blur-2xl pointer-events-none" />
+              
+              {/* Frameless Glass Video Card */}
+              <div className="relative rounded-3xl overflow-hidden border-2 border-orange-400/90 shadow-[0_25px_60px_-15px_rgba(234,88,12,0.35)] bg-slate-950 aspect-[16/9] group">
+                <video
+                  src={heroVideo}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Floating Top Left Video Tag */}
+                <div className="absolute top-3.5 left-3.5 pointer-events-none z-10">
+                  <span className="bg-slate-950/85 text-white text-xs font-extrabold px-3.5 py-1.5 rounded-full border border-amber-300/40 backdrop-blur-md flex items-center gap-2 shadow-lg">
+                    <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
+                    <span>Vastu Science Report Overview</span>
+                  </span>
+                </div>
+
+                {/* Floating Top Right Badge */}
+                <div className="absolute top-3.5 right-3.5 pointer-events-none z-10">
+                  <span className="bg-orange-500/90 text-white text-xs font-extrabold px-3.5 py-1.5 rounded-full backdrop-blur-md flex items-center gap-1 shadow-lg border border-white/20">
+                    <ShieldCheck size={14} className="text-white" />
+                    <span>100% Non-Demolition</span>
+                  </span>
+                </div>
+              </div>
+
             </div>
           </div>
 
