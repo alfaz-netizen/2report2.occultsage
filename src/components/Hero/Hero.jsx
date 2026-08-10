@@ -113,9 +113,13 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
 
             {/* 2. MASTER HEADLINE (Phone & Desktop) */}
             <div className="order-2 lg:order-2 pt-1 lg:pt-2">
-              <h1 className="text-2xl sm:text-3xl lg:text-[26px] xl:text-[31px] 2xl:text-[35px] font-extrabold text-slate-900 font-sora leading-[1.3] tracking-tight">
-                <span className="block">Get Your <span className="orange-gradient-text">Personalized Vastu Report</span></span>
-                <span className="orange-gradient-text block pt-1 sm:pt-1.5">Improve Your Health, Wealth, Relationships, Career</span>
+              <h1 className="text-[24px] sm:text-[27px] md:text-3xl lg:text-[26px] xl:text-[31px] 2xl:text-[35px] font-extrabold text-slate-900 font-sora leading-[1.28] tracking-tight">
+                {/* Mobile: 3 exact lines | Desktop: 2 exact lines */}
+                <span className="block lg:inline">Get Your <span className="orange-gradient-text">Personalized Vastu </span></span>
+                <span className="orange-gradient-text inline">Report </span>
+                <br className="hidden lg:inline" />
+                <span className="orange-gradient-text inline lg:inline">Improve Your Health, </span>
+                <span className="orange-gradient-text block lg:inline">Wealth, Relationships, Career</span>
               </h1>
             </div>
 
@@ -131,9 +135,11 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
                   <video
                     src={heroVideo}
                     poster={heroPosterImg}
+                    autoPlay
+                    loop
                     controls
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     className="w-full h-full object-cover"
                   />
 
@@ -157,8 +163,8 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
               </div>
             </div>
 
-            {/* 4. PRIMARY CAPSULE CTA BUTTON */}
-            <div className="order-4 lg:order-5 pt-0 lg:pt-3 relative z-20">
+            {/* 4. PRIMARY CAPSULE CTA BUTTON (Hidden on Mobile View, Visible on Desktop View) */}
+            <div className="hidden lg:block order-4 lg:order-5 pt-0 lg:pt-3 relative z-20">
               <div className="w-full flex justify-center lg:justify-start">
                 <button 
                   onClick={onNavigateCheckout}
@@ -192,9 +198,11 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
                 <video
                   src={heroVideo}
                   poster={heroPosterImg}
+                  autoPlay
+                  loop
                   controls
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   className="w-full h-full object-cover"
                 />
 
