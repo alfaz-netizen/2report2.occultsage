@@ -417,7 +417,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
             </h3>
             <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-extrabold px-3 py-0.5 rounded-full flex items-center gap-1">
               <ShieldCheck size={13} className="text-emerald-700" />
-              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹996"}</span>
+              <span>{isVipUpgraded ? "PAID (UPGRADE REPORT)" : "PAID ₹1,499"}</span>
             </span>
           </div>
 

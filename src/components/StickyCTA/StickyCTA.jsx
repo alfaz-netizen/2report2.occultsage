@@ -40,7 +40,7 @@ export default function StickyCTA({ onNavigateCheckout }) {
               ₹5,999
             </span>
             <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white font-sora tracking-tight mt-0.5 drop-shadow-sm">
-              ₹1499
+              ₹1,499
             </span>
           </div>
 

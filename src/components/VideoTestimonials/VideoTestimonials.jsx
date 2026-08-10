@@ -187,7 +187,7 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
             className="w-full sm:w-auto btn-orange-primary text-white font-black text-sm sm:text-base px-8 sm:px-12 py-4 rounded-full shadow-2xl shadow-orange-500/35 inline-flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40"
           >
             <Sparkles size={18} className="text-amber-200 animate-pulse shrink-0" />
-            <span>BUY NOW at ₹1499 only & Get Report</span>
+            <span>BUY NOW at ₹1,499 only & Get Report</span>
             <ArrowRight size={18} className="text-white shrink-0" />
           </button>
         </div>

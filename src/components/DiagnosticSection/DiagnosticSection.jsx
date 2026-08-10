@@ -234,7 +234,7 @@ export default function DiagnosticSection() {
 
               <div className="flex items-center justify-between text-xs text-slate-600 pt-1">
                 <span>📄 Full Personalised PDF Report + Remedial Map</span>
-                <span className="text-[#ea580c] font-bold text-sm">Special Offer: ₹1499 <del className="text-slate-400 font-normal">₹5,999</del></span>
+                <span className="text-[#ea580c] font-bold text-sm">Special Offer: ₹1,499 <del className="text-slate-400 font-normal">₹5,999</del></span>
               </div>
 
               <button
@@ -246,7 +246,7 @@ export default function DiagnosticSection() {
                   <span>Generating Your Custom Report...</span>
                 ) : (
                   <>
-                    <span>BUY NOW at ₹1499 only</span>
+                    <span>BUY NOW at ₹1,499 only</span>
                     <ArrowRight size={20} />
                   </>
                 )}

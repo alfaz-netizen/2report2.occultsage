@@ -122,7 +122,7 @@ export default function ReportBenefits({ onNavigateCheckout }) {
             className="w-full sm:w-auto btn-orange-primary text-white font-black text-base sm:text-lg md:text-lg px-6 sm:px-9 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-2.5 transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
           >
             <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
-            <span>BUY NOW at ₹1499 only</span>
+            <span>BUY NOW at ₹1,499 only</span>
             <ArrowRight size={20} className="text-white shrink-0" />
           </button>
 

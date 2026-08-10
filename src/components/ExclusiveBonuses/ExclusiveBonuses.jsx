@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ExclusiveBonuses.css";
 import { Sparkles, ArrowRight } from "lucide-react";
 
-import bonusRemediesReportImg from "../../assets/bonus_remedies_report.jpg";
+import bonus15minLiveImg from "../../assets/bonus_15min_live_session.jpg";
 import bonusAudioGuidanceImg from "../../assets/bonus_audio_guidance.jpg";
 
 export default function ExclusiveBonuses({ onNavigateCheckout }) {
@@ -42,33 +42,33 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
         {/* 2 Big Bonus Cards with User Provided Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 pt-4">
           
-          {/* BONUS CARD 1: Free Report With Remedies */}
+          {/* BONUS CARD 1: Free 15-Min Live Report Session */}
           <div className="bonus-card">
             <div className="bonus-badge">
               FREE BONUS #1
             </div>
 
-            {/* User Provided Free Report With Remedies Image */}
+            {/* User Provided Free 15-Min Live Report Session Image */}
             <div className="bonus-img-container shadow-md">
               <img 
-                src={bonusRemediesReportImg} 
-                alt="Free Report With Remedies" 
+                src={bonus15minLiveImg} 
+                alt="Free 15-Min Live Report Session" 
                 className="bonus-img"
               />
             </div>
 
             <div className="space-y-2">
               <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 font-sora">
-                Free Report With Remedies
+                Free 15-Min Live Report Session
               </h3>
               <div className="text-base font-extrabold text-[#ea580c]">
-                <span className="line-through text-slate-400 mr-2">₹999</span>
+                <span className="line-through text-slate-400 mr-2">₹1,999</span>
                 <span>FREE TODAY</span>
               </div>
             </div>
 
             <p className="text-xs md:text-sm text-slate-600 font-medium leading-relaxed pt-3">
-              Apni property ki directional energy blocks ko decode kijiye aur exact non-demolition 16-zone remedies, elemental color balancing, aur directional alignment paayein - Aaj hi order karte hi paaiye ye Remedies Guide bilkul FREE!
+              Get 1-on-1 Personal Live Guidance & Analysis with Senior Vastu Expert to understand your report insights, remedies, directional recommendations, and practical execution!
             </p>
           </div>
 
@@ -156,7 +156,7 @@ export default function ExclusiveBonuses({ onNavigateCheckout }) {
               className="w-full sm:w-auto btn-orange-primary text-white font-black text-base sm:text-lg md:text-lg px-6 sm:px-9 py-4 sm:py-4.5 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-2.5 mx-auto transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
             >
               <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
-              <span>BUY NOW at ₹1499 only</span>
+              <span>BUY NOW at ₹1,499 only</span>
               <ArrowRight size={20} className="text-white shrink-0" />
             </button>
           </div>

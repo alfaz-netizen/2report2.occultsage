@@ -351,6 +351,10 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
               <option value="">-- Select Property Type --</option>
               <option value="Own Property">Own Property</option>
               <option value="Rental Property">Rental Property</option>
+              <option value="Commercial Property">Commercial Property</option>
+              <option value="Industrial & Factory">Industrial & Factory</option>
+              <option value="Office / Business Space">Office / Business Space</option>
+              <option value="Shop / Showroom / Warehouse">Shop / Showroom / Warehouse</option>
             </select>
             {errors.propertyType && <p className="text-[11px] text-rose-600 font-bold mt-1">Please select Property Type</p>}
           </div>
@@ -427,7 +431,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
               <span>Opening Payment Gateway...</span>
             ) : (
               <>
-                <span>Proceed to Pay ₹1499 & Get Report</span>
+                <span>Proceed to Pay ₹1,499 & Get Report</span>
                 <Sparkles size={18} />
               </>
             )}
