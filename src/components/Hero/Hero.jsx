@@ -112,9 +112,9 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
 
             {/* 2. MASTER HEADLINE (Phone & Desktop) */}
             <div className="order-2 lg:order-2 pt-1 lg:pt-2">
-              <h1 className="text-2xl sm:text-3xl lg:text-[35px] xl:text-[40px] font-extrabold text-slate-900 font-sora leading-[1.26] tracking-tight">
-                Get Your <span className="orange-gradient-text">Personalized Vastu Report</span> <br className="hidden sm:inline" />
-                <span className="orange-gradient-text">Improve Your Health, Wealth, Relationships, Career</span>
+              <h1 className="text-2xl sm:text-3xl lg:text-[26px] xl:text-[31px] 2xl:text-[35px] font-extrabold text-slate-900 font-sora leading-[1.3] tracking-tight">
+                <span className="block">Get Your <span className="orange-gradient-text">Personalized Vastu Report</span></span>
+                <span className="orange-gradient-text block pt-1 sm:pt-1.5">Improve Your Health, Wealth, Relationships, Career</span>
               </h1>
             </div>
 
