@@ -5,6 +5,7 @@ import {
   ShieldCheck, ArrowRight, Sparkles 
 } from "lucide-react";
 import heroVideo from "../../assets/Vastu Report Homepage Hero Section.mp4";
+import heroPosterImg from "../../assets/hero_poster.jpg";
 import vwLogo from "../../assets/VW-HR.png";
 
 export default function Hero({ onNavigateCheckout, onBackToHome }) {
@@ -129,6 +130,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
                 <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-orange-400/80 shadow-2xl shadow-orange-500/25 bg-slate-950 aspect-[16/9] group">
                   <video
                     src={heroVideo}
+                    poster={heroPosterImg}
                     controls
                     playsInline
                     preload="metadata"
@@ -189,6 +191,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
               <div className="relative rounded-3xl overflow-hidden border-2 border-orange-400/90 shadow-[0_25px_60px_-15px_rgba(234,88,12,0.35)] bg-slate-950 aspect-[16/9] group">
                 <video
                   src={heroVideo}
+                  poster={heroPosterImg}
                   controls
                   playsInline
                   preload="metadata"

@@ -6,6 +6,10 @@ import alkaVideo from "../../assets/ALKA MAM TESTIMONIAL .mp4";
 import dineshVideo from "../../assets/DINESH SIR-.mp4";
 import samsherVideo from "../../assets/samsher sir.mp4";
 
+import alkaPoster from "../../assets/alka_poster.jpg";
+import dineshPoster from "../../assets/dinesh_poster.jpg";
+import samsherPoster from "../../assets/samsher_poster.jpg";
+
 export default function VideoTestimonials({ onNavigateCheckout }) {
   const [playingVideo, setPlayingVideo] = useState(null);
   const videoRefs = [useRef(null), useRef(null), useRef(null)];
@@ -18,6 +22,7 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
       location: "Punjab",
       rating: 5,
       videoUrl: samsherVideo,
+      posterUrl: samsherPoster,
       tagline: "Property Vastu & Peace of Mind",
       quote: "Getting our customized Vastu analysis was the best decision for our family peace and prosperity."
     },
@@ -28,6 +33,7 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
       location: "Jaipur, Rajasthan",
       rating: 5,
       videoUrl: dineshVideo,
+      posterUrl: dineshPoster,
       tagline: "Business Growth & Cash Flow",
       quote: "My commercial space financial flow improved significantly after applying elemental color balancing."
     },
@@ -38,6 +44,7 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
       location: "Delhi NCR",
       rating: 5,
       videoUrl: alkaVideo,
+      posterUrl: alkaPoster,
       tagline: "Vastu Remedies For Home & Health",
       quote: "Acharya Ji's zero-demolition remedies completely changed the energy of our house within weeks."
     }
@@ -99,6 +106,7 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
                   <video
                     ref={videoRefs[index]}
                     src={item.videoUrl}
+                    poster={item.posterUrl}
                     controls={isPlaying}
                     playsInline
                     preload="metadata"
