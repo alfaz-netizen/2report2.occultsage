@@ -52,7 +52,7 @@ const INDIAN_CITIES = [
 export default function ReportForm({ onBack, onPaymentSuccess }) {
   const [formData, setFormData] = useState({
     fullName: "",
-    propertyType: "",
+    propertyType: "Own Property",
     direction: "N/A",
     concern: "N/A",
     dob: "N/A",
@@ -60,7 +60,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
     phone: "",
     email: "",
     city: "N/A",
-    reportLanguage: ""
+    reportLanguage: "Hindi"
   });
 
   const [errors, setErrors] = useState({});
