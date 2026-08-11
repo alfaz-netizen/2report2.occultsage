@@ -92,14 +92,14 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
           </p>
         </div>
 
-        {/* 3 Video Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        {/* 3 Video Cards: Horizontal Swipe Slider on Phone View | 3-Column Grid on Desktop View */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 px-2 pb-2 md:pb-0 md:grid md:grid-cols-3 md:overflow-visible md:gap-6 lg:gap-8">
           {videosData.map((item, index) => {
             const isPlaying = playingVideo === index;
             return (
               <div 
                 key={item.id}
-                className="bg-white rounded-3xl border-2 border-orange-200/80 overflow-hidden video-card-shadow video-card-hover flex flex-col justify-between"
+                className="w-[85vw] max-w-[320px] md:w-auto shrink-0 snap-center bg-white rounded-3xl border-2 border-orange-200/80 overflow-hidden video-card-shadow video-card-hover flex flex-col justify-between"
               >
                 {/* Video Container Box */}
                 <div className="relative aspect-[9/16] sm:aspect-[4/5] bg-slate-950 overflow-hidden group">
@@ -178,6 +178,15 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
               </div>
             );
           })}
+        </div>
+
+        {/* Mobile Swipe Hint Indicator */}
+        <div className="flex md:hidden items-center justify-center gap-1.5 pt-1 text-slate-500 text-xs font-bold">
+          <span className="animate-pulse">👈</span>
+          <span className="text-[#ea580c] font-extrabold bg-orange-50 border border-orange-200 px-3.5 py-1 rounded-full shadow-sm">
+            Swipe left to watch all 3 reviews
+          </span>
+          <span className="animate-pulse">👉</span>
         </div>
 
         {/* CTA Button */}
