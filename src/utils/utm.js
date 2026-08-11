@@ -50,13 +50,19 @@ export function captureUtmParams() {
   }
 }
 
-// Get clean UTM params object for Razorpay Notes (strictly 2 UTM keys + utm_details so total notes = 15 limit)
+// Get clean individual UTM params for Razorpay Notes & Webhooks
 export function getUtmParamsForNotes() {
   const params = captureUtmParams();
   
   return {
     utm_source: params.utm_source || "organic / none",
     utm_medium: params.utm_medium || "organic / none",
-    utm_details: JSON.stringify(params) // Full payload of all 9 UTM parameters encoded
+    utm_campaign: params.utm_campaign || "organic / none",
+    utm_term: params.utm_term || "organic / none",
+    utm_content: params.utm_content || "organic / none",
+    utm_id: params.utm_id || "organic / none",
+    utm_platform: params.utm_platform || params.utm_source_platform || "organic / none",
+    utm_creative_format: params.utm_creative_format || "organic / none",
+    utm_marketing_tactic: params.utm_marketing_tactic || "organic / none"
   };
 }

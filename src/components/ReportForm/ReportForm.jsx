@@ -182,13 +182,14 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
           current_location: formData.city || "N/A",
           utm_source: rawUtms.utm_source || "organic / none",
           utm_medium: rawUtms.utm_medium || "organic / none",
-          utm_campaign: rawUtms.utm_campaign || "N/A",
-          utm_term: rawUtms.utm_term || "N/A",
-          utm_content: rawUtms.utm_content || "N/A",
-          utm_id: rawUtms.utm_id || "N/A",
-          utm_source_platform: rawUtms.utm_source_platform || "N/A",
-          utm_creative_format: rawUtms.utm_creative_format || "N/A",
-          utm_marketing_tactic: rawUtms.utm_marketing_tactic || "N/A"
+          utm_campaign: rawUtms.utm_campaign || "organic / none",
+          utm_term: rawUtms.utm_term || "organic / none",
+          utm_content: rawUtms.utm_content || "organic / none",
+          utm_id: rawUtms.utm_id || "organic / none",
+          utm_platform: rawUtms.utm_platform || rawUtms.utm_source_platform || "organic / none",
+          utm_source_platform: rawUtms.utm_source_platform || rawUtms.utm_platform || "organic / none",
+          utm_creative_format: rawUtms.utm_creative_format || "organic / none",
+          utm_marketing_tactic: rawUtms.utm_marketing_tactic || "organic / none"
         };
 
         fetch("https://script.google.com/macros/s/AKfycbyr-ZmzmrnrRhEwA5zhxvJWol7M3nTBpklIqQ5gtvmyg6S1W5kbWDVNf50WxfuYgwCX/exec", {
@@ -239,17 +240,11 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         contact: formData.phone
       },
       notes: {
-        payment_type: "form_checkout",
         unique_customer_id: uniqueCustomerId,
         full_name: formData.fullName || "N/A",
-        property_type: formData.propertyType || "N/A",
-        entrance_direction: formData.direction || "N/A",
-        primary_challenge: formData.concern || "N/A",
-        date_of_birth: formData.dob || "N/A",
-        gender: formData.gender || "N/A",
         phone_number: formData.phone || "N/A",
         email_id: formData.email || "N/A",
-        current_location: formData.city || "N/A",
+        property_type: formData.propertyType || "N/A",
         report_language: languagePayload,
         ...getUtmParamsForNotes()
       },
