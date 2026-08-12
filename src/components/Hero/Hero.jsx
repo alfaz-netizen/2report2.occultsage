@@ -168,7 +168,7 @@ export default function Hero({ onNavigateCheckout, onBackToHome }) {
               <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/10 border border-amber-400/50 rounded-full px-3.5 sm:px-4.5 py-1.5 shadow-sm backdrop-blur-md">
                 <Award size={15} className="text-[#ea580c] shrink-0" />
                 <span className="text-[11px] sm:text-xs font-bold text-amber-900 tracking-wide">
-                  Based on Ancient Vedic Vastu & Numerology — Trusted by 60,000+ People
+                  Based on Ancient Vedic Vastu & Modern Science- Trusted by 60,000+ Users
                 </span>
               </div>
             </div>
