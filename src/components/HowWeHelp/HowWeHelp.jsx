@@ -21,8 +21,8 @@ export default function HowWeHelp() {
       icon: Sparkles
     },
     {
-      title: "Astro-Vastu Birth Chart Sync",
-      desc: "Align your home's 16 directional zones with your personal birth planetary positions for rapid individual growth and prosperity.",
+      title: "Directional Energy Zone Sync",
+      desc: "Align your property's 16 directional zones with space energy balancing for rapid peace, growth and family harmony.",
       icon: Compass
     }
   ];

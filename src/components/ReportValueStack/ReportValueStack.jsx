@@ -10,6 +10,7 @@ import page2Img from "../../assets/vastu_report_page2.png";
 import page3Img from "../../assets/vastu_report_page3.png";
 import page4Img from "../../assets/vastu_report_page4.png";
 import page5Img from "../../assets/vastu_report_page5.png";
+import page6Img from "../../assets/vastu_report_page6.png";
 
 export default function ReportValueStack({ onNavigateCheckout }) {
   const [activePageIndex, setActivePageIndex] = useState(0);
@@ -74,15 +75,29 @@ export default function ReportValueStack({ onNavigateCheckout }) {
     {
       id: 4,
       pageNo: "Section 05",
-      badge: "Astro-Vastu Alignment",
-      title: "Personal Astro-Vastu Gemstone & Chakra Guide",
-      subtitle: "Customized Remedies Based on Your DOB",
-      desc: "Tailored planetary recommendations based on your birth date and janam kundali to remove personal career stagnation and health stress.",
+      badge: "Executive Summary",
+      title: "Executive Report Summary & Key Findings",
+      subtitle: "Summary of Key Findings & Personalized Vastu Recommendations",
+      desc: "A clear, consolidated summary of your property's top Vastu strengths, zone energy imbalances, and prioritized non-demolition remedies by Acharya Pankaj Ji.",
       image: page5Img,
       features: [
-        "DOB Kundali & Vastu Directional Synergy",
-        "Rashi & Gemstone chakra balancing guide",
-        "Personalized success & prosperity forecast"
+        "Key Vastu findings & priority score",
+        "Personalized non-demolition action plan",
+        "Executive guidance by Acharya Pankaj Ji"
+      ]
+    },
+    {
+      id: 5,
+      pageNo: "Section 06",
+      badge: "24-48 Hours Delivery",
+      title: "Custom Tailored PDF Vastu Science Report",
+      subtitle: "Delivered Directly to Your WhatsApp & Email within 24-48 Hours",
+      desc: "Comprehensive digital PDF Vastu Analysis Report customized for your property, delivered directly to your registered WhatsApp number and Email ID within 24-48 hours.",
+      image: page6Img,
+      features: [
+        "Delivery within 24-48 hours on WhatsApp & Email",
+        "High-resolution digital PDF format",
+        "Lifetime access to property analysis report"
       ]
     }
   ];
@@ -99,15 +114,15 @@ export default function ReportValueStack({ onNavigateCheckout }) {
 
   // Feature Cards mapping (Left 3, Right 3)
   const leftFeatures = [
-    { idx: 0, label: "16-Zone Directional Energy Heatmap", sub: "Degree directional mapping" },
-    { idx: 1, label: "100% Non-Demolition Remedial Blueprint", sub: "Color tape & copper strip fixes" },
-    { idx: 2, label: "Entrance & Room Vastu Scorecard", sub: "Individual compliance ratings" }
+    { idx: 0, featureNum: "1", label: "16-Zone Directional Energy Heatmap", sub: "Degree directional mapping" },
+    { idx: 1, featureNum: "2", label: "100% Non-Demolition Remedial Blueprint", sub: "Color tape & copper strip fixes" },
+    { idx: 2, featureNum: "3", label: "Entrance & Room Vastu Scorecard", sub: "Individual compliance ratings" }
   ];
 
   const rightFeatures = [
-    { idx: 3, label: "Kuber Wealth Zone & Cashflow Multiplier", sub: "North zone money inflow activator" },
-    { idx: 4, label: "Astro-Vastu Gemstone & DOB Alignment", sub: "Personal planetary remedies" },
-    { idx: 0, label: "Custom Tailored PDF Report", sub: "Instant delivery on WhatsApp & Email" }
+    { idx: 3, featureNum: "4", label: "Kuber Wealth Zone & Cashflow Multiplier", sub: "North zone money inflow activator" },
+    { idx: 4, featureNum: "5", label: "REPORT SUMMARY", sub: "Summary of key findings and personalized Vastu recommendations." },
+    { idx: 5, featureNum: "6", label: "Custom Tailored PDF Report", sub: "Delivery within 24-48 hours via WhatsApp & Email" }
   ];
 
   return (
@@ -266,7 +281,7 @@ export default function ReportValueStack({ onNavigateCheckout }) {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-extrabold text-[#ea580c] uppercase tracking-wider">
-                    Feature #{item.idx === 0 ? "1" : item.idx === 3 ? "4" : "5"}
+                    Feature #{item.featureNum}
                   </span>
                   {activePageIndex === item.idx && (
                     <CheckCircle2 size={16} className="text-[#ea580c]" />
@@ -315,7 +330,7 @@ export default function ReportValueStack({ onNavigateCheckout }) {
           <div className="flex items-center justify-center gap-4 text-xs text-slate-500 font-medium pt-1">
             <span className="flex items-center gap-1"><ShieldCheck size={15} className="text-emerald-600" /> 100% Satisfaction Guarantee</span>
             <span>•</span>
-            <span>Instant PDF Download on WhatsApp & Email</span>
+            <span>Delivery within 24-48 Hours on WhatsApp & Email</span>
           </div>
 
         </div>
