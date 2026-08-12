@@ -20,35 +20,35 @@ export default function VideoTestimonials({ onNavigateCheckout }) {
     {
       id: "samsher",
       name: "Samsher",
-      designation: "Property Investor",
+      designation: "Business Owner",
       location: "Punjab",
       rating: 5,
       videoUrl: samsherVideo,
       posterUrl: samsherPoster,
-      tagline: "Property Vastu & Peace of Mind",
-      quote: "Getting our customized Vastu analysis was the best decision for our family peace and prosperity."
+      tagline: "Business Growth & Cash Flow",
+      quote: "Mene business space ke liye Vastu report nikalwaya aur Acharya Ji ki remedies follow kine. Business cash flow aur growth me bohot bada improvement aaya!"
     },
     {
       id: "dinesh",
       name: "Dinesh",
-      designation: "Business Owner",
+      designation: "Verified Homeowner",
       location: "Jaipur, Rajasthan",
       rating: 5,
       videoUrl: dineshVideo,
       posterUrl: dineshPoster,
-      tagline: "Business Growth & Cash Flow",
-      quote: "My commercial space financial flow improved significantly after applying elemental color balancing."
+      tagline: "House Vastu & Family Peace",
+      quote: "Mene apne ghar ka Vastu report nikalwaya aur simple remedies follow kine. Ghar ka environment, health aur overall peace bilkul sahi ho gaya!"
     },
     {
       id: "alka",
       name: "Alka",
-      designation: "Verified Homeowner",
+      designation: "Relationship & Harmony",
       location: "Delhi NCR",
       rating: 5,
       videoUrl: alkaVideo,
       posterUrl: alkaPoster,
-      tagline: "Vastu Remedies For Home & Health",
-      quote: "Acharya Ji's zero-demolition remedies completely changed the energy of our house within weeks."
+      tagline: "Relationship Harmony & Peace",
+      quote: "Ghar me hamesha larai aur negative stress rehta tha. Vastu report ke baad remedies follow karte hi relationships aur ghar me shanti ho gayi!"
     }
   ];
 
