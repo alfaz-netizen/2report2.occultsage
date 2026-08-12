@@ -199,11 +199,15 @@ export default function Transparency() {
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
           {stats.map((s, i) => (
-            <div key={i} className="white-orange-card p-6 text-center rounded-3xl">
-              <div className="text-3xl md:text-4xl font-extrabold text-[#ea580c] font-sora">{s.val}</div>
-              <div className="text-xs md:text-sm text-slate-600 mt-1 font-semibold">{s.label}</div>
+            <div key={i} className="white-orange-card p-3 sm:p-5 md:p-6 text-center rounded-2xl sm:rounded-3xl flex flex-col justify-center items-center overflow-hidden">
+              <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-[#ea580c] font-sora tracking-tight whitespace-nowrap leading-none">
+                {s.val}
+              </div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-slate-600 mt-1.5 font-semibold leading-tight">
+                {s.label}
+              </div>
             </div>
           ))}
         </div>
