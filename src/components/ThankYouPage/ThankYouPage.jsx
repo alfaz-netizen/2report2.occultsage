@@ -7,7 +7,8 @@ import { getPricingForRoute } from "../../config/pricing";
 export default function ThankYouPage({ selectedLanguage, fullName, phone, email, paymentId, uniqueCustomerId, onBackToHome }) {
   const isHindi = selectedLanguage === "Hindi";
   const routePath = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
-  const isFb1 = routePath.includes("/fb1");
+  const isFb1 = routePath.includes("fb1") || (uniqueCustomerId && uniqueCustomerId.includes("FB1"));
+  const activePixelId = isFb1 ? "2606867239768678" : "1032914616258314";
   
   // Calculate route's independent Topop pricing configuration
   const currentPricing = getPricingForRoute(routePath);
@@ -46,13 +47,13 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       : (isHindi ? "Vastu Wheels Hindi FB" : "Vastu Wheels English FB");
 
     if (isHindi) {
-      trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName });
+      trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true, activePixelId);
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
     } else {
-      trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName });
+      trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true, activePixelId);
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
     }
-  }, [selectedLanguage, showPopup, isHindi, isFb1]);
+  }, [selectedLanguage, showPopup, isHindi, isFb1, activePixelId]);
 
   // 🎉 Party Popper Confetti Burst & Fast Rolling Price Animation
   const handleClaimDiscount = () => {
@@ -147,8 +148,8 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
         setVipPaymentId(response?.razorpay_payment_id || ("PAY_UPGRADE_" + Math.random().toString(36).substring(2, 10).toUpperCase()));
         
         // Trigger Facebook Pixel Upgrade Purchase Events:
-        trackPixelEvent("Purchase Report Upgrade", { value: displayPrice, currency: "INR" });
-        trackPixelEvent("Purchase", { value: displayPrice, currency: "INR", content_name: "Vastu Wheels Report Upgrade" });
+        trackPixelEvent("Purchase Report Upgrade", { value: displayPrice, currency: "INR" }, true, activePixelId);
+        trackPixelEvent("Purchase", { value: displayPrice, currency: "INR", content_name: "Vastu Wheels Report Upgrade" }, false, activePixelId);
       },
       prefill: {
         name: fullName || "Valued Customer",
@@ -183,7 +184,8 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    const baseRoute = isHindi ? "/thankyou-hindi" : "/thankyou-english";
+    const prefix = isFb1 ? "/fb1" : "";
+    const baseRoute = `${prefix}${isHindi ? "/thankyou-hindi" : "/thankyou-english"}`;
     window.history.pushState({}, "", baseRoute);
   };
 

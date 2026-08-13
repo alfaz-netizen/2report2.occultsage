@@ -12,20 +12,20 @@ export const initFb1Pixel = () => {
   }
 };
 
-export const getActivePixelId = () => {
+export const getActivePixelId = (customerTag = "") => {
   if (typeof window !== "undefined") {
     const rawPath = window.location.pathname.toLowerCase();
-    if (rawPath.includes("/fb1")) {
+    if (rawPath.includes("/fb1") || (customerTag && customerTag.includes("FB1"))) {
       return "2606867239768678";
     }
   }
   return "1032914616258314";
 };
 
-export const trackPixelEvent = (eventName, params = {}, isCustom = false) => {
+export const trackPixelEvent = (eventName, params = {}, isCustom = false, overridePixelId = null) => {
   if (typeof window !== "undefined" && window.fbq) {
     try {
-      const activePixelId = getActivePixelId();
+      const activePixelId = overridePixelId || getActivePixelId();
 
       // Ensure FB1 pixel is initialized if on /fb1
       if (activePixelId === "2606867239768678") {
