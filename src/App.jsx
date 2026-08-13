@@ -15,11 +15,14 @@ import Footer from "./components/Footer/Footer";
 import ReportForm from "./components/ReportForm/ReportForm";
 import LegalPage from "./components/LegalPage/LegalPage";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
-import { trackPixelEvent } from "./utils/pixel";
+import { trackPixelEvent, initFb1Pixel } from "./utils/pixel";
 import { captureUtmParams } from "./utils/utm";
+import { getPricingForRoute } from "./config/pricing";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("landing"); // "landing" | "checkout" | "legal" | "thankyou"
+  const [isFb1, setIsFb1] = useState(false); // Mode for /fb1 route (Pixel ID: 2606867239768678)
+  const [currentPrefix, setCurrentPrefix] = useState(""); // Stores prefix like "/fb1"
   const [activeLegalDoc, setActiveLegalDoc] = useState("privacy");
   const [orderInfo, setOrderInfo] = useState({ 
     language: "English", 
@@ -29,31 +32,66 @@ export default function App() {
     paymentId: ""
   });
 
-  // Sync initial URL path on mount, capture UTM parameters, & listen to browser back/forward buttons
+  // Calculate current route's independent pricing configuration
+  const currentPricing = getPricingForRoute(currentPrefix);
+
+  // Sync URL path on mount, capture UTM parameters, & listen to browser navigation
   useEffect(() => {
     captureUtmParams(); // Capture UTM ad parameters immediately on site visit
 
     const handleUrlChange = () => {
-      // Decode URL (handles spaces or encoded characters like %20 in 'thankyou english')
       const rawPath = decodeURIComponent(window.location.pathname).toLowerCase();
       
-      if (rawPath.includes("hindi")) {
+      // Strictly allow ONLY /fb1 as the dedicated FB1 campaign route prefix
+      const pathSegments = rawPath.split("/").filter(Boolean);
+      let prefix = "";
+      let actionRoute = rawPath;
+
+      if (pathSegments.length > 0 && pathSegments[0] === "fb1") {
+        prefix = "/fb1";
+        actionRoute = "/" + pathSegments.slice(1).join("/");
+      }
+
+      setCurrentPrefix(prefix);
+
+      // Dedicated FB1 Landing Page mode (/fb1 or /fb1/*)
+      const fb1Mode = prefix === "/fb1";
+      setIsFb1(fb1Mode);
+
+      if (fb1Mode) {
+        initFb1Pixel(); // Initialize Pixel 2606867239768678 for FB1 campaign
+        trackPixelEvent("PageView");
+      } else {
+        trackPixelEvent("PageView");
+      }
+
+      // Dynamic Canonical & Open Graph URL management: Sets exact page URL for /fb1 vs /
+      const canonicalLink = document.querySelector("link[rel='canonical']");
+      const ogUrlMeta = document.querySelector("meta[property='og:url']");
+      const twitterUrlMeta = document.querySelector("meta[name='twitter:url']");
+      const activeFullUrl = `https://report.globalinch.com${prefix || "/"}`;
+
+      if (canonicalLink) canonicalLink.setAttribute("href", activeFullUrl);
+      if (ogUrlMeta) ogUrlMeta.setAttribute("content", activeFullUrl);
+      if (twitterUrlMeta) twitterUrlMeta.setAttribute("content", activeFullUrl);
+
+      if (actionRoute.includes("hindi")) {
         setOrderInfo((prev) => ({ ...prev, language: "Hindi" }));
         setCurrentPage("thankyou");
-      } else if (rawPath.includes("english")) {
+      } else if (actionRoute.includes("english")) {
         setOrderInfo((prev) => ({ ...prev, language: "English" }));
         setCurrentPage("thankyou");
-      } else if (rawPath.includes("thank")) {
+      } else if (actionRoute.includes("thank")) {
         setCurrentPage("thankyou");
-      } else if (rawPath.includes("checkout")) {
+      } else if (actionRoute.includes("checkout")) {
         setCurrentPage("checkout");
-      } else if (rawPath.includes("privacy") || rawPath.includes("tnc") || rawPath.includes("about") || rawPath.includes("refund") || rawPath.includes("disclaimer") || rawPath.includes("contact") || rawPath.includes("legal")) {
+      } else if (actionRoute.includes("privacy") || actionRoute.includes("tnc") || actionRoute.includes("about") || actionRoute.includes("refund") || actionRoute.includes("disclaimer") || actionRoute.includes("contact") || actionRoute.includes("legal")) {
         setCurrentPage("legal");
-        if (rawPath.includes("tnc")) setActiveLegalDoc("tnc");
-        else if (rawPath.includes("about")) setActiveLegalDoc("about");
-        else if (rawPath.includes("refund")) setActiveLegalDoc("refund");
-        else if (rawPath.includes("disclaimer")) setActiveLegalDoc("disclaimer");
-        else if (rawPath.includes("contact")) setActiveLegalDoc("contact");
+        if (actionRoute.includes("tnc")) setActiveLegalDoc("tnc");
+        else if (actionRoute.includes("about")) setActiveLegalDoc("about");
+        else if (actionRoute.includes("refund")) setActiveLegalDoc("refund");
+        else if (actionRoute.includes("disclaimer")) setActiveLegalDoc("disclaimer");
+        else if (actionRoute.includes("contact")) setActiveLegalDoc("contact");
         else setActiveLegalDoc("privacy");
       } else {
         setCurrentPage("landing");
@@ -66,42 +104,52 @@ export default function App() {
   }, []);
 
   const handleNavigateCheckout = () => {
-    // Trigger Meta Facebook Pixel AddToCart Event on CTA Button Clicks
-    trackPixelEvent("AddToCart", { value: 1499, currency: "INR" });
-    window.history.pushState({}, "", "/checkout");
+    // Trigger Meta Facebook Pixel AddToCart Event for the active Pixel ID with route's independent price
+    trackPixelEvent("AddToCart", { value: currentPricing.price, currency: "INR" });
+    
+    // Build target URL path retaining campaign prefix (e.g. /fb1/checkout or /checkout)
+    const targetUrl = currentPrefix ? `${currentPrefix}/checkout` : "/checkout";
+    
+    window.history.pushState({}, "", targetUrl);
     setCurrentPage("checkout");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleNavigateLegal = (docKey = "privacy") => {
     setActiveLegalDoc(docKey);
-    window.history.pushState({}, "", `/${docKey}`);
+    const targetPath = currentPrefix ? `${currentPrefix}/${docKey}` : `/${docKey}`;
+    window.history.pushState({}, "", targetPath);
     setCurrentPage("legal");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleBackToLanding = () => {
-    window.history.pushState({}, "", "/");
+    const targetPath = currentPrefix ? currentPrefix : "/";
+    window.history.pushState({}, "", targetPath);
     setCurrentPage("landing");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handlePaymentSuccess = (data) => {
     const selectedLang = data.language || "English";
+    const defaultTag = (isFb1 || currentPrefix === "/fb1") ? "VW-FB1-" : "VW-FB-";
     const newOrder = {
       language: selectedLang,
       fullName: data.fullName || "",
       phone: data.phone || "",
       email: data.email || "",
       paymentId: data.paymentId || "",
-      uniqueCustomerId: data.uniqueCustomerId || ("VW-" + Math.floor(10000000 + Math.random() * 90000000))
+      uniqueCustomerId: data.uniqueCustomerId || (defaultTag + Math.floor(10000000 + Math.random() * 90000000))
     };
     setOrderInfo(newOrder);
+
     try {
       localStorage.setItem("vastu_order_info", JSON.stringify(newOrder));
     } catch {}
 
-    const targetUrl = selectedLang === "Hindi" ? "/thankyou-hindi" : "/thankyou-english";
+    const langSlug = selectedLang === "Hindi" ? "thankyou-hindi" : "thankyou-english";
+    const targetUrl = currentPrefix ? `${currentPrefix}/${langSlug}` : `/${langSlug}`;
+
     window.history.pushState({}, "", targetUrl);
     setCurrentPage("thankyou");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -112,6 +160,7 @@ export default function App() {
       <ReportForm 
         onBack={handleBackToLanding} 
         onPaymentSuccess={handlePaymentSuccess} 
+        price={currentPricing.price}
       />
     );
   }
@@ -137,7 +186,8 @@ export default function App() {
         onBackToHome={handleBackToLanding}
         onSelectDoc={(docKey) => {
           setActiveLegalDoc(docKey);
-          window.history.pushState({}, "", `/${docKey}`);
+          const targetPath = currentPrefix ? `${currentPrefix}/${docKey}` : `/${docKey}`;
+          window.history.pushState({}, "", targetPath);
         }}
       />
     );
@@ -149,23 +199,40 @@ export default function App() {
       {/* 1. Brand Header Only */}
       <Header onNavigateCheckout={handleNavigateCheckout} onBackToHome={handleBackToLanding} />
 
-      {/* 2. Main Streamlined Landing Flow */}
+      {/* 2. Main Streamlined Landing Flow (Shared components with independent prices) */}
       <main className="flex-1 space-y-0">
         
         {/* Hero Section */}
-        <Hero onNavigateCheckout={handleNavigateCheckout} onBackToHome={handleBackToLanding} />
+        <Hero 
+          onNavigateCheckout={handleNavigateCheckout} 
+          onBackToHome={handleBackToLanding} 
+          price={currentPricing.price}
+          originalPrice={currentPricing.originalPrice}
+        />
 
         {/* Section 2 Below Hero: Sahi Vastu Science Report Paane Ke Fayde */}
-        <ReportBenefits onNavigateCheckout={handleNavigateCheckout} />
+        <ReportBenefits 
+          onNavigateCheckout={handleNavigateCheckout} 
+          price={currentPricing.price}
+          originalPrice={currentPricing.originalPrice}
+        />
 
         {/* Section 3 Below ReportBenefits: 2 Exclusive FREE Bonuses */}
-        <ExclusiveBonuses onNavigateCheckout={handleNavigateCheckout} />
+        <ExclusiveBonuses 
+          onNavigateCheckout={handleNavigateCheckout} 
+        />
 
         {/* Section 4: What You Get in Vastu Report (Value Stack) */}
-        <ReportValueStack onNavigateCheckout={handleNavigateCheckout} />
+        <ReportValueStack 
+          onNavigateCheckout={handleNavigateCheckout} 
+          price={currentPricing.price}
+          originalPrice={currentPricing.originalPrice}
+        />
 
         {/* Section 5A: Customer Video Feedback Testimonials */}
-        <VideoTestimonials onNavigateCheckout={handleNavigateCheckout} />
+        <VideoTestimonials 
+          onNavigateCheckout={handleNavigateCheckout} 
+        />
 
         {/* Section 5B: Verified Customer Success Stories & Reviews (Trusted By Over 60,000+ Indian Families) */}
         <Transparency />
@@ -176,7 +243,11 @@ export default function App() {
       </main>
 
       {/* Sticky Mobile Bottom Offer Bar */}
-      <StickyCTA onNavigateCheckout={handleNavigateCheckout} />
+      <StickyCTA 
+        onNavigateCheckout={handleNavigateCheckout} 
+        price={currentPricing.price}
+        originalPrice={currentPricing.originalPrice}
+      />
 
       {/* Brand Footer */}
       <Footer onNavigateLegal={handleNavigateLegal} onBackToHome={handleBackToLanding} />

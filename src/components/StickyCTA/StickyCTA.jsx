@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./StickyCTA.css";
 import { ArrowRight, Clock } from "lucide-react";
 
-export default function StickyCTA({ onNavigateCheckout }) {
+export default function StickyCTA({ onNavigateCheckout, price = 1499, originalPrice = 5999 }) {
   const [timeLeft, setTimeLeft] = useState(856); // 14:16 like reference screenshot!
+  const formattedPrice = price ? price.toLocaleString("en-IN") : "1,499";
+  const formattedOriginalPrice = originalPrice ? originalPrice.toLocaleString("en-IN") : "5,999";
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -37,10 +39,10 @@ export default function StickyCTA({ onNavigateCheckout }) {
           {/* LEFT COLUMN: Pricing Block (Strikethrough cut price ₹5,999 above, Big ₹1499 below) */}
           <div className="flex flex-col items-start sm:items-center justify-center leading-none min-w-[70px] sm:min-w-[90px] shrink-0">
             <span className="line-through text-orange-200 text-xs sm:text-sm md:text-base font-bold tracking-tight">
-              ₹5,999
+              ₹{formattedOriginalPrice}
             </span>
             <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white font-sora tracking-tight mt-0.5 drop-shadow-sm">
-              ₹1,499
+              ₹{formattedPrice}
             </span>
           </div>
 

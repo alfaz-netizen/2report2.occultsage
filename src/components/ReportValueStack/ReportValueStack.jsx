@@ -12,8 +12,9 @@ import page4Img from "../../assets/vastu_report_page4.png";
 import page5Img from "../../assets/vastu_report_page5.png";
 import page6Img from "../../assets/vastu_report_page6.png";
 
-export default function ReportValueStack({ onNavigateCheckout }) {
+export default function ReportValueStack({ onNavigateCheckout, price = 1499 }) {
   const [activePageIndex, setActivePageIndex] = useState(0);
+  const formattedPrice = price ? price.toLocaleString("en-IN") : "1,499";
 
   const pagesData = [
     {
@@ -322,7 +323,7 @@ export default function ReportValueStack({ onNavigateCheckout }) {
               className="w-full sm:w-auto btn-orange-primary text-white font-black text-base sm:text-lg md:text-lg px-8 sm:px-10 py-4 rounded-full shadow-2xl shadow-orange-500/35 flex items-center justify-center gap-2.5 mx-auto transition-all duration-300 transform hover:scale-[1.02] cursor-pointer border border-amber-300/40 leading-snug tracking-tight"
             >
               <Sparkles size={22} className="text-amber-200 animate-pulse shrink-0" />
-              <span>BUY NOW at ₹1,499 only</span>
+              <span>BUY NOW at ₹{formattedPrice} only</span>
               <ArrowRight size={20} className="text-white shrink-0" />
             </button>
           </div>

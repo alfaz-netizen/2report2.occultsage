@@ -2,42 +2,57 @@ import React, { useState, useEffect } from "react";
 import { ArrowLeft, ShieldCheck, CheckCircle2, Clock, Mail, Phone, CreditCard, FileCheck, User, MessageCircle, X, Sparkles, Zap, Headphones, Gift } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
+import { getPricingForRoute } from "../../config/pricing";
 
 export default function ThankYouPage({ selectedLanguage, fullName, phone, email, paymentId, uniqueCustomerId, onBackToHome }) {
+  const isHindi = selectedLanguage === "Hindi";
+  const routePath = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
+  const isFb1 = routePath.includes("/fb1");
+  
+  // Calculate route's independent Topop pricing configuration
+  const currentPricing = getPricingForRoute(routePath);
+  const topopConfig = currentPricing.topop || { originalPrice: 4999, initialPrice: 1999, discountedPrice: 1799 };
+
   // Interactive Popup States
   const [showPopup, setShowPopup] = useState(true);
   const [discountClaimed, setDiscountClaimed] = useState(false);
-  const [displayPrice, setDisplayPrice] = useState(1999);
+  const [displayPrice, setDisplayPrice] = useState(topopConfig.initialPrice);
   const [isRolling, setIsRolling] = useState(false);
   const [particles, setParticles] = useState([]);
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [isVipUpgraded, setIsVipUpgraded] = useState(false);
   const [vipPaymentId, setVipPaymentId] = useState("");
 
-  const isHindi = selectedLanguage === "Hindi";
+  const defaultTag = isFb1 ? "VW-FB1-" : "VW-FB-";
   const displayPaymentId = paymentId || ("pay_vw" + Math.random().toString(36).substring(2, 10).toUpperCase());
-  const activeCustomerId = uniqueCustomerId || ("VW-" + Math.floor(10000000 + Math.random() * 90000000));
+  const activeCustomerId = uniqueCustomerId || (defaultTag + Math.floor(10000000 + Math.random() * 90000000));
 
   // Dynamic URL Subroute Management: Shows /topop when popup is open, reverts when closed
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    const baseRoute = isHindi ? "/thankyou-hindi" : "/thankyou-english";
+    const prefix = isFb1 ? "/fb1" : "";
+    const baseRoute = `${prefix}${isHindi ? "/thankyou-hindi" : "/thankyou-english"}`;
+
     if (showPopup) {
       window.history.pushState({}, "", `${baseRoute}/topop`);
     } else {
       window.history.pushState({}, "", baseRoute);
     }
 
-    // Fire Meta Facebook Pixel Purchase Triggers:
+    // Fire Meta Facebook Pixel Purchase Triggers for the active Pixel ID:
+    const contentName = isFb1
+      ? (isHindi ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1")
+      : (isHindi ? "Vastu Wheels Hindi FB" : "Vastu Wheels English FB");
+
     if (isHindi) {
       trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels Hindi FB" });
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName });
     } else {
       trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: "Vastu Wheels English FB" });
+      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName });
     }
-  }, [selectedLanguage, showPopup, isHindi]);
+  }, [selectedLanguage, showPopup, isHindi, isFb1]);
 
   // 🎉 Party Popper Confetti Burst & Fast Rolling Price Animation
   const handleClaimDiscount = () => {
@@ -55,9 +70,9 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     }));
     setParticles(newParticles);
 
-    // Fast Rolling Number Counter Effect (from ₹1,999 down to ₹1,799)
-    let current = 1999;
-    const target = 1799;
+    // Fast Rolling Number Counter Effect (from initial price down to discounted price)
+    let current = topopConfig.initialPrice;
+    const target = topopConfig.discountedPrice;
     const step = 20;
     const interval = setInterval(() => {
       current -= step;
@@ -147,6 +162,9 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
         full_name: fullName || "Valued Customer",
         phone_number: phone || "9217664304",
         email_id: email || "globalinchpvt@gmail.com",
+        report_language: isFb1 
+          ? (isHindi ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1")
+          : (isHindi ? "Vastu Wheels Hindi fb" : "Vastu Wheels English FB"),
         upgrade_type: "1-on-1 Consultation"
       },
       theme: {
@@ -192,7 +210,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     benefit2: "⚡ इमीडिएट इंस्टेंट रिपोर्ट (बिना किसी वेटिंग के)",
     benefit3: "🤝 पर्सनल वास्तु एजेंट & गाइडेंस सपोर्ट",
     claimBtn: "🎉 10% अतिरिक्त डिस्काउंट क्लेम करें",
-    claimedBtn: "🚀 ₹1,799 में अपग्रेड करें (Direct Payment)",
+    claimedBtn: `🚀 ₹${topopConfig.discountedPrice.toLocaleString("en-IN")} में अपग्रेड करें (Direct Payment)`,
     dismissText: "नहीं धन्यवाद, स्टैंडर्ड रिपोर्ट ही रखें"
   } : {
     badge: isVipUpgraded ? "🎉 Upgrade Payment Completed!" : "Payment Completed Successfully",
@@ -216,7 +234,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     benefit2: "⚡ Immediate Express Vastu Report Delivery (Zero waiting)",
     benefit3: "🤝 Dedicated Personal Vastu Agent & Guidance Support",
     claimBtn: "🎉 Claim Extra 10% INSTANT Discount",
-    claimedBtn: "🚀 Upgrade Order Now at ₹1,799",
+    claimedBtn: `🚀 Upgrade Order Now at ₹${topopConfig.discountedPrice.toLocaleString("en-IN")}`,
     dismissText: "No thanks, I will keep standard report"
   };
 
@@ -278,7 +296,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
             <div className="bg-white border-2 border-orange-300 p-4 rounded-2xl shadow-inner space-y-2 relative">
               <div className="flex items-center justify-center gap-3">
                 <span className="text-xs text-slate-400 font-bold line-through">
-                  ₹4,999
+                  ₹{topopConfig.originalPrice.toLocaleString("en-IN")}
                 </span>
                 <div className="flex items-baseline gap-1 text-2xl sm:text-3xl font-black text-[#ea580c] font-sora">
                   <span className="text-sm font-bold text-slate-700">₹</span>

@@ -49,7 +49,9 @@ const INDIAN_CITIES = [
   "Other / Outside India"
 ];
 
-export default function ReportForm({ onBack, onPaymentSuccess }) {
+export default function ReportForm({ onBack, onPaymentSuccess, price = 1499 }) {
+  const checkoutPrice = price || 1499;
+  const formattedPrice = checkoutPrice.toLocaleString("en-IN");
   const [formData, setFormData] = useState({
     fullName: "",
     propertyType: "",
@@ -131,12 +133,15 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
     const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_live_SSFQ4gpLaM0VXb";
 
-    // Format exact language payload for Razorpay Notes requested by user:
-    // Hindi -> "Vastu Wheels Hindi fb"
-    // English -> "Vastu Wheels English FB"
-    const languagePayload = formData.reportLanguage === "Hindi"
-      ? "Vastu Wheels Hindi fb"
-      : "Vastu Wheels English FB";
+    // Check if user is on FB1 campaign funnel (/fb1) or default Meta FB Ads funnel (/)
+    const isFb1 = typeof window !== "undefined" && window.location.pathname.toLowerCase().includes("/fb1");
+
+    // Format exact language payload for Razorpay Notes & Google Sheet:
+    // Default FB (/) -> "Vastu Wheels Hindi fb" / "Vastu Wheels English FB"
+    // Dedicated FB1 (/fb1) -> "Vastu Wheels Hindi FB1" / "Vastu Wheels English FB1"
+    const languagePayload = isFb1
+      ? (formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1")
+      : (formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi fb" : "Vastu Wheels English FB");
 
     // Create Razorpay Order via Orders API to guarantee 100% automatic payment capture
     let orderId = "";
@@ -144,7 +149,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       const orderRes = await fetch("/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 1499 * 100 }) // ₹1499 in paise = 149900
+        body: JSON.stringify({ amount: checkoutPrice * 100 })
       });
       if (orderRes.ok) {
         const orderData = await orderRes.json();
@@ -156,8 +161,9 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
       console.warn("Orders API warning, proceeding with fallback checkout options:", err);
     }
 
-    // Generate Unique Customer ID for tracking customer across payments (e.g. VW-84920193)
-    const uniqueCustomerId = "VW-" + Math.floor(10000000 + Math.random() * 90000000);
+    // Generate Unique Customer ID tagged with FB or FB1 prefix (e.g. VW-FB-84920193 or VW-FB1-84920193)
+    const customerTag = isFb1 ? "VW-FB1-" : "VW-FB-";
+    const uniqueCustomerId = customerTag + Math.floor(10000000 + Math.random() * 90000000);
 
     // Track whether payment was completed to ensure ONLY unpaid/dropped-off leads go to Google Sheet
     let hasPaymentCompleted = false;
@@ -169,11 +175,11 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
         const leadPayload = {
           unique_customer_id: uniqueCustomerId,
           payment_id: "PENDING / NOT PAID",
-          amount: "1499",
+          amount: checkoutPrice.toString(),
           full_name: formData.fullName || "N/A",
           phone_number: formData.phone || "N/A",
           email_id: formData.email || "N/A",
-          report_language: formData.reportLanguage || "N/A",
+          report_language: languagePayload,
           property_type: formData.propertyType || "N/A",
           entrance_direction: formData.direction || "N/A",
           primary_challenge: formData.concern || "N/A",
@@ -204,7 +210,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
 
     const options = {
       key: keyId,
-      amount: 1499 * 100, // ₹1499 in paise = 149900
+      amount: checkoutPrice * 100, // Dynamic offer price in paise
       currency: "INR",
       name: "VastuWheels (Powered & Managed by GlobalInch)",
       description: "Personalised Vastu Science Report",
@@ -424,7 +430,7 @@ export default function ReportForm({ onBack, onPaymentSuccess }) {
               <span>Opening Payment Gateway...</span>
             ) : (
               <>
-                <span>Proceed to Pay ₹1,499 & Get Report</span>
+                <span>Proceed to Pay ₹{formattedPrice} & Get Report</span>
                 <Sparkles size={18} />
               </>
             )}

@@ -4,6 +4,10 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 
 export default function Footer({ onNavigateLegal, onBackToHome }) {
+  const currentPath = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
+  const currentPrefix = currentPath.includes("fb1") ? "/fb1" : "";
+  const siteDomain = `report.globalinch.com${currentPrefix}`;
+
   return (
     <footer className="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-12 px-4 md:px-8 pb-24 md:pb-12 font-sora">
       <div className="max-w-[1400px] mx-auto space-y-10">
@@ -151,26 +155,26 @@ export default function Footer({ onNavigateLegal, onBackToHome }) {
           
           {/* Corporate Details */}
           <div className="text-slate-300 font-semibold space-y-1">
-            <p>report.globalinch.com (VastuWheels Powered & Managed by GlobalInch Private Limited) | globalinchpvt@gmail.com</p>
+            <p>{siteDomain} (VastuWheels Powered & Managed by GlobalInch Private Limited) | globalinchpvt@gmail.com</p>
             <p className="text-slate-400 font-normal">Address: 3rd Floor, Plot No 3, Near Aapka Bazar, Sector-12 Dwarka, South West Delhi, New Delhi, Delhi 110078 | Phone: +91 9217664304</p>
           </div>
 
           {/* Meta & Google Disclaimers */}
           <div className="space-y-1 text-slate-500 leading-relaxed max-w-4xl mx-auto">
             <p>
-              report.globalinch.com and GlobalInch Private Limited are not a part of Facebook.com or Facebook Inc or Google.com or Google Inc.
+              {siteDomain} and GlobalInch Private Limited are not a part of Facebook.com or Facebook Inc or Google.com or Google Inc.
             </p>
             <p>
-              Additionally, report.globalinch.com is not endorsed by Facebook.com or Facebook Inc or Google.com or Google Inc.
+              Additionally, {siteDomain} is not endorsed by Facebook.com or Facebook Inc or Google.com or Google Inc.
             </p>
             <p className="text-amber-400/90 font-medium pt-1">
-              * Refund Notice: All digital Vastu reports & services purchased on report.globalinch.com are custom generated and strictly NON-REFUNDABLE under any circumstances.
+              * Refund Notice: All digital Vastu reports & services purchased on {siteDomain} are custom generated and strictly NON-REFUNDABLE under any circumstances.
             </p>
           </div>
 
           {/* Copyright */}
           <div className="text-slate-400 font-bold text-xs pt-2">
-            Copyright 2026 - report.globalinch.com (GlobalInch Private Limited). All Rights Reserved.
+            Copyright 2026 - {siteDomain} (GlobalInch Private Limited). All Rights Reserved.
           </div>
 
         </div>
