@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { ArrowLeft, ShieldCheck, CheckCircle2, Clock, Mail, Phone, CreditCard, FileCheck, User, MessageCircle, X, Sparkles, Zap, Headphones, Gift } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
+import { trackGtmEvent } from "../../utils/gtm";
 import { getPricingForRoute } from "../../config/pricing";
 
 export default function ThankYouPage({ selectedLanguage, fullName, phone, email, paymentId, uniqueCustomerId, onBackToHome }) {
   const isHindi = selectedLanguage === "Hindi";
   const routePath = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
   const isFb1 = routePath.includes("fb1") || (uniqueCustomerId && uniqueCustomerId.includes("FB1"));
+  const isGa = routePath.includes("ga") || (uniqueCustomerId && uniqueCustomerId.includes("GA"));
   const activePixelId = isFb1 ? "2606867239768678" : "1032914616258314";
   
   // Calculate route's independent Topop pricing configuration
@@ -24,7 +26,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
   const [isVipUpgraded, setIsVipUpgraded] = useState(false);
   const [vipPaymentId, setVipPaymentId] = useState("");
 
-  const defaultTag = isFb1 ? "VW-FB1-" : "VW-FB-";
+  const defaultTag = isFb1 ? "VW-FB1-" : (isGa ? "VW-GA-" : "VW-FB-");
   const displayPaymentId = paymentId || ("pay_vw" + Math.random().toString(36).substring(2, 10).toUpperCase());
   const activeCustomerId = uniqueCustomerId || (defaultTag + Math.floor(10000000 + Math.random() * 90000000));
 
@@ -32,7 +34,10 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    const prefix = isFb1 ? "/fb1" : "";
+    let prefix = "";
+    if (isFb1) prefix = "/fb1";
+    else if (isGa) prefix = "/ga";
+
     const baseRoute = `${prefix}${isHindi ? "/thankyou-hindi" : "/thankyou-english"}`;
 
     if (showPopup) {
@@ -41,10 +46,14 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       window.history.pushState({}, "", baseRoute);
     }
 
+    if (isGa) {
+      trackGtmEvent("purchase", { value: currentPricing.price || 1499, currency: "INR" });
+    }
+
     // Fire Meta Facebook Pixel Purchase Triggers for the active Pixel ID:
-    const contentName = isFb1
-      ? (isHindi ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1")
-      : (isHindi ? "Vastu Wheels Hindi FB" : "Vastu Wheels English FB");
+    let contentName = isHindi ? "Vastu Wheels Hindi FB" : "Vastu Wheels English FB";
+    if (isFb1) contentName = isHindi ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1";
+    else if (isGa) contentName = isHindi ? "Vastu Wheels Hindi GA" : "Vastu Wheels English GA";
 
     if (isHindi) {
       trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true, activePixelId);
@@ -53,7 +62,7 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true, activePixelId);
       trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
     }
-  }, [selectedLanguage, showPopup, isHindi, isFb1, activePixelId]);
+  }, [selectedLanguage, showPopup, isHindi, isFb1, isGa, activePixelId]);
 
   // 🎉 Party Popper Confetti Burst & Fast Rolling Price Animation
   const handleClaimDiscount = () => {
@@ -184,7 +193,9 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
 
   const handleClosePopup = () => {
     setShowPopup(false);
-    const prefix = isFb1 ? "/fb1" : "";
+    let prefix = "";
+    if (isFb1) prefix = "/fb1";
+    else if (isGa) prefix = "/ga";
     const baseRoute = `${prefix}${isHindi ? "/thankyou-hindi" : "/thankyou-english"}`;
     window.history.pushState({}, "", baseRoute);
   };

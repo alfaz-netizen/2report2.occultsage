@@ -21,20 +21,32 @@ export const CAMPAIGN_PRICING = {
 
   // 2. Dedicated FB1 Campaign Landing Page (https://report.globalinch.com/fb1)
   fb1: {
-    price: 1499,         // Offer Price in ₹ (Edit here independently!)
+    price: 1,         // Offer Price in ₹ (Edit here independently!)
     originalPrice: 5999, // Strikethrough Price in ₹
     // Thank You Topop Upgrade Popup Pricing for FB1 Page (/fb1)
     topop: {
       originalPrice: 4999,   // Strikethrough price in Topop for FB1 (Edit independently!)
-      initialPrice: 1999,    // Initial upgrade price in Topop for FB1
-      discountedPrice: 1799, // Final upgrade price after claiming 10% discount for FB1
+      initialPrice: 1,    // Initial upgrade price in Topop for FB1
+      discountedPrice: 1, // Final upgrade price after claiming 10% discount for FB1
+    }
+  },
+
+  // 3. Dedicated GA Campaign Landing Page (https://report.globalinch.com/ga)
+  ga: {
+    price: 1,         // Offer Price in ₹ (Edit here independently!)
+    originalPrice: 5999, // Strikethrough Price in ₹
+    // Thank You Topop Upgrade Popup Pricing for GA Page (/ga)
+    topop: {
+      originalPrice: 4999,   // Strikethrough price in Topop for GA
+      initialPrice: 1,    // Initial upgrade price in Topop for GA
+      discountedPrice: 1, // Final upgrade price after claiming 10% discount for GA
     }
   }
 };
 
 /**
  * Helper function to retrieve the exact pricing object for the current URL path.
- * @param {string} pathname - e.g. "/", "/fb1", "/fb1/checkout", "/fb1/thankyou-hindi/topop", etc.
+ * @param {string} pathname - e.g. "/", "/fb1", "/ga", etc.
  * @returns {{ price: number, originalPrice: number, topop: { originalPrice: number, initialPrice: number, discountedPrice: number } }}
  */
 export function getPricingForRoute(pathname = "") {
@@ -44,8 +56,13 @@ export function getPricingForRoute(pathname = "") {
   const cleanPath = (pathname || "").toLowerCase();
 
   // If user is on /fb1 or any /fb1/* route, return FB1 pricing
-  if (cleanPath.includes("/fb1")) {
+  if (cleanPath.includes("fb1")) {
     return CAMPAIGN_PRICING.fb1;
+  }
+
+  // If user is on /ga or any /ga/* route, return GA pricing
+  if (cleanPath.includes("ga")) {
+    return CAMPAIGN_PRICING.ga;
   }
 
   // Default to Main Landing Page pricing

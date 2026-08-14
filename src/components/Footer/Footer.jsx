@@ -5,7 +5,9 @@ import vwLogo from "../../assets/VW-HR.png";
 
 export default function Footer({ onNavigateLegal, onBackToHome }) {
   const currentPath = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
-  const currentPrefix = currentPath.includes("fb1") ? "/fb1" : "";
+  let currentPrefix = "";
+  if (currentPath.includes("fb1")) currentPrefix = "/fb1";
+  else if (currentPath.includes("ga")) currentPrefix = "/ga";
   const siteDomain = `report.globalinch.com${currentPrefix}`;
 
   return (

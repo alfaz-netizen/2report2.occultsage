@@ -36,6 +36,14 @@
       "destination": "/fb1.html"
     },
     {
+      "source": "/ga",
+      "destination": "/ga.html"
+    },
+    {
+      "source": "/ga/(.*)",
+      "destination": "/ga.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

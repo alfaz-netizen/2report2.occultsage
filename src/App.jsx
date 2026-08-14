@@ -16,13 +16,15 @@ import ReportForm from "./components/ReportForm/ReportForm";
 import LegalPage from "./components/LegalPage/LegalPage";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
 import { trackPixelEvent, initMetaPixel, trackPageView } from "./utils/pixel";
+import { initGtm, trackGtmEvent } from "./utils/gtm";
 import { captureUtmParams } from "./utils/utm";
 import { getPricingForRoute } from "./config/pricing";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("landing"); // "landing" | "checkout" | "legal" | "thankyou"
   const [isFb1, setIsFb1] = useState(false); // Mode for /fb1 route (Pixel ID: 2606867239768678)
-  const [currentPrefix, setCurrentPrefix] = useState(""); // Stores prefix like "/fb1"
+  const [isGa, setIsGa] = useState(false); // Mode for /ga route (Google Ads Campaign, GTM: GTM-PBKMRHTJ)
+  const [currentPrefix, setCurrentPrefix] = useState(""); // Stores prefix like "/fb1" or "/ga"
   const [activeLegalDoc, setActiveLegalDoc] = useState("privacy");
   const [orderInfo, setOrderInfo] = useState({ 
     language: "English", 
@@ -42,26 +44,37 @@ export default function App() {
     const handleUrlChange = () => {
       const rawPath = decodeURIComponent(window.location.pathname).toLowerCase();
       
-      // Strictly allow ONLY /fb1 as the dedicated FB1 campaign route prefix
+      // Strictly allow /fb1 or /ga as dedicated campaign route prefixes
       const pathSegments = rawPath.split("/").filter(Boolean);
       let prefix = "";
       let actionRoute = rawPath;
 
-      if (pathSegments.length > 0 && pathSegments[0] === "fb1") {
+      const firstSegment = pathSegments.length > 0 ? pathSegments[0] : "";
+      if (firstSegment === "fb1") {
         prefix = "/fb1";
+        actionRoute = "/" + pathSegments.slice(1).join("/");
+      } else if (firstSegment === "ga") {
+        prefix = "/ga";
         actionRoute = "/" + pathSegments.slice(1).join("/");
       }
 
       setCurrentPrefix(prefix);
 
-      // Dedicated FB1 Landing Page mode (/fb1 or /fb1/*)
+      // Campaign mode flags
       const fb1Mode = prefix === "/fb1";
+      const gaMode = prefix === "/ga";
       setIsFb1(fb1Mode);
+      setIsGa(gaMode);
+
+      if (gaMode) {
+        initGtm("GTM-PBKMRHTJ");
+        trackGtmEvent("page_view", { page_path: rawPath });
+      }
 
       // Initialize active Meta Pixel and fire 1 Single PageView event with strict deduplication
       trackPageView();
 
-      // Dynamic Canonical & Open Graph URL management: Sets exact page URL for /fb1 vs /
+      // Dynamic Canonical & Open Graph URL management: Sets exact page URL for /fb1 vs /ga vs /
       const canonicalLink = document.querySelector("link[rel='canonical']");
       const ogUrlMeta = document.querySelector("meta[property='og:url']");
       const twitterUrlMeta = document.querySelector("meta[name='twitter:url']");
@@ -102,8 +115,11 @@ export default function App() {
   const handleNavigateCheckout = () => {
     // Trigger Meta Facebook Pixel AddToCart Event for the active Pixel ID with route's independent price
     trackPixelEvent("AddToCart", { value: currentPricing.price, currency: "INR" });
+    if (isGa || currentPrefix === "/ga") {
+      trackGtmEvent("add_to_cart", { value: currentPricing.price, currency: "INR" });
+    }
     
-    // Build target URL path retaining campaign prefix (e.g. /fb1/checkout or /checkout)
+    // Build target URL path retaining campaign prefix (e.g. /fb1/checkout, /ga/checkout, or /checkout)
     const targetUrl = currentPrefix ? `${currentPrefix}/checkout` : "/checkout";
     
     window.history.pushState({}, "", targetUrl);
@@ -120,7 +136,7 @@ export default function App() {
   };
 
   const handleBackToLanding = () => {
-    const targetPath = currentPrefix ? currentPrefix : "/";
+    const targetPath = currentPrefix || "/";
     window.history.pushState({}, "", targetPath);
     setCurrentPage("landing");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -128,7 +144,10 @@ export default function App() {
 
   const handlePaymentSuccess = (data) => {
     const selectedLang = data.language || "English";
-    const defaultTag = (isFb1 || currentPrefix === "/fb1") ? "VW-FB1-" : "VW-FB-";
+    let defaultTag = "VW-FB-";
+    if (isFb1 || currentPrefix === "/fb1") defaultTag = "VW-FB1-";
+    else if (isGa || currentPrefix === "/ga") defaultTag = "VW-GA-";
+    
     const newOrder = {
       language: selectedLang,
       fullName: data.fullName || "",

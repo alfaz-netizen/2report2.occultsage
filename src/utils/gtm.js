@@ -1,6 +1,6 @@
 // Google Tag Manager (GTM) Utility for Google Ads Landing Page (/ga)
 
-export function initGtm(gtmId = import.meta.env.VITE_GTM_ID || "GTM-K5W28G3") {
+export function initGtm(gtmId = import.meta.env.VITE_GTM_ID || "GTM-PBKMRHTJ") {
   if (typeof window === "undefined") return;
   
   window.dataLayer = window.dataLayer || [];

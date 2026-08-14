@@ -3,6 +3,7 @@ import "./ReportForm.css";
 import { ArrowLeft, ShieldCheck, CheckCircle2, Sparkles, AlertCircle, MapPin, ChevronDown, Search } from "lucide-react";
 import vwLogo from "../../assets/VW-HR.png";
 import { trackPixelEvent } from "../../utils/pixel";
+import { trackGtmEvent } from "../../utils/gtm";
 import { getUtmParamsForNotes, captureUtmParams } from "../../utils/utm";
 
 const INDIAN_CITIES = [
@@ -119,8 +120,15 @@ export default function ReportForm({ onBack, onPaymentSuccess, price = 1499 }) {
       return;
     }
 
-    // Trigger Meta Facebook Pixel InitiateCheckout Event
-    trackPixelEvent("InitiateCheckout", { value: 1499, currency: "INR" });
+    // Trigger Meta Facebook Pixel & GTM InitiateCheckout Event
+    trackPixelEvent("InitiateCheckout", { value: checkoutPrice, currency: "INR" });
+    const currentRoute = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
+    const isFb1 = currentRoute.includes("fb1");
+    const isGa = currentRoute.includes("ga");
+
+    if (isGa) {
+      trackGtmEvent("begin_checkout", { value: checkoutPrice, currency: "INR" });
+    }
 
     setIsSubmitting(true);
 
@@ -133,15 +141,16 @@ export default function ReportForm({ onBack, onPaymentSuccess, price = 1499 }) {
 
     const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_live_SSFQ4gpLaM0VXb";
 
-    // Check if user is on FB1 campaign funnel (/fb1) or default Meta FB Ads funnel (/)
-    const isFb1 = typeof window !== "undefined" && window.location.pathname.toLowerCase().includes("/fb1");
-
     // Format exact language payload for Razorpay Notes & Google Sheet:
     // Default FB (/) -> "Vastu Wheels Hindi fb" / "Vastu Wheels English FB"
     // Dedicated FB1 (/fb1) -> "Vastu Wheels Hindi FB1" / "Vastu Wheels English FB1"
-    const languagePayload = isFb1
-      ? (formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1")
-      : (formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi fb" : "Vastu Wheels English FB");
+    // Dedicated GA (/ga) -> "Vastu Wheels Hindi GA" / "Vastu Wheels English GA"
+    let languagePayload = formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi fb" : "Vastu Wheels English FB";
+    if (isFb1) {
+      languagePayload = formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1";
+    } else if (isGa) {
+      languagePayload = formData.reportLanguage === "Hindi" ? "Vastu Wheels Hindi GA" : "Vastu Wheels English GA";
+    }
 
     // Create Razorpay Order via Orders API to guarantee 100% automatic payment capture
     let orderId = "";
@@ -161,8 +170,11 @@ export default function ReportForm({ onBack, onPaymentSuccess, price = 1499 }) {
       console.warn("Orders API warning, proceeding with fallback checkout options:", err);
     }
 
-    // Generate Unique Customer ID tagged with FB or FB1 prefix (e.g. VW-FB-84920193 or VW-FB1-84920193)
-    const customerTag = isFb1 ? "VW-FB1-" : "VW-FB-";
+    // Generate Unique Customer ID tagged with FB, FB1, or GA prefix (e.g. VW-FB-84920193, VW-FB1-84920193, VW-GA-84920193)
+    let customerTag = "VW-FB-";
+    if (isFb1) customerTag = "VW-FB1-";
+    else if (isGa) customerTag = "VW-GA-";
+
     const uniqueCustomerId = customerTag + Math.floor(10000000 + Math.random() * 90000000);
 
     // Track whether payment was completed to ensure ONLY unpaid/dropped-off leads go to Google Sheet

@@ -48,6 +48,17 @@ export default defineConfig({
           next();
         });
       }
+    },
+    {
+      name: 'ga-dev-rewrite',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url && req.url.toLowerCase().startsWith('/ga') && !req.url.includes('.')) {
+            req.url = '/ga.html';
+          }
+          next();
+        });
+      }
     }
   ],
   server: {
@@ -58,7 +69,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
-        fb1: './fb1.html'
+        fb1: './fb1.html',
+        ga: './ga.html'
       }
     }
   }
