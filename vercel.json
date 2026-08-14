@@ -28,6 +28,14 @@
       "destination": "/api/$1"
     },
     {
+      "source": "/fb1",
+      "destination": "/fb1.html"
+    },
+    {
+      "source": "/fb1/(.*)",
+      "destination": "/fb1.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

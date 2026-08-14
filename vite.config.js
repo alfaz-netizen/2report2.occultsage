@@ -37,11 +37,29 @@ export default defineConfig({
           next();
         });
       }
+    },
+    {
+      name: 'fb1-dev-rewrite',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url && req.url.toLowerCase().startsWith('/fb1') && !req.url.includes('.')) {
+            req.url = '/fb1.html';
+          }
+          next();
+        });
+      }
     }
   ],
   server: {
     port: 5175,
     host: true
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        fb1: './fb1.html'
+      }
+    }
   }
 })
-

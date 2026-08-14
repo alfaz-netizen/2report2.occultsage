@@ -15,7 +15,7 @@ import Footer from "./components/Footer/Footer";
 import ReportForm from "./components/ReportForm/ReportForm";
 import LegalPage from "./components/LegalPage/LegalPage";
 import ThankYouPage from "./components/ThankYouPage/ThankYouPage";
-import { trackPixelEvent, initFb1Pixel } from "./utils/pixel";
+import { trackPixelEvent, initMetaPixel, trackPageView } from "./utils/pixel";
 import { captureUtmParams } from "./utils/utm";
 import { getPricingForRoute } from "./config/pricing";
 
@@ -58,12 +58,8 @@ export default function App() {
       const fb1Mode = prefix === "/fb1";
       setIsFb1(fb1Mode);
 
-      if (fb1Mode) {
-        initFb1Pixel(); // Initialize Pixel 2606867239768678 for FB1 campaign
-        trackPixelEvent("PageView");
-      } else {
-        trackPixelEvent("PageView");
-      }
+      // Initialize active Meta Pixel and fire 1 Single PageView event with strict deduplication
+      trackPageView();
 
       // Dynamic Canonical & Open Graph URL management: Sets exact page URL for /fb1 vs /
       const canonicalLink = document.querySelector("link[rel='canonical']");

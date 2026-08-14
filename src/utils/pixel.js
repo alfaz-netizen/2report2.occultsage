@@ -1,43 +1,100 @@
-// Safe Meta Facebook Pixel Helper
-// Default FB Pixel ID: 1032914616258314 (Main Landing Page /)
-// Dedicated FB1 Landing Page Pixel ID: 2606867239768678 (/fb1)
+// Centralized Meta Facebook Pixel Manager with Idempotent Deduplication
+// Main Landing Page (/) Pixel ID: 1032914616258314
+// Dedicated FB1 Campaign (/fb1) Pixel ID: 2606867239768678
 
-export const initFb1Pixel = () => {
-  if (typeof window !== "undefined" && window.fbq) {
-    if (!window.fb1PixelInitialized) {
-      window.fbq('init', '2606867239768678');
-      window.fb1PixelInitialized = true;
-      console.log('[FB Pixel] Initialized FB1 Pixel: 2606867239768678');
-    }
-  }
+const PIXELS = {
+  MAIN: "1032914616258314",
+  FB1: "2606867239768678",
 };
+
+let pixelScriptInjected = false;
+const initializedPixels = new Set();
+let pageViewFiredForRoute = "";
 
 export const getActivePixelId = (customerTag = "") => {
   if (typeof window !== "undefined") {
     const rawPath = window.location.pathname.toLowerCase();
-    if (rawPath.includes("/fb1") || (customerTag && customerTag.includes("FB1"))) {
-      return "2606867239768678";
+    if (rawPath.includes("fb1") || (customerTag && customerTag.includes("FB1"))) {
+      return PIXELS.FB1;
     }
   }
-  return "1032914616258314";
+  return PIXELS.MAIN;
+};
+
+export const initFb1Pixel = () => {
+  initMetaPixel(PIXELS.FB1);
+};
+
+export const initMetaPixel = (targetPixelId = null) => {
+  if (typeof window === "undefined") return;
+  const pixelId = targetPixelId || getActivePixelId();
+
+  // Inject fbevents.js script tag dynamically ONCE
+  if (!pixelScriptInjected && !window.fbq) {
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    pixelScriptInjected = true;
+  }
+
+  // Initialize specific pixel ID ONCE
+  if (window.fbq && !initializedPixels.has(pixelId)) {
+    try {
+      const state = typeof window.fbq.getState === "function" ? window.fbq.getState() : null;
+      if (state && state.pixels && Array.isArray(state.pixels) && state.pixels.some((p) => p.id === pixelId)) {
+        initializedPixels.add(pixelId);
+        return;
+      }
+    } catch (e) {}
+
+    window.fbq("init", pixelId);
+    initializedPixels.add(pixelId);
+    console.log(`[FB Pixel] Initialized Pixel ID: ${pixelId}`);
+  }
+};
+
+export const trackPageView = () => {
+  if (typeof window === "undefined") return;
+  const currentPath = window.location.pathname.toLowerCase();
+
+  // On initial page load, static HTML head snippet already fires PageView for root landing routes
+  if (!pageViewFiredForRoute && (currentPath === "/" || currentPath === "/fb1" || currentPath === "/fb1/")) {
+    pageViewFiredForRoute = currentPath;
+    return;
+  }
+
+  // Strict Deduplication Guard: Prevent firing PageView multiple times on the same route
+  if (pageViewFiredForRoute === currentPath) return;
+  pageViewFiredForRoute = currentPath;
+
+  const activePixelId = getActivePixelId();
+  initMetaPixel(activePixelId);
+
+  if (window.fbq) {
+    window.fbq("trackSingle", activePixelId, "PageView");
+    console.log(`[FB Pixel] Fired Single PageView for ${activePixelId} on ${currentPath}`);
+  }
 };
 
 export const trackPixelEvent = (eventName, params = {}, isCustom = false, overridePixelId = null) => {
-  if (typeof window !== "undefined" && window.fbq) {
+  if (typeof window !== "undefined") {
     try {
       const activePixelId = overridePixelId || getActivePixelId();
+      initMetaPixel(activePixelId);
 
-      // Ensure FB1 pixel is initialized if on /fb1
-      if (activePixelId === "2606867239768678") {
-        initFb1Pixel();
-      }
-
-      if (isCustom) {
-        window.fbq("trackSingleCustom", activePixelId, eventName, params);
-        console.log(`[FB Pixel Custom Event ${activePixelId}] ${eventName}:`, params);
-      } else {
-        window.fbq("trackSingle", activePixelId, eventName, params);
-        console.log(`[FB Pixel Standard Event ${activePixelId}] ${eventName}:`, params);
+      if (window.fbq) {
+        if (isCustom) {
+          window.fbq("trackSingleCustom", activePixelId, eventName, params);
+          console.log(`[FB Pixel Custom Event ${activePixelId}] ${eventName}:`, params);
+        } else {
+          window.fbq("trackSingle", activePixelId, eventName, params);
+          console.log(`[FB Pixel Standard Event ${activePixelId}] ${eventName}:`, params);
+        }
       }
     } catch (err) {
       console.warn("FB Pixel Error:", err);
