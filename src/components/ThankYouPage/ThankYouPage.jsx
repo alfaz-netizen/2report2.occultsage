@@ -56,11 +56,11 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
     else if (isGa) contentName = isHindi ? "Vastu Wheels Hindi GA" : "Vastu Wheels English GA";
 
     if (isHindi) {
-      trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true, activePixelId);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
+      trackPixelEvent("Purchase Hindi", { value: 1499, currency: "INR" }, true, activePixelId);
+      trackPixelEvent("Purchase", { value: 1499, currency: "INR", content_name: contentName }, false, activePixelId);
     } else {
-      trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true, activePixelId);
-      trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
+      trackPixelEvent("Purchase English", { value: 1499, currency: "INR" }, true, activePixelId);
+      trackPixelEvent("Purchase", { value: 1499, currency: "INR", content_name: contentName }, false, activePixelId);
     }
   }, [selectedLanguage, showPopup, isHindi, isFb1, isGa, activePixelId]);
 

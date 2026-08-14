@@ -21,25 +21,25 @@ export const CAMPAIGN_PRICING = {
 
   // 2. Dedicated FB1 Campaign Landing Page (https://report.globalinch.com/fb1)
   fb1: {
-    price: 1,         // Offer Price in ₹ (Edit here independently!)
+    price: 1499,         // Offer Price in ₹ (Edit here independently!)
     originalPrice: 5999, // Strikethrough Price in ₹
     // Thank You Topop Upgrade Popup Pricing for FB1 Page (/fb1)
     topop: {
       originalPrice: 4999,   // Strikethrough price in Topop for FB1 (Edit independently!)
-      initialPrice: 1,    // Initial upgrade price in Topop for FB1
-      discountedPrice: 1, // Final upgrade price after claiming 10% discount for FB1
+      initialPrice: 1999,    // Initial upgrade price in Topop for FB1
+      discountedPrice: 1799, // Final upgrade price after claiming 10% discount for FB1
     }
   },
 
   // 3. Dedicated GA Campaign Landing Page (https://report.globalinch.com/ga)
   ga: {
-    price: 1,         // Offer Price in ₹ (Edit here independently!)
+    price: 1499,         // Offer Price in ₹ (Edit here independently!)
     originalPrice: 5999, // Strikethrough Price in ₹
     // Thank You Topop Upgrade Popup Pricing for GA Page (/ga)
     topop: {
       originalPrice: 4999,   // Strikethrough price in Topop for GA
-      initialPrice: 1,    // Initial upgrade price in Topop for GA
-      discountedPrice: 1, // Final upgrade price after claiming 10% discount for GA
+      initialPrice: 1999,    // Initial upgrade price in Topop for GA
+      discountedPrice: 1799, // Final upgrade price after claiming 10% discount for GA
     }
   }
 };
