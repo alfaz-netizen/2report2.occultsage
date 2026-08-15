@@ -14,6 +14,10 @@ let pageViewFiredForRoute = "";
 export const getActivePixelId = (customerTag = "") => {
   if (typeof window !== "undefined") {
     const rawPath = window.location.pathname.toLowerCase();
+    // Dedicated Google Ads campaign route (/ga) does NOT use Meta Facebook Pixel
+    if (rawPath.includes("ga") || (customerTag && customerTag.includes("GA"))) {
+      return null;
+    }
     if (rawPath.includes("fb1") || (customerTag && customerTag.includes("FB1"))) {
       return PIXELS.FB1;
     }
@@ -28,6 +32,7 @@ export const initFb1Pixel = () => {
 export const initMetaPixel = (targetPixelId = null) => {
   if (typeof window === "undefined") return;
   const pixelId = targetPixelId || getActivePixelId();
+  if (!pixelId) return; // Skip Meta Pixel for Google Ads /ga routes
 
   // Inject fbevents.js script tag dynamically ONCE
   if (!pixelScriptInjected && !window.fbq) {
@@ -62,6 +67,9 @@ export const trackPageView = () => {
   if (typeof window === "undefined") return;
   const currentPath = window.location.pathname.toLowerCase();
 
+  // Skip Meta Pixel PageView for Google Ads campaign route (/ga)
+  if (currentPath.includes("ga")) return;
+
   // On initial page load, static HTML head snippet already fires PageView for root landing routes
   if (!pageViewFiredForRoute && (currentPath === "/" || currentPath === "/fb1" || currentPath === "/fb1/")) {
     pageViewFiredForRoute = currentPath;
@@ -73,6 +81,8 @@ export const trackPageView = () => {
   pageViewFiredForRoute = currentPath;
 
   const activePixelId = getActivePixelId();
+  if (!activePixelId) return;
+
   initMetaPixel(activePixelId);
 
   if (window.fbq) {
@@ -85,6 +95,8 @@ export const trackPixelEvent = (eventName, params = {}, isCustom = false, overri
   if (typeof window !== "undefined") {
     try {
       const activePixelId = overridePixelId || getActivePixelId();
+      if (!activePixelId) return; // Skip Meta Pixel events on /ga routes
+
       initMetaPixel(activePixelId);
 
       if (window.fbq) {

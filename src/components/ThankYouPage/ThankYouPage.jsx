@@ -50,17 +50,18 @@ export default function ThankYouPage({ selectedLanguage, fullName, phone, email,
       trackGtmEvent("purchase", { value: currentPricing.price || 1499, currency: "INR" });
     }
 
-    // Fire Meta Facebook Pixel Purchase Triggers for the active Pixel ID:
-    let contentName = isHindi ? "Vastu Wheels Hindi FB" : "Vastu Wheels English FB";
-    if (isFb1) contentName = isHindi ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1";
-    else if (isGa) contentName = isHindi ? "Vastu Wheels Hindi GA" : "Vastu Wheels English GA";
+    // Fire Meta Facebook Pixel Purchase Triggers for Meta campaigns ONLY (skip for /ga Google Ads):
+    if (!isGa) {
+      let contentName = isHindi ? "Vastu Wheels Hindi FB" : "Vastu Wheels English FB";
+      if (isFb1) contentName = isHindi ? "Vastu Wheels Hindi FB1" : "Vastu Wheels English FB1";
 
-    if (isHindi) {
-      trackPixelEvent("Purchase Hindi", { value: 1499, currency: "INR" }, true, activePixelId);
-      trackPixelEvent("Purchase", { value: 1499, currency: "INR", content_name: contentName }, false, activePixelId);
-    } else {
-      trackPixelEvent("Purchase English", { value: 1499, currency: "INR" }, true, activePixelId);
-      trackPixelEvent("Purchase", { value: 1499, currency: "INR", content_name: contentName }, false, activePixelId);
+      if (isHindi) {
+        trackPixelEvent("Purchase Hindi", { value: 996, currency: "INR" }, true, activePixelId);
+        trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
+      } else {
+        trackPixelEvent("Purchase English", { value: 996, currency: "INR" }, true, activePixelId);
+        trackPixelEvent("Purchase", { value: 996, currency: "INR", content_name: contentName }, false, activePixelId);
+      }
     }
   }, [selectedLanguage, showPopup, isHindi, isFb1, isGa, activePixelId]);
 
